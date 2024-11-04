@@ -3425,6 +3425,12 @@ namespace taskt.Core.Script
 
             // UIAutomationCheckUIElementExistCommand -> UIAutomationCheckUIElementExistsCommand
             ChangeCommandName(doc, "UIAutomationCheckUIElementExistCommand", "UIAutomationCheckUIElementExistsCommand", "Check UIElement Exists");
+
+            // SeleniumBrowserNavigateURLCommand -> SeleniumBrowserNavigateToURLCommand
+            ChangeCommandName(doc, "SeleniumBrowserNavigateURLCommand", "SeleniumBrowserNavigateToURLCommand", "Navigate To URL");
+
+            // SeleniumBrowserGetWebBrowserInfoCommand -> SeleniumBrowserGetWebBrowserInformationCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetWebBrowserInfoCommand", "SeleniumBrowserGetWebBrowserInformationCommand", "Get Web Browser Information");
         }
 
         /// <summary>
