@@ -55,12 +55,5 @@ namespace UIAutomationTester
             listView1.View = (View)cmbListViewView.SelectedIndex;
         }
         #endregion
-
-        #region pictureBox1
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            label1.Text = "pictureBox1 Clicked";
-        }
-        #endregion
     }
 }
