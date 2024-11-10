@@ -8,7 +8,7 @@
         /// <summary>
         /// taskt client settings
         /// </summary>
-        public new IFrmScriptBuilderClientSettings ClientSettings { get; private set; }
+        public new SafeFrmScriptBuilderClientSettings ClientSettings { get; private set; }
 
         public SafeFrmScriptBuilderApplicationSettings(ApplicationSettings appSettings) : base(appSettings)
         {

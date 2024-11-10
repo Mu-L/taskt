@@ -8,7 +8,7 @@
         /// <summary>
         /// taskt server settings
         /// </summary>
-        public new IWebSocketServerSettings ServerSettings { get; private set; }
+        public new SafeWebSocketServerSettings ServerSettings { get; private set; }
 
         public SafeWebSocketApplicationSettings(ApplicationSettings appSettings) : base(appSettings)
         {

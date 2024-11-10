@@ -3,7 +3,7 @@
     /// <summary>
     /// Safe Client Settings for Document Generation
     /// </summary>
-    public class SafeDocumentGenerationClientSettings : SafeClientSettings, IDocumentGenerationClientSettings
+    public class SafeDocumentGenerationClientSettings : SafeClientSettings
     {
         public SafeDocumentGenerationClientSettings(ClientSettings clientSettings) : base(clientSettings) 
         {

@@ -5,7 +5,7 @@ namespace taskt.Core
     /// <summary>
     /// ServerSettings for HttpServerClient
     /// </summary>
-    public class SafeHttpServerClientServerSettings : SafeServerSettings, IHttpServerClientServerSettings
+    public class SafeHttpServerClientServerSettings : SafeServerSettings
     {
         public SafeHttpServerClientServerSettings(ServerSettings serverSettings) : base(serverSettings)
         {

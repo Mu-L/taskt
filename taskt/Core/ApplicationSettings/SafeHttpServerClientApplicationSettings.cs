@@ -8,7 +8,7 @@
         /// <summary>
         /// taskt server settings
         /// </summary>
-        public new IHttpServerClientServerSettings ServerSettings { get; private set; }
+        public new SafeHttpServerClientServerSettings ServerSettings { get; private set; }
 
         public SafeHttpServerClientApplicationSettings(ApplicationSettings appSettings) : base(appSettings) 
         {

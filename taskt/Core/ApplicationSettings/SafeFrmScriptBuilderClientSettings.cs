@@ -3,7 +3,7 @@
     /// <summary>
     /// SafeClientSettings for frmScriptBuilder
     /// </summary>
-    public class SafeFrmScriptBuilderClientSettings : SafeClientSettings, IFrmScriptBuilderClientSettings
+    public class SafeFrmScriptBuilderClientSettings : SafeClientSettings
     {
         public SafeFrmScriptBuilderClientSettings(ClientSettings clientSettings) : base(clientSettings) 
         {

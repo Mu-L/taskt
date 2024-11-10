@@ -3,7 +3,7 @@
     /// <summary>
     /// ServerSettings for WebSocket
     /// </summary>
-    public class SafeWebSocketServerSettings : SafeServerSettings, IWebSocketServerSettings
+    public class SafeWebSocketServerSettings : SafeServerSettings
     {
         public SafeWebSocketServerSettings(ServerSettings serverSettings) : base(serverSettings) 
         { 

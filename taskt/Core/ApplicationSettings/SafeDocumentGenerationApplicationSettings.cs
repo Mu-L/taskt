@@ -8,7 +8,7 @@
         /// <summary>
         /// taskt client settings
         /// </summary>
-        public new IDocumentGenerationClientSettings ClientSettings { get; private set; }
+        public new SafeDocumentGenerationClientSettings ClientSettings { get; private set; }
 
         public SafeDocumentGenerationApplicationSettings(ApplicationSettings appSettings) : base(appSettings)
         {

@@ -328,13 +328,9 @@
     <Compile Include="Core\ApplicationSettings\EngineSettings.cs" />
     <Compile Include="Core\ApplicationSettings\IApplicationSettings.cs" />
     <Compile Include="Core\ApplicationSettings\IClientSettings.cs" />
-    <Compile Include="Core\ApplicationSettings\IDocumentGenerationClientSettings.cs" />
     <Compile Include="Core\ApplicationSettings\IEngineSettings.cs" />
-    <Compile Include="Core\ApplicationSettings\IFrmScriptBuilderClientSettings.cs" />
-    <Compile Include="Core\ApplicationSettings\IHttpServerClientServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\ILocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\IServerSettings.cs" />
-    <Compile Include="Core\ApplicationSettings\IWebSocketServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\LocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeApplicationSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeClientSettings.cs" />
