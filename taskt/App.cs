@@ -27,8 +27,7 @@ namespace taskt
         /// <summary>
         /// UNSAFE application settings
         /// </summary>
-        // TODO: hidden in feature
-        public static ApplicationSettings Taskt_UNSAFE_Settings { get; private set; }
+        private static ApplicationSettings Taskt_UNSAFE_Settings { get; set; }
 
         /// <summary>
         /// application settings
