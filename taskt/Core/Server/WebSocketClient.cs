@@ -51,7 +51,8 @@ namespace taskt.Core.Server
             //get app settings
             //var appSettings = new Core.ApplicationSettings();
             //appSettings = appSettings.GetOrCreateApplicationSettings();
-            var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+            //var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+            var appSettings = App.Taskt_Settings;
 
             //pull server settings
             var serverSettings = appSettings.ServerSettings;

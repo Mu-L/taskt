@@ -43,7 +43,8 @@ namespace taskt.Core.Server
 
             //var appSettings = new Core.ApplicationSettings();
             //appSettings = appSettings.GetOrCreateApplicationSettings();
-            var appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+            //var appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+            var appSettings = App.Taskt_Settings;
 
             listenerSettings = appSettings.ListenerSettings;
 

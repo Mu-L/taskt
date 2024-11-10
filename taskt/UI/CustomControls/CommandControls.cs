@@ -1916,7 +1916,8 @@ namespace taskt.UI.CustomControls
                 }).ToList();
 
             //var userPrefs = new ApplicationSettings().GetOrCreateApplicationSettings();
-            var userPrefs = ApplicationSettings.GetOrCreateApplicationSettings();
+            //var userPrefs = ApplicationSettings.GetOrCreateApplicationSettings();
+            var userPrefs = App.Taskt_Settings;
 
             //Loop through each class
             foreach (var commandClass in commandClasses)

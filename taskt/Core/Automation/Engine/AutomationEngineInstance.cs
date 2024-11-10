@@ -71,7 +71,8 @@ namespace taskt.Core.Automation.Engine
 
             //get engine settings
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
-            var settings = ApplicationSettings.GetOrCreateApplicationSettings();
+            //var settings = ApplicationSettings.GetOrCreateApplicationSettings();
+            var settings = App.Taskt_Settings;
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
