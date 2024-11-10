@@ -77,8 +77,8 @@ namespace taskt.Core
                     outputText = sw.ToString();
                 }
 
-                outputText = outputText.Replace("<FileIOApplicationSettings ", "<ApplicationSettings ")
-                                .Replace("</FileIOApplicationSettings>", "</ApplicationSettings>");
+                outputText = outputText.Replace($"<{nameof(FileIOApplicationSettings)} ", $"<{nameof(ApplicationSettings)} ")
+                                .Replace($"</{nameof(FileIOApplicationSettings)}>", $"</{nameof(ApplicationSettings)}>");
                 using (var writer = new StreamWriter(filePath))
                 {
                     writer.WriteLine(outputText);
@@ -98,8 +98,8 @@ namespace taskt.Core
                     xmlText = reader.ReadToEnd();
                 }
 
-                xmlText = xmlText.Replace("<ApplicationSettings ", "<FileIOApplicationSettings ")
-                                .Replace("</ApplicationSettings>", "</FileIOApplicationSettings>");
+                xmlText = xmlText.Replace($"<{nameof(ApplicationSettings)} ", $"<{nameof(FileIOApplicationSettings)} ")
+                                .Replace($"</{nameof(ApplicationSettings)}>", $"</{nameof(FileIOApplicationSettings)}>");
 
                 FileIOApplicationSettings settings = null;
                 using (var sr = new StringReader(xmlText))
