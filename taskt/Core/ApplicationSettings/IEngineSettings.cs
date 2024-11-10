@@ -33,14 +33,14 @@
         bool TrackExecutionMetrics { get; }
 
         /// <summary>
-        /// Variable start marker, Value can be changed during script execution
+        /// Variable start marker
         /// </summary>
-        string VariableStartMarker { get; set; }
+        string VariableStartMarker { get; }
 
         /// <summary>
-        /// Variable end marker, Value can be changed during script execution
+        /// Variable end marker
         /// </summary>
-        string VariableEndMarker { get; set; }
+        string VariableEndMarker { get; }
 
         /// <summary>
         /// key to cancel script execution
@@ -48,9 +48,9 @@
         System.Windows.Forms.Keys CancellationKey { get; }
 
         /// <summary>
-        /// Delay between commands, Value can be changed during script execution
+        /// Delay between commands
         /// </summary>
-        int DelayBetweenCommands { get; set; }
+        int DelayBetweenCommands { get; }
 
         /// <summary>
         /// override existing app instances

@@ -333,6 +333,8 @@
     <Compile Include="Core\ApplicationSettings\IServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\LocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeAutomationEngineInstanceEngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeAutomationEngineInstanceApplicationSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeClientSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeFrmScriptBuilderApplicationSettings.cs" />
     <Compile Include="Core\ApplicationSettings\SafeFrmScriptBuilderClientSettings.cs" />

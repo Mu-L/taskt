@@ -72,7 +72,8 @@ namespace taskt.Core.Automation.Engine
             //get engine settings
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
             //var settings = ApplicationSettings.GetOrCreateApplicationSettings();
-            var settings = App.Taskt_Settings;
+            //var settings = App.Taskt_Settings;
+            var settings = App.GetAutomationEngineInstanceApplicationSettings();
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
@@ -623,6 +624,15 @@ namespace taskt.Core.Automation.Engine
             {
                 engineLogger.Information(logText);
             }
+        }
+
+        /// <summary>
+        /// Get SafeAutomationEngineInstanceEngineSettings, for change EngineSettings when script is executing
+        /// </summary>
+        /// <returns></returns>
+        public SafeAutomationEngineInstanceEngineSettings GetAutomationEngineInstanceEngineSettings()
+        {
+            return (SafeAutomationEngineInstanceEngineSettings)engineSettings;
         }
     }
 

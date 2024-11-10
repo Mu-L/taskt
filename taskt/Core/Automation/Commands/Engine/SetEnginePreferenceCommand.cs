@@ -59,10 +59,12 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "start variable marker":
-                    engine.engineSettings.VariableStartMarker = parameterValue;
+                    //engine.engineSettings.VariableStartMarker = parameterValue;
+                    engine.GetAutomationEngineInstanceEngineSettings().VariableStartMarker = parameterValue;
                     break;
                 case "end variable marker":
-                    engine.engineSettings.VariableEndMarker = parameterValue;
+                    //engine.engineSettings.VariableEndMarker = parameterValue;
+                    engine.GetAutomationEngineInstanceEngineSettings().VariableEndMarker = parameterValue;
                     break;
 
                 case "engine delay":
@@ -70,7 +72,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         if (delay >= 1)
                         {
-                            engine.engineSettings.DelayBetweenCommands = delay;
+                            //engine.engineSettings.DelayBetweenCommands = delay;
+                            engine.GetAutomationEngineInstanceEngineSettings().DelayBetweenCommands = delay;
                         }
                         else
                         {

@@ -40,7 +40,8 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var delay = this.ExpandValueOrUserVariableAsInteger(nameof(v_EngineSpeed), engine);
-            engine.engineSettings.DelayBetweenCommands = delay;
+            //engine.engineSettings.DelayBetweenCommands = delay;
+            engine.GetAutomationEngineInstanceEngineSettings().DelayBetweenCommands = delay;
         }
 
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

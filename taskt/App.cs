@@ -131,5 +131,14 @@ namespace taskt
         {
             return new SafeFrmScriptBuilderApplicationSettings(Taskt_UNSAFE_Settings);
         }
+
+        /// <summary>
+        /// get AppSettings for AutomationEngineInstance
+        /// </summary>
+        /// <returns></returns>
+        public static SafeAutomationEngineInstanceApplicationSettings GetAutomationEngineInstanceApplicationSettings()
+        {
+            return new SafeAutomationEngineInstanceApplicationSettings(Taskt_UNSAFE_Settings);
+        }
     }
 }
