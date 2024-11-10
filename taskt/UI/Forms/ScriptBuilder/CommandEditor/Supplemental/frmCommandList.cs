@@ -5,7 +5,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmCommandList : ThemedForm
     {
-        private Core.ApplicationSettings appSettings;
+        private Core.SafeApplicationSettings appSettings;
 
         private TreeNode[] treeAllCommands;
         private ImageList treeAllCommandsImage;
@@ -19,7 +19,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
-        public frmCommandList(Core.ApplicationSettings appSettings, TreeNode[] commands, ImageList commandsImage, string selectedCommand) : this()
+        public frmCommandList(Core.SafeApplicationSettings appSettings, TreeNode[] commands, ImageList commandsImage, string selectedCommand) : this()
         {
             this.appSettings = appSettings;
             treeAllCommands = (TreeNode[])commands.Clone();

@@ -24,7 +24,7 @@ namespace taskt.UI.Forms.ScriptEngine
     {
         //all variables used by this form
         #region Form Variables
-        public Core.EngineSettings engineSettings;
+        public Core.SafeEngineSettings engineSettings;
 
         public string filePath { get; set; }
 
@@ -74,7 +74,10 @@ namespace taskt.UI.Forms.ScriptEngine
             this.filePath = pathToFile;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = App.Taskt_UNSAFE_Settings.EngineSettings;
+            engineSettings = App.Taskt_Settings.GetEngineSettings();
 
             //determine whether to show listbox or not
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
@@ -112,12 +115,14 @@ namespace taskt.UI.Forms.ScriptEngine
         {
             InitializeComponent();
 
-
             //set file
             this.filePath = null;
 
             //get engine settings
-            engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings().EngineSettings;
+            //engineSettings = App.Taskt_UNSAFE_Settings.EngineSettings;
+            engineSettings = App.Taskt_Settings.GetEngineSettings();
 
             //determine whether to show listbox or not
             advancedDebug = engineSettings.ShowAdvancedDebugOutput;
@@ -137,7 +142,6 @@ namespace taskt.UI.Forms.ScriptEngine
                 pbBotIcon.Show();
                 lblAction.Show();
             }
-
 
             //apply debug window setting
             if (!engineSettings.ShowDebugWindow)
@@ -288,7 +292,6 @@ namespace taskt.UI.Forms.ScriptEngine
         /// <param name="mainLogoText"></param>
         private void UpdateUI(string mainLogoText)
         {
-
             if (InvokeRequired)
             {
                 var d = new UpdateUIDelegate(UpdateUI);

@@ -323,9 +323,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
     <Compile Include="Core\ApplicationSettings\ClientSettings.cs" />
     <Compile Include="Core\ApplicationSettings\EngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\IApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\IClientSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\IEngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\ILocalListenerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\IServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\LocalListenerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeAutomationEngineInstanceEngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeAutomationEngineInstanceApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeClientSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeFrmScriptBuilderApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeFrmScriptBuilderClientSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeHttpServerClientApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeHttpServerClientServerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeWebSocketApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeDocumentGenerationApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeDocumentGenerationClientSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeEngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeServerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SafeWebSocketServerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\SefeLocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\ServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunJavaScriptFileCommand.cs" />
@@ -622,6 +643,7 @@
     <Compile Include="Core\Automation\Engine\IScriptVariableListProperties.cs" />
     <Compile Include="Core\Automation\Engine\SystemVariables.cs" />
     <Compile Include="Core\Automation\Commands\FormUIControls.cs" />
+    <Compile Include="Core\IO\Files.cs" />
     <Compile Include="Core\Script\InnerScriptVariable.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings\ApplicationSettings.cs" />

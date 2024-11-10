@@ -40,7 +40,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private ImageList scriptImages;
 
-        public Core.ApplicationSettings appSettings;
+        public Core.SafeFrmScriptBuilderApplicationSettings appSettings;
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
@@ -177,8 +177,11 @@ namespace taskt.UI.Forms.ScriptBuilder
             undoList = new List<List<ListViewItem>>();
 
             //get app settings
-            appSettings = new Core.ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
+            //appSettings = new Core.ApplicationSettings();
+            //appSettings = appSettings.GetOrCreateApplicationSettings();
+            //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+            //appSettings = App.Taskt_UNSAFE_Settings;
+            appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
             {              
@@ -319,12 +322,14 @@ namespace taskt.UI.Forms.ScriptBuilder
         
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
         {
-
-            Program.SplashForm.Hide();
+            //Program.SplashForm.Hide();
+            Program.HideSplashScreen();
 
             if (editMode)
+            {
                 return;
-
+            }
+            
             Notify("Welcome! Press 'Start Edit Script' to get started!");
         }
 
@@ -349,7 +354,14 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             if ((this.WindowState == FormWindowState.Minimized) && (appSettings.ClientSettings.MinimizeToTray))
             {
-                appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                //appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+                //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+                if (appSettings == null)
+                {
+                    //appSettings = App.Taskt_UNSAFE_Settings;
+                    appSettings = App.GetFrmScriptBuilderApplicationSettings();
+                }
+
                 if (appSettings.ClientSettings.MinimizeToTray)
                 {
                     notifyTray.Visible = true;
@@ -433,12 +445,14 @@ namespace taskt.UI.Forms.ScriptBuilder
                         break;
                     }
 
-                    LinkLabel newFileLink = new LinkLabel();
-                    newFileLink.Text = fil;
-                    newFileLink.AutoSize = true;
-                    newFileLink.LinkColor = Color.AliceBlue;
-                    newFileLink.Font = lnkGitIssue.Font;
-                    newFileLink.Margin = new Padding(0, 0, 0, 0);
+                    LinkLabel newFileLink = new LinkLabel
+                    {
+                        Text = fil,
+                        AutoSize = true,
+                        LinkColor = Color.AliceBlue,
+                        Font = lnkGitIssue.Font,
+                        Margin = new Padding(0, 0, 0, 0)
+                    };
                     newFileLink.LinkClicked += NewFileLink_LinkClicked;
                     flwRecentFiles.Controls.Add(newFileLink);
                 }
@@ -3475,8 +3489,10 @@ namespace taskt.UI.Forms.ScriptBuilder
                 newSettings.ShowDialog();
 
                 //reload app settings
-                appSettings = new Core.ApplicationSettings();
-                appSettings = appSettings.GetOrCreateApplicationSettings();
+                //appSettings = new Core.ApplicationSettings();
+                //appSettings = appSettings.GetOrCreateApplicationSettings();
+                //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
                 //reinit
                 Core.Server.HttpServerClient.Initialize();
@@ -3489,8 +3505,10 @@ namespace taskt.UI.Forms.ScriptBuilder
                 newSettings.ShowDialog();
 
                 //reload app settings
-                appSettings = new Core.ApplicationSettings();
-                appSettings = appSettings.GetOrCreateApplicationSettings();
+                //appSettings = new Core.ApplicationSettings();
+                //appSettings = appSettings.GetOrCreateApplicationSettings();
+                //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
                 //reinit
                 Core.Server.HttpServerClient.Initialize();
@@ -3660,9 +3678,9 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void sampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var fm = new Supplemental.frmSample(this))
+            using (var fm = new Supplemental.frmSample())
             {
-                fm.ShowDialog();
+                fm.ShowDialog(this);
             }
         }
 
@@ -4042,9 +4060,9 @@ namespace taskt.UI.Forms.ScriptBuilder
                 return;
             }
             string commandName = GetSelectedCommandFullName().Split('-')[1].Trim();
-            using (var frm = new Supplemental.frmSample(this, commandName))
+            using (var frm = new Supplemental.frmSample(commandName))
             {
-                frm.ShowDialog();
+                frm.ShowDialog(this);
             }
         }
 

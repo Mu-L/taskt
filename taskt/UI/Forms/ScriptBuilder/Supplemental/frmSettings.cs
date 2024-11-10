@@ -33,8 +33,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            newAppSettings = new Core.ApplicationSettings();
-            newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+            //newAppSettings = new Core.ApplicationSettings();
+            //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+            newAppSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
 
             var serverSettings = newAppSettings.ServerSettings;
             chkServerEnabled.DataBindings.Add("Checked", serverSettings, "ServerConnectionEnabled", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -131,8 +132,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
-            newAppSettings.Save(newAppSettings);
+            //newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.GetEngineSettings().CancellationKey = key;
+            //newAppSettings.Save(newAppSettings);
+            newAppSettings.Save();
             Core.Server.SocketClient.LoadSettings();
             this.Close();
         }
@@ -465,8 +468,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 if (pulledNewGUID)
                 {
-                    newAppSettings = new Core.ApplicationSettings();
-                    newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    //newAppSettings = new Core.ApplicationSettings();
+                    //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    newAppSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
                     txtHttpsAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
                     MessageBox.Show("Connected Successfully! GUID will be reloaded automatically the next time settings is loaded!");
                 }

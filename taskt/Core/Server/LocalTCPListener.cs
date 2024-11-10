@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RestSharp;
 using static taskt.Core.Automation.Commands.TextControls;
@@ -20,7 +19,7 @@ namespace taskt.Core.Server
         public static Automation.Engine.AutomationEngineInstance ExecuteCommandEngine;
         private static Serilog.Core.Logger automationLogger;
         public static TcpListener automationListener;
-        private static LocalListenerSettings listenerSettings;
+        private static ILocalListenerSettings listenerSettings;
         public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         public static int Port;
         public static bool IsListening { get; set; }
@@ -42,8 +41,10 @@ namespace taskt.Core.Server
 
             automationInstance = new Automation.Engine.AutomationEngineInstance();
 
-            var appSettings = new Core.ApplicationSettings();
-            appSettings = appSettings.GetOrCreateApplicationSettings();
+            //var appSettings = new Core.ApplicationSettings();
+            //appSettings = appSettings.GetOrCreateApplicationSettings();
+            //var appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+            var appSettings = App.Taskt_Settings;
 
             listenerSettings = appSettings.ListenerSettings;
 

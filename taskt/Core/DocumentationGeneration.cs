@@ -63,7 +63,9 @@ namespace taskt.Core
                 }).ToList();
 
             // load settings
-            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = ApplicationSettings.GetOrCreateApplicationSettings();
+            var settings = App.GetSafeDocumentGenerationApplicationSettings();
             settings.ClientSettings.ShowSampleUsageInDescription = false;   // output trick
             settings.ClientSettings.ShowDefaultValueInDescription = false;
 
@@ -125,7 +127,7 @@ namespace taskt.Core
         /// <param name="docsFolderName"></param>
         /// <param name="cultureInfo"></param>
         /// <returns></returns>
-        private static CommandMetaData GenerateMarkdownCommandFile(Type commandClass, ApplicationSettings settings, string docsFolderName, CultureInfo cultureInfo)
+        private static CommandMetaData GenerateMarkdownCommandFile(Type commandClass, SafeApplicationSettings settings, string docsFolderName, CultureInfo cultureInfo)
         {
             ScriptCommand command = (ScriptCommand)Activator.CreateInstance(commandClass);
             var commandName = command.SelectionName;
@@ -418,7 +420,7 @@ namespace taskt.Core
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
         }
 
-        private static string GetInputSpecification(PropertyInfo propInfo, PropertyInfo virtualProp, ApplicationSettings settings)
+        private static string GetInputSpecification(PropertyInfo propInfo, PropertyInfo virtualProp, SafeApplicationSettings settings)
         {
             var attrInput = GetCustomAttributeWithVirtual<InputSpecification>(propInfo, virtualProp);
 
@@ -485,7 +487,7 @@ namespace taskt.Core
             return ("", "");
         }
 
-        private static string GetSampleUsageText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, ApplicationSettings settings)
+        private static string GetSampleUsageText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, SafeApplicationSettings settings)
         {
             var smp = CommandControls.GetSampleUsageText(propInfo, settings, virtualPropInfo, false);
 
@@ -512,7 +514,7 @@ namespace taskt.Core
             }
         }
 
-        private static string GetSampleUsageMeansText(PropertyDetailSampleUsage smp, ApplicationSettings settings)
+        private static string GetSampleUsageMeansText(PropertyDetailSampleUsage smp, SafeApplicationSettings settings)
         {
             string ret = "";
             switch (smp.valueType)
@@ -605,7 +607,7 @@ namespace taskt.Core
             return validate;
         }
 
-        private static string GetRemarksText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, ApplicationSettings settings)
+        private static string GetRemarksText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, SafeApplicationSettings settings)
         {
             //string rm = settings.ClientSettings.replaceClientKeyword(GetCustomAttributeWithVirtual<Remarks>(propInfo, virtualPropInfo)?.remarks ?? "");
             string rm = InternalKeywordsControls.ReplaceKeywordsToSystemVariableAndInstanceName(GetCustomAttributeWithVirtual<Remarks>(propInfo, virtualPropInfo)?.remarks ?? "", settings);

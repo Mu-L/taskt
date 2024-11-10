@@ -6,7 +6,7 @@ namespace taskt.UI.Forms.AttendedMode
 {
     public partial class frmAttendedMode : Form
     {
-        public Core.ApplicationSettings appSettings { get; set; }
+        public Core.SafeApplicationSettings appSettings { get; set; }
 
         #region form events
         public frmAttendedMode()
@@ -17,7 +17,9 @@ namespace taskt.UI.Forms.AttendedMode
         private void frmAttendedMode_Load(object sender, EventArgs e)
         {
             //get app settings
-            appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            //appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
+            appSettings = App.Taskt_Settings;
 
             //setup file system watcher
             attendedScriptWatcher.Path = appSettings.ClientSettings.AttendedTasksFolder;

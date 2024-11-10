@@ -7,7 +7,7 @@ namespace taskt.Core
     /// Defines application/client-level settings which can be managed by the user
     /// </summary>
     [Serializable]
-    public class ClientSettings
+    public sealed class ClientSettings : IClientSettings
     {
         public bool AntiIdleWhileOpen { get; set; }
         public string RootFolder { get; set; }
@@ -226,14 +226,13 @@ namespace taskt.Core
             DisplayNumberBeforeParameterDescription = true;
         }
 
-        //public string replaceClientKeyword(string targetString)
-        //{
-        //    return targetString.Replace(InterDefaultBrowserInstanceNameKeyword, this.DefaultBrowserInstanceName)
-        //            .Replace(InterDefaultStopWatchInstanceNameKeyword, this.DefaultStopWatchInstanceName)
-        //            .Replace(InterDefaultExcelInstanceNameKeyword, this.DefaultExcelInstanceName)
-        //            .Replace(InterDefaultWordInstanceNameKeyword, this.DefaultWordInstanceName)
-        //            .Replace(InterDefaultDBInstanceNameKeyword, this.DefaultDBInstanceName)
-        //            .Replace(InterDefaultNLGInstanceNameKeyword, this.DefaultNLGInstanceName);
-        //}
+        /// <summary>
+        /// clone instance
+        /// </summary>
+        /// <returns></returns>
+        public ClientSettings Clone()
+        {
+            return (ClientSettings)MemberwiseClone();
+        }
     }
 }

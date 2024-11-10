@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
@@ -12,29 +14,32 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private frmScriptBuilder parentForm;
         private TreeNode[] bufferdSampleNodes;
 
-        public frmSample(frmScriptBuilder parentForm)
+        public frmSample()
         {
             InitializeComponent();
-            this.parentForm = parentForm;
         }
 
-        public frmSample(frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
+        public frmSample(string searchKeyword) : this()
         {
             txtSearchBox.Text = searchKeyword;
         }
 
         private void frmSample_Load(object sender, EventArgs e)
         {
-            samplePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Samples";
+            this.parentForm = (frmScriptBuilder)this.Owner;
 
-            if (!System.IO.Directory.Exists(samplePath))
+            //samplePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Samples";
+            samplePath = Core.IO.Folders.GetSamplesFolderPath();
+
+            if (!Directory.Exists(samplePath))
             {
                 return;
             }
 
-            IEnumerable<string> files = System.IO.Directory.EnumerateFiles(samplePath, "*.xml", System.IO.SearchOption.AllDirectories);
+            var files = Directory.EnumerateFiles(samplePath, "*.xml", SearchOption.AllDirectories).ToList();
 
-            int baseLen = samplePath.Length + 1;    // (+1) is \\
+            //int baseLen = samplePath.Length + 1;    // (+1) is \\
+            var baseLen = samplePath.Length;
 
             ImageList tvImageList = new ImageList();
             tvImageList.ImageSize = new Size(16, 16);
@@ -42,18 +47,17 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             tvImageList.Images.Add(Properties.Resources.command_group);
             tvSamples.ImageList = tvImageList;
 
-            string oldFolder;
-            oldFolder = "----";
+            string oldFolder = "----";
 
-            List<TreeNode> tempNodes = new List<TreeNode>();
+            var tempNodes = new List<TreeNode>();
             TreeNode parentGroup = null;
             foreach(var file in files)
             {
-                string absPath = file.Substring(baseLen);
-                string[] absParts = absPath.Split('\\');
+                var absPath = file.Substring(baseLen);
+                var absParts = absPath.Split('\\');
                 if (absParts[0] == oldFolder)
                 {
-                    TreeNode newNode = new TreeNode(convertFileNameToTreeNode(absParts[1]));
+                    TreeNode newNode = new TreeNode(ConvertFileNameToTreeNode(absParts[1]));
                     parentGroup.Nodes.Add(newNode);
                 }
                 else
@@ -64,7 +68,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     }
                     oldFolder = absParts[0];
                     parentGroup = new TreeNode(absParts[0], 1, 1);
-                    TreeNode newNode = new TreeNode(convertFileNameToTreeNode(absParts[1]));
+                    var newNode = new TreeNode(ConvertFileNameToTreeNode(absParts[1]));
                     parentGroup.Nodes.Add(newNode);
                 }
             }
@@ -79,9 +83,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             if (txtSearchBox.Text.Length > 0)
             {
-                filterSampleProcess();
+                ApplyFilterProcess();
             }
         }
+
         private void frmSample_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -106,6 +111,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 tvContextMenuStrip.Show(Cursor.Position);
             }
         }
+
         private void tvSamples_MouseClick(object sender, MouseEventArgs e)
         {
             if (tvSamples.SelectedNode == null)
@@ -142,6 +148,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 tvSamples.SelectedNode = e.Node;
             }
         }
+
         private void tvSamples_KeyDown(object sender, KeyEventArgs e)
         {
             if (tvSamples.SelectedNode == null)
@@ -154,18 +161,18 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 {
                     if (e.Control || e.Shift)
                     {
-                        importSampleScriptProcess();
+                        ImportSampleScriptProcess();
                     }
                     else
                     {
-                        openSampleScriptProcess();
+                        OpenSampleScriptProcess();
                     }
                 }
                 else
                 {
                     if (e.Control && (e.KeyCode == Keys.N))
                     {
-                        newTasktSampleScriptProcess();
+                        NewTasktSampleScriptProcess();
                     }
                 }
             }
@@ -175,16 +182,19 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region footer buttons
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            openSampleScriptProcess();
+            OpenSampleScriptProcess();
         }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
-            importSampleScriptProcess();
+            ImportSampleScriptProcess();
         }
+
         private void btnNew_Click(object sender, EventArgs e)
         {
-            newTasktSampleScriptProcess();
+            NewTasktSampleScriptProcess();
         }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -192,15 +202,17 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #endregion
 
         #region Open/Import sample
-        private string convertFileNameToTreeNode(string filaName)
+        private string ConvertFileNameToTreeNode(string filaName)
         {
-            return System.IO.Path.GetFileNameWithoutExtension(filaName).Replace("_", " ");
+            return Path.GetFileNameWithoutExtension(filaName).Replace("_", " ");
         }
-        private string convertTreeNodeToFileName(string treeText)
+
+        private string ConvertTreeNodeToFileName(string treeText)
         {
             return treeText.Replace(" ", "_") + ".xml";
         }
-        private string getSelectedScriptPath()
+
+        private string GetSelectedScriptPath()
         {
             if (tvSamples.SelectedNode.Level != 1)
             {
@@ -208,38 +220,44 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
             else
             {
-                return samplePath + "\\" + tvSamples.SelectedNode.Parent.Text + "\\" + convertTreeNodeToFileName(tvSamples.SelectedNode.Text);
+                //return samplePath + "\\" + tvSamples.SelectedNode.Parent.Text + "\\" + convertTreeNodeToFileName(tvSamples.SelectedNode.Text);
+                return Path.Combine(samplePath, tvSamples.SelectedNode.Parent.Text, ConvertTreeNodeToFileName(tvSamples.SelectedNode.Text));
             }
         }
-        private void openSampleScriptProcess()
+
+        private void OpenSampleScriptProcess()
         {
-            string targetFile = getSelectedScriptPath();
-            string fileName = System.IO.Path.GetFileName(targetFile);
+            var targetFile = GetSelectedScriptPath();
+            //string fileName = Path.GetFileName(targetFile);
             if (targetFile != "")
             {
                 parentForm.OpenScriptFromFilePath(targetFile);
                 this.Close();
             }
         }
-        private void importSampleScriptProcess()
+
+        private void ImportSampleScriptProcess()
         {
-            string targetFile = getSelectedScriptPath();
-            string fileName = System.IO.Path.GetFileName(targetFile);
+            var targetFile = GetSelectedScriptPath();
+            //string fileName = Path.GetFileName(targetFile);
             if (targetFile != "")
             {
                 parentForm.ImportScriptFromFilePath(targetFile);
                 this.Close();
             }
         }
-        private void newTasktSampleScriptProcess()
+
+        private void NewTasktSampleScriptProcess()
         {
-            string targetFile = getSelectedScriptPath();
-            string fileName = System.IO.Path.GetFileName(targetFile);
+            var targetFile = GetSelectedScriptPath();
+            //string fileName = Path.GetFileName(targetFile);
             if (targetFile != "")
             {
-                System.Diagnostics.ProcessStartInfo pInfo = new System.Diagnostics.ProcessStartInfo();
-                pInfo.FileName = Assembly.GetEntryAssembly().Location;
-                pInfo.Arguments = "-oh \"" + getSelectedScriptPath() + "\"";
+                System.Diagnostics.ProcessStartInfo pInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = Assembly.GetEntryAssembly().Location,
+                    Arguments = "-oh \"" + GetSelectedScriptPath() + "\""
+                };
                 System.Diagnostics.Process.Start(pInfo);
                 this.Close();
             }
@@ -249,21 +267,23 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #region tvContextMenuStrip events
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openSampleScriptProcess();
+            OpenSampleScriptProcess();
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            importSampleScriptProcess();
+            ImportSampleScriptProcess();
         }
+
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newTasktSampleScriptProcess();
+            NewTasktSampleScriptProcess();
         }
+
         private void clearFilterTvContextMenuStrip_Click(object sender, EventArgs e)
         {
             //txtSearchBox.Text = "";
-            showAllSamples();
+            ShowAllSamplesProcess();
         }
         #endregion
 
@@ -281,92 +301,147 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void clearFilterRootContextMenuStrop_Click(object sender, EventArgs e)
         {
             //txtSearchBox.Text = "";
-            showAllSamples();
+            ShowAllSamplesProcess();
         }
         #endregion
 
         #region search filter
         private void picSearch_Click(object sender, EventArgs e)
         {
-            filterSampleProcess();
+            ApplyFilterProcess();
         }
+
         private void picClear_Click(object sender, EventArgs e)
         {
             //txtSearchBox.Text = "";
-            showAllSamples();
+            ShowAllSamplesProcess();
         }
+
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
                 e.Handled = true;
-                filterSampleProcess();
+                ApplyFilterProcess();
             }
         }
-        private void filterSampleProcess()
+
+        /// <summary>
+        /// tvSample update process
+        /// </summary>
+        /// <param name="proc"></param>
+        private void tvSamplesUpdateProcess(Action proc)
         {
-            string keyword = txtSearchBox.Text.ToLower().Trim();
+            tvSamples.BeginUpdate();
+            proc();
+            tvSamples.EndUpdate();
+        }
+
+        /// <summary>
+        /// apply filter text in tvSamples
+        /// </summary>
+        private void ApplyFilterProcess()
+        {
+            var keyword = txtSearchBox.Text.ToLower().Trim();
             if (keyword.Length == 0)
             {
-                showAllSamples();
+                ShowAllSamplesProcess();
             }
             else
             {
-                filterSamples(keyword);
+                FilterSamplesProcess(keyword);
             }
         }
 
-        private void filterSamples(string keyword)
+        /// <summary>
+        /// filter samples
+        /// </summary>
+        /// <param name="keyword"></param>
+        private void FilterSamplesProcess(string keyword)
         {
-            tvSamples.BeginUpdate();
-            tvSamples.Nodes.Clear();
+            //tvSamples.BeginUpdate();
+            //tvSamples.Nodes.Clear();
 
-            foreach(TreeNode parentNode in bufferdSampleNodes)
+            //foreach(TreeNode parentNode in bufferdSampleNodes)
+            //{
+            //    var paNode = new TreeNode("", 1, 1);
+            //    foreach(TreeNode node in parentNode.Nodes)
+            //    {
+            //        if (node.Text.ToLower().Contains(keyword))
+            //        {
+            //            paNode.Nodes.Add(node.Text);
+            //        }
+            //    }
+            //    if (paNode.Nodes.Count > 0)
+            //    {
+            //        paNode.Text = parentNode.Text;
+            //        tvSamples.Nodes.Add(paNode);
+            //    }
+            //}
+
+            //if (tvSamples.Nodes.Count == 0)
+            //{
+            //    tvSamples.Nodes.Add(new TreeNode("nothing :-("));
+            //}
+            //tvSamples.ExpandAll();
+
+            //tvSamples.EndUpdate();
+
+            tvSamplesUpdateProcess(new Action(() =>
             {
-                TreeNode paNode = new TreeNode("", 1, 1);
-                foreach(TreeNode node in parentNode.Nodes)
+                tvSamples.Nodes.Clear();
+
+                foreach (TreeNode parentNode in bufferdSampleNodes)
                 {
-                    if (node.Text.ToLower().Contains(keyword))
+                    var paNode = new TreeNode("", 1, 1);
+                    foreach (TreeNode node in parentNode.Nodes)
                     {
-                        paNode.Nodes.Add(node.Text);
+                        if (node.Text.ToLower().Contains(keyword))
+                        {
+                            paNode.Nodes.Add(node.Text);
+                        }
+                    }
+                    if (paNode.Nodes.Count > 0)
+                    {
+                        paNode.Text = parentNode.Text;
+                        tvSamples.Nodes.Add(paNode);
                     }
                 }
-                if (paNode.Nodes.Count > 0)
+
+                if (tvSamples.Nodes.Count == 0)
                 {
-                    paNode.Text = parentNode.Text;
-                    tvSamples.Nodes.Add(paNode);
+                    tvSamples.Nodes.Add(new TreeNode("nothing :-("));
                 }
-            }
-
-            if (tvSamples.Nodes.Count == 0)
-            {
-                tvSamples.Nodes.Add(new TreeNode("nothing :-("));
-            }
-            tvSamples.ExpandAll();
-
-            tvSamples.EndUpdate();
+                tvSamples.ExpandAll();
+            }));
 
             clearFilterRootContextMenuStrop.Enabled = true;
             clearFilterTvContextMenuStrip.Enabled = true;
         }
 
-        private void showAllSamples()
+        /// <summary>
+        /// show all samples
+        /// </summary>
+        private void ShowAllSamplesProcess()
         {
             txtSearchBox.Text = "";
-            tvSamples.BeginUpdate();
 
-            tvSamples.Nodes.Clear();
-            tvSamples.Nodes.AddRange(bufferdSampleNodes);
+            tvSamplesUpdateProcess(new Action(() => {
+                tvSamples.Nodes.Clear();
+                tvSamples.Nodes.AddRange(bufferdSampleNodes);
+            }));
 
-            tvSamples.EndUpdate();
+            //tvSamples.BeginUpdate();
+
+            //tvSamples.Nodes.Clear();
+            //tvSamples.Nodes.AddRange(bufferdSampleNodes);
+
+            //tvSamples.EndUpdate();
 
             clearFilterRootContextMenuStrop.Enabled = false;
             clearFilterTvContextMenuStrip.Enabled = false;
         }
         #endregion
-
-        
-
     }
 }

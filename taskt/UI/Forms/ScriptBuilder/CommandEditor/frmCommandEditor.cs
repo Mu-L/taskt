@@ -41,7 +41,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
         //track existing commands for visibility
         public List<ScriptCommand> configuredCommands;
         // taskt setting
-        public Core.ApplicationSettings appSettings;
+        public Core.SafeApplicationSettings appSettings;
         // instance counter
         public Core.InstanceCounter instanceList;
 

@@ -35,8 +35,8 @@ namespace taskt.Core.Automation.Engine
         public UI.Forms.ScriptEngine.frmScriptEngine tasktEngineUI { get; set; }
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
-        public EngineSettings engineSettings { get; set; }
-        public ServerSettings serverSettings { get; set; }
+        public IEngineSettings engineSettings { get; set; }
+        public IServerSettings serverSettings { get; set; }
         public List<DataTable> DataTables { get; set; }
         public string FileName { get; set; }
         public Task taskModel { get; set; }
@@ -70,7 +70,10 @@ namespace taskt.Core.Automation.Engine
             CurrentStatus = EngineStatus.Loaded;
 
             //get engine settings
-            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = ApplicationSettings.GetOrCreateApplicationSettings();
+            //var settings = App.Taskt_Settings;
+            var settings = App.GetAutomationEngineInstanceApplicationSettings();
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
@@ -621,6 +624,15 @@ namespace taskt.Core.Automation.Engine
             {
                 engineLogger.Information(logText);
             }
+        }
+
+        /// <summary>
+        /// Get SafeAutomationEngineInstanceEngineSettings, for change EngineSettings when script is executing
+        /// </summary>
+        /// <returns></returns>
+        public SafeAutomationEngineInstanceEngineSettings GetAutomationEngineInstanceEngineSettings()
+        {
+            return (SafeAutomationEngineInstanceEngineSettings)engineSettings;
         }
     }
 

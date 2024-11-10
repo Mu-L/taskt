@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        private ApplicationSettings appSetting;
+        private SafeApplicationSettings appSetting;
 
         [XmlIgnore]
         private List<Script.ScriptVariable> ScriptVariables { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using taskt.Core;
 using taskt.Core.IO;
 
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
@@ -55,8 +56,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         private void frmNewSettings_Load(object sender, EventArgs e)
         {
-            newAppSettings = new Core.ApplicationSettings();
-            newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+            //newAppSettings = new Core.ApplicationSettings();
+            //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+            newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings();
 
             // Network -> Server
             Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
@@ -73,7 +75,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             //Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
             //newAppSettings.EngineSettings.CancellationKey = key;
-            newAppSettings.Save(newAppSettings);
+            //newAppSettings.Save(newAppSettings);
+            newAppSettings.Save();
             Core.Server.SocketClient.LoadSettings();
             this.Close();
         }
@@ -852,7 +855,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
         private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
+            //newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
+            newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
         }
         #endregion
 
@@ -933,7 +937,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     }
 
                     //update textbox which will be updated once user selects "Ok"
-                    newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                    //newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                    newAppSettings.GetClientSettings().RootFolder = newRootFolder;
                 }
             }
         }
@@ -1008,8 +1013,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 if (pulledNewGUID)
                 {
-                    newAppSettings = new Core.ApplicationSettings();
-                    newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    //newAppSettings = new Core.ApplicationSettings();
+                    //newAppSettings = newAppSettings.GetOrCreateApplicationSettings();
+                    newAppSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+
                     txtAddress.Text = newAppSettings.ServerSettings.HTTPGuid.ToString();
                     MessageBox.Show("Connected Successfully!\nGUID will be reloaded automatically the next time settings is loaded!", "Taskt", MessageBoxButtons.OK);
                 }
@@ -1123,7 +1130,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         
         private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
         {
-            newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
+            //newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
+            newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
             txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
         }
 
@@ -1226,14 +1234,16 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
+            //newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.GetEngineSettings().CancellationKey = key;
         }
         #endregion
 
         #region Editor Events
         private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
+            //newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
+            newAppSettings.GetClientSettings().InstanceNameOrder = ((ComboBox)sender).Text;
         }
         #endregion
 
@@ -1348,7 +1358,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 {
                     try
                     {
-                        Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
+                        //Core.ApplicationSettings.SaveAs(newAppSettings, frm.FileName);
+                        Core.ApplicationSettings.Save(newAppSettings, frm.FileName);
                         MessageBox.Show("Exported", "taskt", MessageBoxButtons.OK);
                     }
                     catch

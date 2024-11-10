@@ -6,7 +6,7 @@ namespace taskt.Core
     /// Defines Server settings for tasktServer if using the server component to manage the client
     /// </summary>
     [Serializable]
-    public class ServerSettings
+    public sealed class ServerSettings : IServerSettings
     {
         public bool ServerConnectionEnabled { get; set; }
         public bool ConnectToServerOnStartup { get; set; }
@@ -20,6 +20,15 @@ namespace taskt.Core
         public ServerSettings()
         {
             HTTPServerURL = "https://localhost:44377/";
+        }
+
+        /// <summary>
+        /// clone instance
+        /// </summary>
+        /// <returns></returns>
+        public ServerSettings Clone()
+        {
+            return (ServerSettings)MemberwiseClone();
         }
     }
 }

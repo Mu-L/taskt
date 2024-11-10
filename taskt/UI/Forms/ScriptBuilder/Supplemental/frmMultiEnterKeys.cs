@@ -10,7 +10,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmMultiEnterKeys : ThemedForm
     {
-        private Core.ApplicationSettings appSetttings;
+        private Core.SafeApplicationSettings appSetttings;
         private List<Core.Script.ScriptVariable> scriptVariables;
         private CreationMode mode;
 
@@ -21,7 +21,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
 
         #region form events
-        public frmMultiEnterKeys(Core.ApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables, List<ScriptCommand> keyCommands = null)
+        public frmMultiEnterKeys(Core.SafeApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables, List<ScriptCommand> keyCommands = null)
         {
             InitializeComponent();
             this.appSetttings = appSetttings;
@@ -231,7 +231,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         /// <param name="variableName"></param>
         /// <param name="txt"></param>
         /// <param name="settings"></param>
-        private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
+        private static void ConcatenateVariableName(string variableName, TextBox txt, Core.SafeApplicationSettings settings)
         {
             variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
             if (settings.ClientSettings.InsertVariableAtCursor)
@@ -251,7 +251,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         /// <param name="variableName"></param>
         /// <param name="cmb"></param>
         /// <param name="settings"></param>
-        private static void ConcatenateVariableName(string variableName, ComboBox cmb, Core.ApplicationSettings settings)
+        private static void ConcatenateVariableName(string variableName, ComboBox cmb, Core.SafeApplicationSettings settings)
         {
             variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
             if (settings.ClientSettings.InsertVariableAtCursor)
@@ -328,7 +328,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         #endregion
 
         #region public methods
-        public static List<ScriptCommand> GetConsecutiveSendKeystrokesCommands(ListView lstCommands, Core.ApplicationSettings appSettings, int startIndex = -1) 
+        public static List<ScriptCommand> GetConsecutiveSendKeystrokesCommands(ListView lstCommands, Core.SafeApplicationSettings appSettings, int startIndex = -1) 
         {
             if (startIndex < 0)
             {
@@ -362,7 +362,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 if (cmd is EnterKeysCommand)
                 {
                     EnterKeysCommand currentSendKeys = (EnterKeysCommand)cmd;
-                    if (isSameWindowToBottom(currentSendKeys, tryFirstKeystroke,  appSettings))
+                    if (isSameWindowToBottom(currentSendKeys, tryFirstKeystroke, appSettings))
                     {
                         tryFirstKeystroke = currentSendKeys;
                         idx--;
@@ -406,7 +406,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             return commands;
         }
 
-        private static bool isSameWindowToBottom(EnterKeysCommand aboveCommand, EnterKeysCommand bottomCommand, Core.ApplicationSettings appSettings)
+        private static bool isSameWindowToBottom(EnterKeysCommand aboveCommand, EnterKeysCommand bottomCommand, Core.SafeApplicationSettings appSettings)
         {
             if (aboveCommand.v_WindowName == bottomCommand.v_WindowName)
             {

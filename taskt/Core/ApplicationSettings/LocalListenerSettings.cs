@@ -6,7 +6,7 @@ namespace taskt.Core
     /// Defines Server settings for tasktServer if using the server component to manage the client
     /// </summary>
     [Serializable]
-    public class LocalListenerSettings
+    public sealed class LocalListenerSettings : ILocalListenerSettings
     {
         public bool StartListenerOnStartup { get; set; }
         public bool LocalListeningEnabled { get; set; }
@@ -24,6 +24,15 @@ namespace taskt.Core
             ListeningPort = 19312;
             AuthKey = Guid.NewGuid().ToString();
             IPWhiteList = "";
+        }
+
+        /// <summary>
+        /// clone instance
+        /// </summary>
+        /// <returns></returns>
+        public LocalListenerSettings Clone()
+        {
+            return (LocalListenerSettings)MemberwiseClone();
         }
     }
 }
