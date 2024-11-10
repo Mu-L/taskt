@@ -194,13 +194,15 @@ namespace taskt.Core.Server
 
                 //add public key to app settings and save
                 //var appSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+                //var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+                var appSettings = App.GetSafeWebSocketApplicationSettings();
                 appSettings.ServerSettings.ConnectToServerOnStartup = true;
                 appSettings.ServerSettings.ServerConnectionEnabled = true;
                 appSettings.ServerSettings.ServerPublicKey = authPublicKey;
 
                 //appSettings.Save(appSettings);
-                appSettings.Save();
+                //appSettings.Save();
+                App.SaveSettings();
             }
         }
 

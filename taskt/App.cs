@@ -88,5 +88,49 @@ namespace taskt
             UpdateLocationAndVersionInfo();
             return UpdateSettings(settingsFilePath);
         }
+
+        /// <summary>
+        /// save current AppSettings
+        /// </summary>
+        public static void SaveSettings()
+        {
+            Taskt_UNSAFE_Settings.Save();
+        }
+
+        /// <summary>
+        /// get AppSettings for DocumentGeneration
+        /// </summary>
+        /// <returns></returns>
+        public static SafeDocumentGenerationApplicationSettings GetSafeDocumentGenerationApplicationSettings()
+        {
+            return new SafeDocumentGenerationApplicationSettings(Taskt_UNSAFE_Settings);
+        }
+
+        /// <summary>
+        /// get AppSettings for WebSocket
+        /// </summary>
+        /// <returns></returns>
+        public static SafeWebSocketApplicationSettings GetSafeWebSocketApplicationSettings()
+        {
+            return new SafeWebSocketApplicationSettings(Taskt_UNSAFE_Settings);
+        }
+
+        /// <summary>
+        /// get AppSettings for HttpServerClient
+        /// </summary>
+        /// <returns></returns>
+        public static SafeHttpServerClientApplicationSettings GetHttpServerClientApplicationSettings()
+        {
+            return new SafeHttpServerClientApplicationSettings(Taskt_UNSAFE_Settings);
+        }
+
+        /// <summary>
+        /// get AppSettings for frmScriptBuilder
+        /// </summary>
+        /// <returns></returns>
+        public static SafeFrmScriptBuilderApplicationSettings GetFrmScriptBuilderApplicationSettings()
+        {
+            return new SafeFrmScriptBuilderApplicationSettings(Taskt_UNSAFE_Settings);
+        }
     }
 }

@@ -767,7 +767,7 @@ namespace taskt.Core.Automation.Commands
             ifActionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderWebElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, ApplicationSettings settings)
+        public static void RenderWebElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, SafeApplicationSettings settings)
         {
             actionParameterBox.Visible = true;
 
@@ -791,7 +791,7 @@ namespace taskt.Core.Automation.Commands
             actionParameterBox.Rows[1].Cells[1] = comparisonComboBox;
         }
 
-        public static void RenderGUIElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, ApplicationSettings settings)
+        public static void RenderGUIElement(object sender, DataGridView actionParameterBox, DataTable actionParameters, SafeApplicationSettings settings)
         {
             actionParameterBox.Visible = true;
             if (sender != null)

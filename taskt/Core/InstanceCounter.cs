@@ -7,7 +7,7 @@ namespace taskt.Core
 {
     public class InstanceCounter
     {
-        private ApplicationSettings appSettings = null;
+        private SafeApplicationSettings appSettings = null;
 
         // instance
         private Dictionary<string, Dictionary<string, int>> databaseInstance = new Dictionary<string, Dictionary<string, int>>
@@ -112,7 +112,7 @@ namespace taskt.Core
             { "used", new Dictionary<string, int>() }
         };
 
-        public InstanceCounter(ApplicationSettings settings)
+        public InstanceCounter(SafeApplicationSettings settings)
         {
             this.appSettings = settings;
         }

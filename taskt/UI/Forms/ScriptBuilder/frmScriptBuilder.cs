@@ -40,7 +40,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private ImageList scriptImages;
 
-        public Core.ApplicationSettings appSettings;
+        public Core.SafeFrmScriptBuilderApplicationSettings appSettings;
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
@@ -180,7 +180,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             //appSettings = new Core.ApplicationSettings();
             //appSettings = appSettings.GetOrCreateApplicationSettings();
             //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
-            appSettings = App.Taskt_UNSAFE_Settings;
+            //appSettings = App.Taskt_UNSAFE_Settings;
+            appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
             {              
@@ -357,7 +358,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
                 if (appSettings == null)
                 {
-                    appSettings = App.Taskt_UNSAFE_Settings;
+                    //appSettings = App.Taskt_UNSAFE_Settings;
+                    appSettings = App.GetFrmScriptBuilderApplicationSettings();
                 }
 
                 if (appSettings.ClientSettings.MinimizeToTray)
@@ -3489,7 +3491,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 //reload app settings
                 //appSettings = new Core.ApplicationSettings();
                 //appSettings = appSettings.GetOrCreateApplicationSettings();
-                appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
                 //reinit
                 Core.Server.HttpServerClient.Initialize();
@@ -3504,7 +3507,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 //reload app settings
                 //appSettings = new Core.ApplicationSettings();
                 //appSettings = appSettings.GetOrCreateApplicationSettings();
-                appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings(App.Taskt_Settings_File_Path);
+                appSettings = App.GetFrmScriptBuilderApplicationSettings();
 
                 //reinit
                 Core.Server.HttpServerClient.Initialize();

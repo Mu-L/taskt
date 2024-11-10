@@ -41,7 +41,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         #region Initialization and Form Load
 
-        public frmScriptVariables(List<Core.Script.ScriptVariable> variables, Core.ApplicationSettings appSettings)
+        public frmScriptVariables(List<Core.Script.ScriptVariable> variables, Core.SafeApplicationSettings appSettings)
         {
             InitializeComponent();
             this.scriptVariables = variables;

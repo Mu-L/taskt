@@ -13,7 +13,8 @@ namespace taskt.Core.Server
         public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         private static Serilog.Core.Logger httpLogger;
         private static System.Timers.Timer heartbeatTimer { get; set; }
-        private static ApplicationSettings appSettings { get; set; }
+        //private static ApplicationSettings appSettings { get; set; }
+        private static SafeHttpServerClientApplicationSettings appSettings { get; set; }
 
         static HttpServerClient()
         {
@@ -28,7 +29,8 @@ namespace taskt.Core.Server
         {
             //var settingClass = new Core.ApplicationSettings();
             //appSettings = settingClass.GetOrCreateApplicationSettings();
-            var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+            //var appSettings = ApplicationSettings.GetOrCreateApplicationSettings();
+            appSettings = App.GetHttpServerClientApplicationSettings();
 
             if (appSettings.ServerSettings.ServerConnectionEnabled)
             {
@@ -100,7 +102,8 @@ namespace taskt.Core.Server
 
                     appSettings.ServerSettings.HTTPGuid = deserialized.WorkerID;
                     //new ApplicationSettings().Save(appSettings);
-                    appSettings.Save();
+                    //appSettings.Save();
+                    App.SaveSettings();
                     return true;
                 }
                 else
@@ -202,7 +205,8 @@ namespace taskt.Core.Server
 
                 appSettings.ServerSettings.HTTPServerURL = HTTPServerURL;
                 //new ApplicationSettings().Save(appSettings);
-                appSettings.Save();
+                //appSettings.Save();
+                App.SaveSettings();
 
                 return true;
             }

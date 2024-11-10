@@ -3,12 +3,12 @@
     /// <summary>
     /// ClientSettings
     /// </summary>
-    public sealed class SafeClientSettings : IClientSettings
+    public class SafeClientSettings : IClientSettings
     {
         /// <summary>
         /// Client Settings for protect
         /// </summary>
-        private readonly ClientSettings clientSettings;
+        protected readonly ClientSettings clientSettings;
 
         public SafeClientSettings(ClientSettings clientSettings)
         {

@@ -3,12 +3,12 @@
     /// <summary>
     /// Safe Application Settings, Most parameters are readonly
     /// </summary>
-    public sealed class SafeApplicationSettings : IApplicationSettings
+    public class SafeApplicationSettings : IApplicationSettings
     {
         /// <summary>
         /// appSettings for protect
         /// </summary>
-        private readonly ApplicationSettings applicationSettings;
+        protected readonly ApplicationSettings applicationSettings;
 
         public IClientSettings ClientSettings { get; private set; }
 
@@ -63,5 +63,5 @@
         {
             return (SafeLocalListenerSettings)ListenerSettings;
         }
-    }   
+    }
 }

@@ -1,16 +1,14 @@
-﻿using System.ComponentModel;
-
-namespace taskt.Core
+﻿namespace taskt.Core
 {
     /// <summary>
     /// EngineSettings
     /// </summary>
-    public sealed class SafeEngineSettings : IEngineSettings
+    public class SafeEngineSettings : IEngineSettings
     {
         /// <summary>
         /// EngineSettings for protect
         /// </summary>
-        private readonly EngineSettings engineSettings;
+        protected readonly EngineSettings engineSettings;
 
         public SafeEngineSettings(EngineSettings engineSettings)
         {

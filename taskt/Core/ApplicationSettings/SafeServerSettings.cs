@@ -5,12 +5,12 @@ namespace taskt.Core
     /// <summary>
     /// ServerSettings
     /// </summary>
-    public sealed class SafeServerSettings : IServerSettings
+    public class SafeServerSettings : IServerSettings
     {
         /// <summary>
         /// ServerSettings for protect
         /// </summary>
-        private readonly ServerSettings serverSettings;
+        protected readonly ServerSettings serverSettings;
 
         public SafeServerSettings(ServerSettings serverSettings)
         {

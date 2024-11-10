@@ -370,7 +370,9 @@ namespace taskt.UI.CustomControls
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var setting = editor?.appSettings ?? CurrentEditor.appSettings;
+            // TODO: more good
+            //var setting = editor?.appSettings ?? CurrentEditor.appSettings;
+            var setting = App.Taskt_Settings;
 
             var labelText = GetLabelText(propertyName, propInfo, setting, virtualPropInfo);
 
@@ -391,7 +393,8 @@ namespace taskt.UI.CustomControls
                 {
                     convFunc = new Func<string, string>((str) =>
                     {
-                        return GetSampleUsageTextForLabel(str, editor.appSettings);
+                        //return GetSampleUsageTextForLabel(str, editor.appSettings);
+                        return GetSampleUsageTextForLabel(str, setting);
                     });
                 }
 
@@ -1182,7 +1185,7 @@ namespace taskt.UI.CustomControls
         /// <param name="setting"></param>
         /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropertyInfo = null)
+        public static string GetLabelText(string propertyName, PropertyInfo propInfo, SafeApplicationSettings setting, PropertyInfo virtualPropertyInfo = null)
         {
             var attrDescription = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropertyInfo) ?? new PropertyDescription(propertyName);
 
@@ -1275,7 +1278,7 @@ namespace taskt.UI.CustomControls
         /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <param name="planeText">if sample usege text written in MarkDown, return value is plane text.</param>
         /// <returns></returns>
-        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropInfo = null, bool planeText = true)
+        public static string GetSampleUsageText(PropertyInfo propInfo, SafeApplicationSettings setting, PropertyInfo virtualPropInfo = null, bool planeText = true)
         {
             var sampleText = "";
             var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropInfo);
@@ -1322,7 +1325,7 @@ namespace taskt.UI.CustomControls
         /// <param name="sample"></param>
         /// <param name="setting"></param>
         /// <returns></returns>
-        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting, bool planeText = true)
+        private static string GetSampleUsageTextForLabel(string sample, SafeApplicationSettings setting, bool planeText = true)
         {
             if (planeText)
             {

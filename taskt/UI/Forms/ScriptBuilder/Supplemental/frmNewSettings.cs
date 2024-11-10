@@ -855,7 +855,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
         private void cmbStartUpMode_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
+            //newAppSettings.ClientSettings.StartupMode = ((ComboBox)sender).Text;
+            newAppSettings.GetClientSettings().StartupMode = ((ComboBox)sender).Text;
         }
         #endregion
 
@@ -936,7 +937,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     }
 
                     //update textbox which will be updated once user selects "Ok"
-                    newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                    //newAppSettings.ClientSettings.RootFolder = newRootFolder;
+                    newAppSettings.GetClientSettings().RootFolder = newRootFolder;
                 }
             }
         }
@@ -1128,7 +1130,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         
         private void btnRegenerateAuthKey_Clicked(object sender, EventArgs e, TextBox txtAuth)
         {
-            newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
+            //newAppSettings.ListenerSettings.AuthKey = Guid.NewGuid().ToString();
+            newAppSettings.GetLocalListenerSettings().AuthKey = Guid.NewGuid().ToString();
             txtAuth.Text = newAppSettings.ListenerSettings.AuthKey;
         }
 
@@ -1231,14 +1234,16 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void cmdCancellationButton_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), ((ComboBox)sender).Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
+            //newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.GetEngineSettings().CancellationKey = key;
         }
         #endregion
 
         #region Editor Events
         private void cmbInstanceSortOrder_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
+            //newAppSettings.ClientSettings.InstanceNameOrder = ((ComboBox)sender).Text;
+            newAppSettings.GetClientSettings().InstanceNameOrder = ((ComboBox)sender).Text;
         }
         #endregion
 

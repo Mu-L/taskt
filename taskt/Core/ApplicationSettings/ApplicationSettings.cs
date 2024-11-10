@@ -12,14 +12,118 @@ namespace taskt.Core
     public sealed class ApplicationSettings : IApplicationSettings
     {
         #region xml properties
+
         public IServerSettings ServerSettings { get; set; } = new ServerSettings();
+
         public IEngineSettings EngineSettings { get; set; } = new EngineSettings();
+
         public IClientSettings ClientSettings { get; set; } = new ClientSettings();
+
         public ILocalListenerSettings ListenerSettings { get; set; } = new LocalListenerSettings();
+
+        #endregion
+
+        #region InnerClass
+
+        /// <summary>
+        /// ApplicationSettings for File I/O
+        /// </summary>
+        [Serializable]
+        public sealed class FileIOApplicationSettings
+        {
+            /// <summary>
+            /// Server Settings
+            /// </summary>
+            public ServerSettings ServerSettings { get; set; }
+
+            /// <summary>
+            /// Engine Settings
+            /// </summary>
+            public EngineSettings EngineSettings { get; set;  }
+
+            /// <summary>
+            /// Client Settings
+            /// </summary>
+            public ClientSettings ClientSettings { get; set;  }
+
+            /// <summary>
+            /// Listener Settings
+            /// </summary>
+            public LocalListenerSettings ListenerSettings { get; set; }
+
+            public FileIOApplicationSettings() 
+            { 
+            }
+
+            public FileIOApplicationSettings(ApplicationSettings settings)
+            {
+                ServerSettings = settings.GetServerSettings();
+                EngineSettings = settings.GetEngineSettings();
+                ClientSettings = settings.GetClientSettings();  
+                ListenerSettings = settings.GetLocalListenerSettings();
+            }
+
+            /// <summary>
+            /// Output ApplicationSettings as XML
+            /// </summary>
+            /// <param name="filePath"></param>
+            public static void SaveAs(ApplicationSettings settings, string filePath)
+            {
+                string outputText;
+                using (var sw = new StringWriter())
+                {
+                    var serializer = new XmlSerializer(typeof(FileIOApplicationSettings));
+                    serializer.Serialize(sw, new FileIOApplicationSettings(settings));
+                    outputText = sw.ToString();
+                }
+
+                outputText = outputText.Replace("<FileIOApplicationSettings ", "<ApplicationSettings ")
+                                .Replace("</FileIOApplicationSettings>", "</ApplicationSettings>");
+                using (var writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine(outputText);
+                }
+            }
+
+            /// <summary>
+            /// Open ApplicationSettings from XML
+            /// </summary>
+            /// <param name="filePath"></param>
+            /// <returns></returns>
+            public static ApplicationSettings Open(string filePath)
+            {
+                string xmlText;
+                using (var reader = new StreamReader(filePath))
+                {
+                    xmlText = reader.ReadToEnd();
+                }
+
+                xmlText = xmlText.Replace("<ApplicationSettings ", "<FileIOApplicationSettings ")
+                                .Replace("</ApplicationSettings>", "</FileIOApplicationSettings>");
+
+                FileIOApplicationSettings settings = null;
+                using (var sr = new StringReader(xmlText))
+                {
+                    var serializer = new XmlSerializer(typeof(FileIOApplicationSettings));
+                    settings = (FileIOApplicationSettings)serializer.Deserialize(sr);
+                }
+                
+                return new ApplicationSettings(settings);
+            }
+        }
+
         #endregion
 
         public ApplicationSettings()
         {
+        }
+
+        private ApplicationSettings(FileIOApplicationSettings settings)
+        {
+            ServerSettings = settings.ServerSettings;
+            EngineSettings = settings.EngineSettings;
+            ClientSettings = settings.ClientSettings;
+            ListenerSettings = settings.ListenerSettings;
         }
 
         /// <summary>
@@ -92,12 +196,14 @@ namespace taskt.Core
         /// <param name="filePath"></param>
         private static void SaveAs(ApplicationSettings appSettings, string filePath)
         {
-            using (FileStream fileStream = File.Create(filePath))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
-                serializer.Serialize(fileStream, appSettings);
-                fileStream.Close();
-            }
+            //using (FileStream fileStream = File.Create(filePath))
+            //{
+            //    XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
+            //    serializer.Serialize(fileStream, appSettings);
+            //    fileStream.Close();
+            //}
+            //new FileIOApplicationSettings(appSettings).SaveAs(filePath);
+            FileIOApplicationSettings.SaveAs(appSettings, filePath);
         }
 
         /// <summary>
@@ -159,25 +265,27 @@ namespace taskt.Core
         /// <returns></returns>
         public static ApplicationSettings Open(string filePath)
         {
-            ApplicationSettings appSettings = null;
-            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
-            {
-                try
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
-                    appSettings = (ApplicationSettings)serializer.Deserialize(fileStream);
-                }
-                catch (Exception ex)
-                {
-                    //appSettings = new ApplicationSettings();
-                    throw ex;
-                }
-                finally
-                {
-                    fileStream.Close();
-                }
-            }
-            return appSettings;
+            //ApplicationSettings appSettings = null;
+            //using (FileStream fileStream = File.Open(filePath, FileMode.Open))
+            //{
+            //    try
+            //    {
+            //        XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
+            //        appSettings = (ApplicationSettings)serializer.Deserialize(fileStream);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        //appSettings = new ApplicationSettings();
+            //        throw ex;
+            //    }
+            //    finally
+            //    {
+            //        fileStream.Close();
+            //    }
+            //}
+            //return appSettings;
+
+            return FileIOApplicationSettings.Open(filePath);
         }
 
         /// <summary>

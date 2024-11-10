@@ -132,7 +132,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
+            //newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.GetEngineSettings().CancellationKey = key;
             //newAppSettings.Save(newAppSettings);
             newAppSettings.Save();
             Core.Server.SocketClient.LoadSettings();

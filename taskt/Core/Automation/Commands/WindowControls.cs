@@ -769,7 +769,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="addAllWindows"></param>
         /// <param name="addDesktop"></param>
         /// <returns></returns>
-        public static List<string> GetAllWindowTitles(ApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        public static List<string> GetAllWindowTitles(SafeApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             var lst = new List<string>();
 
