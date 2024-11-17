@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Timers;
 using System.Windows.Forms;
@@ -157,8 +158,15 @@ namespace taskt.Core.Server
                             }
                             else
                             {
-                                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine();
-                                newEngine.xmlData = deserialized.PublishedScript.ScriptData;
+                                // save script file
+                                var tempFilePath = Script.Script.GetRunWithoutSavingScriptFilePath();
+                                using (var writer = new StreamWriter(tempFilePath))
+                                {
+                                    writer.Write(deserialized.PublishedScript.ScriptData);
+                                }
+
+                                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine(tempFilePath, null);
+                                //newEngine.xmlData = deserialized.PublishedScript.ScriptData;
                                 newEngine.remoteTask = deserialized.ScheduledTask;
                                 newEngine.serverExecution = true;
                                 newEngine.Show();
