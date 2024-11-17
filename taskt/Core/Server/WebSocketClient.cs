@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -309,10 +310,17 @@ namespace taskt.Core.Server
 
         private static void RunXMLScript(string scriptData)
         {
+            // save script file
+            var tempFilePath = Script.Script.GetRunWithoutSavingScriptFilePath();
+            using (var writer = new StreamWriter(tempFilePath))
+            {
+                writer.Write(scriptData);
+            }
+
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
-                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine();
-                newEngine.xmlData = scriptData;
+                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine(tempFilePath, associatedBuilder);
+                //newEngine.xmlData = scriptData;
                 newEngine.callBackForm = null;
                 newEngine.Show();
             }));            
