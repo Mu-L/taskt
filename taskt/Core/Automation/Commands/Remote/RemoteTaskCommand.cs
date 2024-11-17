@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("IP and Port", true)]
         [PropertyDetailSampleUsage("**192.168.0.15:19312**", PropertyDetailSampleUsage.ValueType.Value, "IP and Port")]
         [PropertyDetailSampleUsage("**{{{vRemoteHost}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "IP and Port")]
-        [PropertyDetailSampleUsage("**{{{vIP}}}:{{{vPort}}}", PropertyDetailSampleUsage.ValueType.Value, "IP and Port")]
+        [PropertyDetailSampleUsage("**{{{vIP}}}:{{{vPort}}}**", PropertyDetailSampleUsage.ValueType.Value, "IP and Port")]
         [PropertyValidationRule("IP and Port", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "IP:Port")]
         public string v_BaseURL { get; set; }
@@ -33,6 +33,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Run Local File")]
         [PropertyUISelectionOption("Run Remote File")]
         [PropertyUISelectionOption("Run Command Json")]
+        [PropertyUISelectionOption("Get Engine Status")]
+        [PropertyUISelectionOption("Restart taskt")]
         [PropertyValidationRule("Paramter Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Parameter Type")]
         public string v_ParameterType { get; set; }
