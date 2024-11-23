@@ -81,9 +81,6 @@ namespace taskt.Core.Server
 
             automationInstance = new Automation.Engine.AutomationEngineInstance();
 
-            //var appSettings = new Core.ApplicationSettings();
-            //appSettings = appSettings.GetOrCreateApplicationSettings();
-            //var appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
             var appSettings = App.Taskt_Settings;
 
             listenerSettings = appSettings.ListenerSettings;
@@ -171,15 +168,6 @@ namespace taskt.Core.Server
                     {
                         using (var ms = new MemoryStream())
                         {
-                            //int pos = 0;
-                            //int b;
-                            //do
-                            //{
-                            //    b = stream.ReadByte();
-                            //    bytes[pos++] = (byte)b;
-                            //} while (b != -1);
-                            //ms.Write(bytes, 0, pos);
-
                             int resSize = 0;
                             do
                             {
