@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -223,50 +224,50 @@ namespace taskt.Core.Server
                             automationLogger.Information($"Listener does not require IP Verification");
                         }
 
-                        if (listenerSettings.RequireListenerAuthenticationKey)
-                        {
-                            // check AuthenticationKey
+                        //if (listenerSettings.RequireListenerAuthenticationKey)
+                        //{
+                        //    // check AuthenticationKey
 
-                            // extract AuthKey
-                            string authKey = "";
-                            foreach (var item in messageContent)
-                            {
-                                if (item.StartsWith("AuthKey: "))
-                                {
-                                    authKey = item.Replace("AuthKey: ", "");
-                                    break;
-                                }
-                            }
+                        //    // extract AuthKey
+                        //    string authKey = "";
+                        //    foreach (var item in messageContent)
+                        //    {
+                        //        if (item.StartsWith("AuthKey: "))
+                        //        {
+                        //            authKey = item.Replace("AuthKey: ", "");
+                        //            break;
+                        //        }
+                        //    }
 
-                            // auth key check
-                            if (string.IsNullOrEmpty(authKey))
-                            {
-                                // auth key not provided
-                                automationLogger.Information($"Closing Client Connection due to Null/Empty Auth Key");
-                                SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
-                                break;
-                            }
-                            else if (authKey != listenerSettings.AuthKey)
-                            {
-                                // auth key invalid   
-                                automationLogger.Information($"Closing Client Connection due to Invalid Auth Key");
-                                SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
-                                break;
-                            }
-                            else if (authKey == listenerSettings.AuthKey)
-                            {
-                                // auth key valid
-                                automationLogger.Information($"Auth Key Verified");
-                                ProcessRequest(data, messageContent, stream);
-                            }
-                        }
-                        else
-                        {
-                            // verification not required
-                            automationLogger.Information($"Auth Key Verification Not Required");
-                            ProcessRequest(data, messageContent, stream);
-                        }
-
+                        //    // auth key check
+                        //    if (string.IsNullOrEmpty(authKey))
+                        //    {
+                        //        // auth key not provided
+                        //        automationLogger.Information($"Closing Client Connection due to Null/Empty Auth Key");
+                        //        SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
+                        //        break;
+                        //    }
+                        //    else if (authKey != listenerSettings.AuthKey)
+                        //    {
+                        //        // auth key invalid   
+                        //        automationLogger.Information($"Closing Client Connection due to Invalid Auth Key");
+                        //        SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
+                        //        break;
+                        //    }
+                        //    else if (authKey == listenerSettings.AuthKey)
+                        //    {
+                        //        // auth key valid
+                        //        automationLogger.Information($"Auth Key Verified");
+                        //        ProcessRequest(data, messageContent, stream);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    // verification not required
+                        //    automationLogger.Information($"Auth Key Verification Not Required");
+                        //    ProcessRequest(data, messageContent, stream);
+                        //}
+                        ProcessRequest(data, messageContent, stream);
                     }
                     catch (Exception ex)
                     {
@@ -278,9 +279,9 @@ namespace taskt.Core.Server
                     automationLogger.Information($"Client Connection Closed");
                 }
             }
-            catch (SocketException e)
+            catch (SocketException ex)
             {
-                automationLogger.Information("SocketException: {0}", e);
+                automationLogger.Information("SocketException: {0}", ex);
             }
             finally
             {
@@ -371,6 +372,49 @@ namespace taskt.Core.Server
             catch
             {
                 // nothing;
+            }
+
+            // Auth Key
+            if (App.Taskt_Settings.ListenerSettings.RequireListenerAuthenticationKey)
+            {
+                string authKey = "";
+                foreach (var item in messageContent)
+                {
+                    if (item.ToLower().StartsWith("authkey: "))
+                    {
+                        authKey = item.Substring(9);
+                        break;
+                    }
+                }
+                if (string.IsNullOrEmpty(authKey))
+                {
+                    var a = jsonBody.GetValue("AuthKey", StringComparison.CurrentCultureIgnoreCase);
+                    if (a != null)
+                    {
+                        authKey = a.ToString();
+                    }
+                }
+
+                // auth key check
+                if (string.IsNullOrEmpty(authKey))
+                {
+                    // auth key not provided
+                    automationLogger.Information($"Closing Client Connection due to Null/Empty Auth Key");
+                    SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
+                    return;
+                }
+                else if (authKey != listenerSettings.AuthKey)
+                {
+                    // auth key invalid   
+                    automationLogger.Information($"Closing Client Connection due to Invalid Auth Key");
+                    SendResponse(ResponseCode.Unauthorized, $"Invalid Auth Key", stream);
+                    return;
+                }
+                else if (authKey == listenerSettings.AuthKey)
+                {
+                    // auth key valid
+                    automationLogger.Information($"Auth Key Verified");
+                }
             }
 
             switch (order)
@@ -801,15 +845,20 @@ namespace taskt.Core.Server
         //    return content;
         //}
 
-        public static string SendAutomationTask(string endpoint, string parameterType, string timeout, string scriptData = "", string awaitPreference = "")
+        public static string SendAutomationTask(string endpoint, string parameterType, string timeout, string scriptData = "", string awaitPreference = "", string authKey = "")
         {
             var request = new RestRequest()
                     .AddHeader("Content-Type", "text/json");
 
             // authKey get from appSettings, it's ok? really?
-            if (listenerSettings.RequireListenerAuthenticationKey)
+            //if (listenerSettings.RequireListenerAuthenticationKey)
+            //{
+            //    request.AddHeader("AuthKey", listenerSettings.AuthKey);
+            //}
+            var sendBodyObject = new Dictionary<string, object>();
+            if (!string.IsNullOrEmpty(authKey))
             {
-                request.AddHeader("AuthKey", listenerSettings.AuthKey);
+                sendBodyObject.Add("AuthKey", authKey);
             }
 
             // MEMO: Resource part of the remote endpoint URL. For example, when using the client-level base URL https://localhost:5000/api and Resource set to weather, the request will be sent to https://localhost:5000/api/weather
@@ -837,10 +886,12 @@ namespace taskt.Core.Server
             switch (parameterType)
             {
                 case "run raw script data":
-                    request.AddJsonBody(new
-                    {
-                        ScriptData = scriptData.ConvertToBase64()
-                    });
+                    sendBodyObject.Add("ScriptData", scriptData.ConvertToBase64());
+                    request.AddJsonBody(sendBodyObject);
+                    //request.AddJsonBody(new
+                    //{
+                    //    ScriptData = scriptData.ConvertToBase64()
+                    //});
                     break;
                 case "run local file":
                     if (File.Exists(scriptData))
@@ -858,22 +909,29 @@ namespace taskt.Core.Server
                     {
                         throw new FileNotFoundException(scriptData);
                     }
-                    request.AddJsonBody(new
-                    {
-                        ScriptData = scriptData.ConvertToBase64()
-                    });
+
+                    sendBodyObject.Add("ScriptData", scriptData.ConvertToBase64());
+                    request.AddJsonBody(sendBodyObject);
+                    //request.AddJsonBody(new
+                    //{
+                    //    ScriptData = scriptData.ConvertToBase64()
+                    //});
                     break;
                 case "run remote file":
-                    request.AddJsonBody(new
-                    {
-                        ScriptLocation = scriptData.ConvertToBase64()
-                    });
+                    sendBodyObject.Add("ScriptLocation", scriptData.ConvertToBase64());
+                    request.AddJsonBody(sendBodyObject);
+                    //request.AddJsonBody(new
+                    //{
+                    //    ScriptLocation = scriptData.ConvertToBase64()
+                    //});
                     break;
                 case "run command json":
-                    request.AddJsonBody(new
-                    {
-                        CommandData = scriptData.ConvertToBase64()
-                    });
+                    sendBodyObject.Add("CommandData", scriptData.ConvertToBase64());
+                    request.AddJsonBody(sendBodyObject);
+                    //request.AddJsonBody(new
+                    //{
+                    //    CommandData = scriptData.ConvertToBase64()
+                    //});
                     break;
             }
 

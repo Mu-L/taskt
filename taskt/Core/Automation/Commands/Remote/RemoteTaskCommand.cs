@@ -73,6 +73,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Use Auth Key")]
+        [PropertyIsOptional(true, "No")]
+        public string v_UseAuthKey { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Auth Key")]
+        [InputSpecification("Auth Key", true)]
+        [PropertyIsOptional(true)]
+        [PropertyDetailSampleUsage("**01234567-89ab-cdef-0123-456789abcedf**", PropertyDetailSampleUsage.ValueType.Value, "Auth Key")]
+        [PropertyDetailSampleUsage("**{{{vKey}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Auth Key")]
+        [PropertyValidationRule("Auth Key", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_AuthKey { get; set; }
+
         public RemoteTaskCommand()
         {
             //this.CommandName = "RemoteTaskCommand";
@@ -95,7 +112,10 @@ namespace taskt.Core.Automation.Commands
                 var awaitPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExecuteAwait), engine);
                 var timeout = v_RequestTimeout.ExpandValueOrUserVariable(engine);
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);
+                var useAuthKey = this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseAuthKey), engine);
+                string authKey = (useAuthKey) ? v_AuthKey.ExpandValueOrUserVariable(engine) : "";
+
+                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference, authKey);
 
                 response.StoreInUserVariable(engine, v_userVariableName);
             }
