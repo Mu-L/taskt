@@ -318,6 +318,13 @@ namespace taskt.Core.Server
             {
                 order = RestOrder.RestartTaskt;
             }
+            else 
+            {
+                // invalid request
+                automationLogger.Information($"Invalid Client Request: {messageContent[0]}");
+                SendResponse(ResponseCode.InternalServerError, "Invalid Client Request", stream);
+                return;
+            }
 
             // extract body, header
             string headerParameterValue = "";
@@ -415,7 +422,8 @@ namespace taskt.Core.Server
                     // check to see if nothing was provided
                     if (string.IsNullOrEmpty(dataParameter64))
                     {
-                        automationLogger.Information($"Client Script Data Not Found");
+                        automationLogger.Information($"Data Not Found");
+                        SendResponse(ResponseCode.InternalServerError, "Data Not Found", stream);
                         return;
                     }
 
@@ -427,6 +435,8 @@ namespace taskt.Core.Server
                     else
                     {
                         automationLogger.Information($"Client Did Not Pass Base64 String");
+                        SendResponse(ResponseCode.InternalServerError, "Invalid Data. Base64?", stream);
+                        return;
                     }
 
                     // check if data parameter references file location
@@ -465,6 +475,18 @@ namespace taskt.Core.Server
                             // specified script file data
                             // log execution
                             automationLogger.Information($"Executing Script: {rawString}");
+
+                            try
+                            {
+                                // check script file
+                                Script.Script.DeserializeScript(rawString);
+                            }
+                            catch
+                            {
+                                automationLogger.Information($"Invalid Script File Data");
+                                SendResponse(ResponseCode.InternalServerError, "Invalid Script File Data", stream);
+                                break;
+                            }
 
                             // save script file
                             var tempFilePath = Script.Script.GetRunWithoutSavingScriptFilePath();
