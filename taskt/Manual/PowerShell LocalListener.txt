@@ -1,0 +1,44 @@
+Execute Remote Script File by PowerShell
+
+Invoke-RestMethod -Uri "http://IP-Address:19312/executescript" -Method Post -Body (@{"ScriptLocation"=[Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("Script-File-Name.xml"))}|ConvertTo-JSON)
+
+or
+
+$uri = "http://IP-Address:19312/executescript"
+$file = "Script-File-Name.xml"
+$b64file = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($file))
+Invoke-RestMethod -Uri $uri -Method Post -Body (@{"ScriptLocation"=$b64file}|ConvertTo-JSON)
+
+
+URL
+
+/executescript
+/execute_script
+	Execute Script
+
+/awaitscript
+/await_script
+	Execute Script and Wait for it to Finish
+
+/enginestatus
+/engine_status
+	Get taskt Script Engine status
+
+/restarttaskt
+/restart_taskt
+	Restart taskt
+
+
+Body Parameter
+
+scriptlocation
+	Script File Path in Remote Computer
+	converted to Base64
+
+scriptdata
+	Script File Data
+	converted to Base64
+
+authkey
+	auth key
+	not convert Base64
