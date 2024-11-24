@@ -430,6 +430,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_6(doc);
             convertTo3_5_2_11(doc);
             convertTo3_5_2_13(doc);
+            convertTo3_5_2_14(doc);
             return doc;
         }
 
@@ -3465,6 +3466,15 @@ namespace taskt.Core.Script
                     }
                 }))
             );
+        }
+
+        private static void convertTo3_5_2_14(XDocument doc)
+        {
+            // RemoteAPICommand -> RemoteTaskCommand
+            ChangeCommandName(doc, "RemoteAPICommand", "RemoteTaskCommand", "Remote Task");
+
+            // RemoteTaskCommand -> CallLocalListenerAPICommand
+            ChangeCommandName(doc, "RemoteTaskCommand", "CallLocalListenerAPICommand", "Call LocalListener API");
         }
 
         /// <summary>

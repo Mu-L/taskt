@@ -6,14 +6,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("LocalListener")]
-    [Attributes.ClassAttributes.CommandSettings("Remote Task")]
+    [Attributes.ClassAttributes.CommandSettings("Call LocalListener API")]
     [Attributes.ClassAttributes.Description("This command allows you to make API calls to taskt has LocalListener enabled")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you  want to make API calls to taskt has LocalListener enabled")]
     [Attributes.ClassAttributes.ImplementationDescription("This command interfaces against Core.Server.LocalTCPListener")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_remote))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RemoteTaskCommand : ScriptCommand
+    public sealed class CallLocalListenerAPICommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_AuthKey { get; set; }
 
-        public RemoteTaskCommand()
+        public CallLocalListenerAPICommand()
         {
             //this.CommandName = "RemoteTaskCommand";
             //this.SelectionName = "Remote Task";
