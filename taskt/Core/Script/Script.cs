@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using MSHTML;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -3475,6 +3476,29 @@ namespace taskt.Core.Script
 
             // RemoteTaskCommand -> CallLocalListenerAPICommand
             ChangeCommandName(doc, "RemoteTaskCommand", "CallLocalListenerAPICommand", "Call LocalListener API");
+
+            // CallLocalListenerAPI split IP, Port
+            var cmds = GetCommands(doc, "CallLocalListenerAPICommand");
+            foreach (var cmd in cmds)
+            {
+                var baseURL = cmd.Attribute("v_BaseURL").Value;
+                var port = cmd.Attribute("v_Port")?.Value ?? "";
+                if ((string.IsNullOrEmpty(port)) && (baseURL.Contains(":")))
+                {
+                    var idx = baseURL.IndexOf(":");
+                    cmd.Attribute("v_BaseURL").SetValue(baseURL.Substring(0, idx));
+
+                    var newPort = baseURL.Substring(idx + 1);
+                    if (cmd.Attribute("v_Port") != null)
+                    {
+                        cmd.Attribute("v_Port").SetValue(newPort);
+                    }
+                    else
+                    {
+                        cmd.SetAttributeValue("v_Port", newPort);
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -17,14 +17,26 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("IP:Port")]
-        [InputSpecification("IP and Port", true)]
-        [PropertyDetailSampleUsage("**192.168.0.15:19312**", PropertyDetailSampleUsage.ValueType.Value, "IP and Port")]
-        [PropertyDetailSampleUsage("**{{{vRemoteHost}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "IP and Port")]
-        [PropertyDetailSampleUsage("**{{{vIP}}}:{{{vPort}}}**", PropertyDetailSampleUsage.ValueType.Value, "IP and Port")]
-        [PropertyValidationRule("IP and Port", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "IP:Port")]
+        [PropertyDescription("taskt IP Address or URL")]
+        [InputSpecification("IP Address", true)]
+        [PropertyDetailSampleUsage("**192.168.0.15**", PropertyDetailSampleUsage.ValueType.Value, "IP Address")]
+        [PropertyDetailSampleUsage("**{{{vRemoteHost}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "IP Address")]
+        [PropertyDetailSampleUsage("**{{{vIP}}}**", PropertyDetailSampleUsage.ValueType.Value, "IP Address")]
+        [PropertyValidationRule("IP Address or URL", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "IP Address or URL")]
         public string v_BaseURL { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Port")]
+        [InputSpecification("Port", true)]
+        [PropertyIsOptional(true, "19312")]
+        [PropertyFirstValue("19312")]
+        [PropertyDetailSampleUsage("**19312**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
+        [PropertyDetailSampleUsage("**{{{vPort}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Port")]
+        [PropertyValidationRule("Port", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "Port")]
+        public string v_Port { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -105,6 +117,7 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 var server = v_BaseURL.ExpandValueOrUserVariable(engine);
+                var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_Port), "Port", engine);
                 //var paramType = v_ParameterType.ConvertToUserVariable(engine);
                 var paramType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine);
                 var parameter = v_Parameter.ExpandValueOrUserVariable(engine);
@@ -115,7 +128,7 @@ namespace taskt.Core.Automation.Commands
                 var useAuthKey = this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseAuthKey), engine);
                 string authKey = (useAuthKey) ? v_AuthKey.ExpandValueOrUserVariable(engine) : "";
 
-                var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference, authKey);
+                var response = Server.LocalTCPListener.SendAutomationTask($"{server}:{port}", paramType, timeout, parameter, awaitPreference, authKey);
 
                 response.StoreInUserVariable(engine, v_userVariableName);
             }
