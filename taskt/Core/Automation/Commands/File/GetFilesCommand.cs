@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyDescription("List Variable Name to Store Result")]
-        public string v_UserVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //filesList.StoreInUserVariable(engine, v_UserVariableName);
-            this.StoreListInUserVariable(filesList, nameof(v_UserVariableName), engine);
+            this.StoreListInUserVariable(filesList, nameof(v_Result), engine);
         }
     }
 }

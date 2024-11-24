@@ -3504,18 +3504,23 @@ namespace taskt.Core.Script
 
         private static void convertTo3_5_2_15(XDocument doc)
         {
-            // GetFilesCommand, GetFoldersCommand v_SearchMethod -> v_CompareMethod
-            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
-            {
-                switch (GetCommandName(el))
+            // GetFilesCommand, GetFoldersCommand v_SearchMethod -> v_CompareMethod, v_UserVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
                 {
-                    case "GetFilesCommand":
-                    case "GetFoldersCommand":
-                        return true;
-                    default:
-                        return false;
+                    switch (GetCommandName(el))
+                    {
+                        case "GetFilesCommand":
+                        case "GetFoldersCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), new List<(string, string)>() 
+                { 
+                    ("v_SearchMethod", "v_CompareMethod"),
+                    ("v_UserVariableName", "v_Result"),
                 }
-            }), "v_SearchMethod", "v_CompareMethod");
+            );
         }
 
         /// <summary>
