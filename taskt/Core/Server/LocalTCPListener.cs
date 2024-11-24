@@ -847,8 +847,8 @@ namespace taskt.Core.Server
 
         public static string SendAutomationTask(string endpoint, string parameterType, string timeout, string scriptData = "", string awaitPreference = "", string authKey = "")
         {
-            var request = new RestRequest()
-                    .AddHeader("Content-Type", "text/json");
+            var request = new RestRequest();
+                    //.AddHeader("Content-Type", "text/json");
 
             // authKey get from appSettings, it's ok? really?
             //if (listenerSettings.RequireListenerAuthenticationKey)
