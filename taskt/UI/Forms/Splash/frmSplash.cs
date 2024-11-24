@@ -15,28 +15,10 @@ namespace taskt.UI.Forms.Splash
         private void frmSplash_Load(object sender, EventArgs e)
         {
             // check exist or create AutoSave, RunWithoutSaving, BeforeConverted folders
-            //var autoSavePath = Script.GetAutoSaveFolderPath();
-            //if (!Directory.Exists(autoSavePath))
-            //{
-            //    Directory.CreateDirectory(autoSavePath);
-            //}
-            //CreateFolderProcess(Script.GetAutoSaveFolderPath);
             CreateFolderProcess(Folders.GetAutoSaveFolderPath());
 
-            //var runPath = Script.GetRunWithoutSavingFolderPath();
-            //if (!Directory.Exists(runPath))
-            //{
-            //    Directory.CreateDirectory(runPath);
-            //}
-            //CreateFolderProcess(Script.GetRunWithoutSavingFolderPath);
             CreateFolderProcess(Folders.GetRunWithoutSavingFolderPath());
 
-            //var befPath = Script.GetBeforeConvertedFolderPath();
-            //if (!Directory.Exists(befPath))
-            //{
-            //    Directory.CreateDirectory(befPath);
-            //}
-            //CreateFolderProcess(Script.GetBeforeConvertedFolderPath);
             CreateFolderProcess(Folders.GetBeforeConvertedFolderPath());
         }
 
