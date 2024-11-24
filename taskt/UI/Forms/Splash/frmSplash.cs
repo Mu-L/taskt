@@ -22,19 +22,6 @@ namespace taskt.UI.Forms.Splash
             CreateFolderProcess(Folders.GetBeforeConvertedFolderPath());
         }
 
-        ///// <summary>
-        ///// create folder process when not exists
-        ///// </summary>
-        ///// <param name="folderFunc"></param>
-        //private static void CreateFolderProcess(Func<string> folderFunc)
-        //{
-        //    var path = folderFunc();
-        //    if (!Directory.Exists(path))
-        //    {
-        //        Directory.CreateDirectory(path);
-        //    }
-        //}
-
         /// <summary>
         /// create folder process when not exists
         /// </summary>
