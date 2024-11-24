@@ -59,14 +59,14 @@ Invoke-RestMethod -Uri $uri -Method Post -Body (@{"ScriptData"=$b64content}|Conv
 scriptlocation
 	Script File Path in Remote Computer
 	converted to Base64
-	URL is not case sensitive
+	Parameter Name is not case sensitive
 
 scriptdata
 	Script File Data
 	converted to Base64
-	URL is not case sensitive
+	Parameter Name is not case sensitive
 
 authkey
 	auth key
 	not convert Base64
-	URL is not case sensitive
+	Parameter Name is not case sensitive
