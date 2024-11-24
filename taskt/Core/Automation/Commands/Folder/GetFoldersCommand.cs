@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ends with")]
         [PropertyUISelectionOption("Exact match")]
         [PropertyIsOptional(true, "Contains")]
-        public string v_SearchMethod { get; set; }
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
             if (!String.IsNullOrEmpty(searchFolder))
             {
-                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine))
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), engine))
                 {
                     case "contains":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Contains(searchFolder)).ToList();

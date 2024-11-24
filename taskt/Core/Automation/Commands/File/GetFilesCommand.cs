@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Exact match")]
         [PropertyIsOptional(true, "Contains")]
         [PropertyDisplayText(true, "Search Method")]
-        public string v_SearchMethod { get; set; }
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
             if (!string.IsNullOrEmpty(searchFile))
             {
-                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), engine);
                 switch (searchMethod)
                 {
                     case "contains":

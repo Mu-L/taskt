@@ -432,6 +432,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_11(doc);
             convertTo3_5_2_13(doc);
             convertTo3_5_2_14(doc);
+            convertTo3_5_2_15(doc);
             return doc;
         }
 
@@ -3499,6 +3500,22 @@ namespace taskt.Core.Script
                     }
                 }
             }
+        }
+
+        private static void convertTo3_5_2_15(XDocument doc)
+        {
+            // GetFilesCommand, GetFoldersCommand v_SearchMethod -> v_CompareMethod
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "GetFilesCommand":
+                    case "GetFoldersCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_SearchMethod", "v_CompareMethod");
         }
 
         /// <summary>
