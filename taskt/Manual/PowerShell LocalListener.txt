@@ -15,30 +15,36 @@ URL
 /executescript
 /execute_script
 	Execute Script
+	URL is not case sensitive
 
 /awaitscript
 /await_script
 	Execute Script and Wait for it to Finish
+	URL is not case sensitive
 
 /enginestatus
 /engine_status
 	Get taskt Script Engine status
+	URL is not case sensitive
 
 /restarttaskt
 /restart_taskt
 	Restart taskt
-
+	URL is not case sensitive
 
 Body Parameter
 
 scriptlocation
 	Script File Path in Remote Computer
 	converted to Base64
+	URL is not case sensitive
 
 scriptdata
 	Script File Data
 	converted to Base64
+	URL is not case sensitive
 
 authkey
 	auth key
 	not convert Base64
+	URL is not case sensitive
