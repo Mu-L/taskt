@@ -60,6 +60,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("When Text Not Found")]
+        [PropertyUISelectionOption("Rise A Error")]
+        [PropertyUISelectionOption("Get Empty Text")]
+        [PropertyDetailSampleUsage("Rise A Error", "Rise A Error")]
+        [PropertyDetailSampleUsage("Get Empty Text", "Get Empty Text")]
+        [PropertyIsOptional(true, "Get Empty Text")]
+        [PropertyFirstValue("Get Empty Text")]
+        [PropertyDisplayText(false, "")]
+        public string v_WhenTextNotFound { get; set; }
+
         public ExtractionTextCommand()
         {
             //this.CommandName = "ExtractionTextCommand";
@@ -80,26 +92,49 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get variablized input
-            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
+            var targetText = v_InputValue.ExpandValueOrUserVariable(engine);
 
             var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
+
             string extractedText = "";
-            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextExtractionType), engine))
+            try
             {
-                case "extract all after text":
-                    extractedText = ExtractLeadingText(variableInput, parms, engine);
-                    break;
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextExtractionType), engine))
+                {
+                    case "extract all after text":
+                        extractedText = ExtractLeadingText(targetText, parms, engine);
+                        break;
 
-                case "extract all before text":
-                    extractedText = ExtractTrailingText(variableInput, parms, engine);
-                    break;
+                    case "extract all before text":
+                        extractedText = ExtractTrailingText(targetText, parms, engine);
+                        break;
 
-                case "extract all between text":
-                    extractedText = ExtractLeadingText(variableInput, parms, engine);
-                    parms["Skip Past Occurences"] = "0";    // force change parameter value
-                    extractedText = ExtractTrailingText(extractedText, parms, engine);
-                    break;
+                    case "extract all between text":
+                        extractedText = ExtractLeadingText(targetText, parms, engine);
+                        parms["Skip Past Occurences"] = "0";    // force change parameter value
+                        extractedText = ExtractTrailingText(extractedText, parms, engine);
+                        break;
+                }
             }
+            catch (Exception ex) 
+            {
+                if (ex.Message.StartsWith("No value was found after skipping "))
+                {
+                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenTextNotFound), engine))
+                    {
+                        case "get empty text":
+                            extractedText = "";
+                            break;
+                        case "rise a error":
+                            throw ex;
+                    }
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+
 
             //store variable
             extractedText.StoreInUserVariable(engine, v_applyToVariableName);
@@ -107,7 +142,7 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbTextExtraction_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ComboBox extractionAction = (ComboBox)sender;
+            var extractionAction = (ComboBox)sender;
 
             var ParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_TextExtractionTable)];
 
@@ -144,6 +179,14 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// after text
+        /// </summary>
+        /// <param name="targetText"></param>
+        /// <param name="parms"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static string ExtractLeadingText(string targetText, Dictionary<string, string> parms, Engine.AutomationEngineInstance engine)
         {
             if (parms.Keys.Contains("Leading Text") && parms.Keys.Contains("Skip Past Occurences"))
@@ -172,6 +215,14 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// before text
+        /// </summary>
+        /// <param name="targetText"></param>
+        /// <param name="parms"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static string ExtractTrailingText(string targetText, Dictionary<string, string> parms, Engine.AutomationEngineInstance engine)
         {
             if (parms.Keys.Contains("Trailing Text") && parms.Keys.Contains("Skip Past Occurences"))
