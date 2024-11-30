@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Empty Text")]
         [PropertyDetailSampleUsage("Rise A Error", "Rise A Error")]
         [PropertyDetailSampleUsage("Get Empty Text", "Get Empty Text")]
-        [PropertyIsOptional(true)]
+        [PropertyIsOptional(true, "Get Empty Text")]
         [PropertyFirstValue("Get Empty Text")]
         [PropertyDisplayText(false, "")]
         public string v_WhenInvalidIndex { get; set; }
