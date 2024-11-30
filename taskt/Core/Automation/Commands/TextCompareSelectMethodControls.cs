@@ -17,6 +17,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Not Starts with")]
         [PropertyUISelectionOption("Not Ends with")]
         [PropertyUISelectionOption("Not Match")]
+        [PropertyUISelectionOption("Not Empty")]
+        [PropertyUISelectionOption("Is a Number")]
+        [PropertyUISelectionOption("Is a Boolean")]
+        [PropertyUISelectionOption("Is a Boolean Loose")]
+        [PropertyUISelectionOption("Is Empty")]
+        [PropertyUISelectionOption("Is Not a Number")]
+        [PropertyUISelectionOption("Is Not a Boolean")]
+        [PropertyUISelectionOption("Is a Boolean Loose Loose")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
@@ -29,6 +37,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Not Starts with**", "It's like Comparing whether to Not Starts With **hello**.")]
         [PropertyDetailSampleUsage("**Not Ends with**", "It's like Comparing whether to Not Ends With **hello**.")]
         [PropertyDetailSampleUsage("**Not Match**", "It's like Comparing whether an Not Matche to **hello**.")]
+        [PropertyDetailSampleUsage("**Not Empty**", "This determines not empty text.")]
+        [PropertyDetailSampleUsage("**Is a Number**", "This determines whether a number.")]
+        [PropertyDetailSampleUsage("**Is a Boolean**", "This determines whether a boolean, such as **True** or **False**.")]
+        [PropertyDetailSampleUsage("**Is a Boolean Loose**", "This determines whether it is a loose boolean, such as **True**, **False**, **Yes**, **No**, **1**, or **0**.")]
+        [PropertyDetailSampleUsage("**Is Empty**", "This determines empty text.")]
+        [PropertyDetailSampleUsage("**Is Not a Number**", "This determines whether it is **Not** a number.")]
+        [PropertyDetailSampleUsage("**Is Not a Boolean**", "This determines whether it is **Not** a boolean, such as **True** or **False**.")]
+        [PropertyDetailSampleUsage("**Is Not a Boolean Loose**", "This determines whether it is **Not** a loose boolean, such as **True**, **False**, **Yes**, **No**, **1**, or **0**.")]
         [PropertyDisplayText(true, "Compare Method")]
         [PropertyParameterOrder(5000)]
         public static string v_CompareMethod { get; }
@@ -48,6 +64,22 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "Case Sensitive")]
         [PropertyParameterOrder(5000)]
         public static string v_CaseSensitive { get; }
+
+        /// <summary>
+        /// compare method is case sensitive or not
+        /// </summary>
+        [PropertyDescription("Case Sensitive")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyDetailSampleUsage("**Yes**", "Comparison Method is Case Sensitive")]
+        [PropertyDetailSampleUsage("**No**", "Comparison Method is NOT Case Sensitive")]
+        [PropertyDisplayText(false, "Case Sensitive")]
+        [PropertyParameterOrder(5000)]
+        public static string v_CaseSensitiveYes { get; }
 
         /// <summary>
         /// trim before compare
