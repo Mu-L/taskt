@@ -3521,6 +3521,67 @@ namespace taskt.Core.Script
                     ("v_UserVariableName", "v_Result"),
                 }
             );
+
+            // Check Text -> TextGetIndexOf
+            var indexAttrPairs = new List<(string, string)>()
+                                {
+                                    ("v_userVariableName", "v_Text"),
+                                    ("v_CheckParameter", "v_SearchText"),
+                                    ("v_applyToVariableName", "v_Result"),
+                                    ("v_CaseSensitive", "v_CaseSensitive"),
+                                    ("v_Comment", "v_Comment"),
+                                };
+
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckTextCommand":
+                            return (el.Attribute("v_CheckMethod").Value.ToLower() == "index of");
+                            
+                        default:
+                            return false;
+                    }
+                }),
+                "TextGetIndexOfCommand", "Get Index Of",
+                indexAttrPairs
+            );
+
+            // Check Text -> TextLastGetIndexOf
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "CheckTextCommand":
+                        return (el.Attribute("v_CheckMethod").Value.ToLower() == "last index of");
+
+                    default:
+                        return false;
+                }
+            }),
+                "TextGetLastIndexOfCommand", "Get Last Index Of",
+                indexAttrPairs
+            );
+
+            // TextGetIndexOf, TextGetLastIndexOf v_SearchStartIndex
+            var idxCmds = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el)) 
+                {
+                    case "TextGetIndexOfCommand":
+                    case "TextGetLastIndexOfCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach(var cmd in idxCmds)
+            {
+                if (cmd.Attribute("v_SearchStartPosition") == null)
+                {
+                    cmd.SetAttributeValue("v_SearchStartPosition", "");
+                }
+            }
         }
 
         /// <summary>
