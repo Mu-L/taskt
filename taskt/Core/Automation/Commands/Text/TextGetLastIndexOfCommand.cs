@@ -38,6 +38,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(TextCompareSelectMethodControls), nameof(TextCompareSelectMethodControls.v_CaseSensitiveYes))]
         public string v_CaseSensitive { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Search Start Position")]
+        [InputSpecification("Search Start Position")]
+        [PropertyIsOptional(true, "-1")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyFirstValue("0")]
+        [PropertyDetailSampleUsage("**0**", "Specify First Charactor Position")]
+        [PropertyDetailSampleUsage("**-1**", "Specify Last Charactor Position")]
+        [PropertyDetailSampleUsage("**{{{vPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Search Start Position")]
+        [PropertyDisplayText(false, "Search Start Position")]
+        public string v_SearchStartPosition { get; set; }
+
         public TextGetLastIndexOfCommand()
         {
         }
@@ -48,14 +61,41 @@ namespace taskt.Core.Automation.Commands
 
             var searchText = this.ExpandValueOrUserVariable(nameof(v_SearchText), "Search Text", engine);
 
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CaseSensitive), engine))
+            if (string.IsNullOrEmpty(v_SearchStartPosition))
             {
-                (targetText.LastIndexOf(searchText)).StoreInUserVariable(engine, v_Result);
+                v_SearchStartPosition = "-1";
+            }
+            var searchStartPosition = this.ExpandValueOrUserVariableAsInteger(nameof(v_SearchStartPosition), engine);
+            if (searchStartPosition < 0)
+            {
+                searchStartPosition += targetText.Length;
+            }
+
+            if (searchStartPosition < 0)
+            {
+                searchStartPosition = 0;
+            }
+            else if (searchStartPosition >= targetText.Length)
+            {
+                searchStartPosition = targetText.Length;
+            }
+
+            if (!this.ExpandValueOrUserVariableAsYesNo(nameof(v_CaseSensitive), engine))
+            {
+                targetText = targetText.ToLower();
+                searchText = searchText.ToLower();
+            }
+
+            int idx;
+            if (searchStartPosition == targetText.Length - 1)
+            {
+                idx = targetText.LastIndexOf(searchText);
             }
             else
-            {
-                targetText.ToLower().LastIndexOf(searchText.ToLower()).StoreInUserVariable(engine, v_Result);
+            {   // (searchStartPosition > 0 && searchStartPosition < taregetText.Length);
+                idx = targetText.LastIndexOf(searchText, searchStartPosition);
             }
+            idx.StoreInUserVariable(engine, v_Result);
         }
     }
 }
