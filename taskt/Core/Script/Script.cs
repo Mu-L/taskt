@@ -3522,7 +3522,7 @@ namespace taskt.Core.Script
                 }
             );
 
-            // Check Text -> TextGetIndexOf
+            // CheckTextCommand -> TextGetIndexOfCommand
             var indexAttrPairs = new List<(string, string)>()
                                 {
                                     ("v_userVariableName", "v_Text"),
@@ -3547,7 +3547,7 @@ namespace taskt.Core.Script
                 indexAttrPairs
             );
 
-            // Check Text -> TextLastGetIndexOf
+            // CheckTextCommand -> TextLastGetIndexOfCommand
             ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
             {
                 switch (GetCommandName(el))
