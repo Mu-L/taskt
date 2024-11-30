@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Collections.Generic;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -113,6 +114,27 @@ namespace taskt.Core.Automation.Commands
                 decodedText = null;
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Search Text Positions
+        /// </summary>
+        /// <param name="targetText"></param>
+        /// <param name="searchText"></param>
+        /// <param name="greedly"></param>
+        /// <returns></returns>
+        public static List<int> SearchTextPositions(string targetText, string searchText, bool greedly)
+        {
+            int posBias = (greedly) ? 1 : searchText.Length;
+
+            var positions = new List<int>();
+            var pos = targetText.IndexOf(searchText, 0);
+            while (pos >= 0)
+            {
+                positions.Add(pos);
+                pos = targetText.IndexOf(searchText, pos + posBias);
+            }
+            return positions;
         }
     }
 }
