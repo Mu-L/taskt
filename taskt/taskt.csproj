@@ -1023,7 +1023,7 @@
     <Compile Include="Core\Automation\Commands\Loop\ExitLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\FormatDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\GetWordCountCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Text\GetWordLengthCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetTextLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\LogDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\GetJSONValuesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\PDFTextExtractionCommand.cs" />

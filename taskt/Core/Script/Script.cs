@@ -3582,6 +3582,9 @@ namespace taskt.Core.Script
                     cmd.SetAttributeValue("v_SearchStartPosition", "");
                 }
             }
+
+            // GetWordLengthCommand -> GetTextLengthCommand
+            ChangeCommandName(doc, "GetWordLengthCommand", "GetTextLengthCommand", "Get Text Length");
         }
 
         /// <summary>
