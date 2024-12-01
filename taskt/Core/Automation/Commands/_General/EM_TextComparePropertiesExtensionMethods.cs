@@ -91,6 +91,8 @@ namespace taskt.Core.Automation.Commands
         private static string ConvertWildcardToRegex(string str)
         {
             return "^" + str.Replace(".", "\\.")
+                        .Replace("^", "\\^")
+                        .Replace("$", "\\$")
                         .Replace("*", ".+")
                         .Replace("?", ".") + "$";
         }
