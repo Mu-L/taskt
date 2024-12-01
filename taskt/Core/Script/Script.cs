@@ -3522,6 +3522,9 @@ namespace taskt.Core.Script
                 }
             );
 
+            // CheckTextCommand v_CheckMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "CheckTextCommand", "v_CheckMethod", "v_CompareMethod");
+
             // CheckTextCommand -> TextGetIndexOfCommand
             var indexAttrPairs = new List<(string, string)>()
                                 {
@@ -3537,7 +3540,7 @@ namespace taskt.Core.Script
                     switch (GetCommandName(el))
                     {
                         case "CheckTextCommand":
-                            return (el.Attribute("v_CheckMethod")?.Value.ToLower() ?? "") == "index of";
+                            return (el.Attribute("v_CompareMethod")?.Value.ToLower() ?? "") == "index of";
 
                         default:
                             return false;
@@ -3553,7 +3556,7 @@ namespace taskt.Core.Script
                 switch (GetCommandName(el))
                 {
                     case "CheckTextCommand":
-                        return (el.Attribute("v_CheckMethod")?.Value.ToLower() ?? "") == "last index of";
+                        return (el.Attribute("v_CompareMethod")?.Value.ToLower() ?? "") == "last index of";
 
                     default:
                         return false;
@@ -3586,8 +3589,15 @@ namespace taskt.Core.Script
             // GetWordLengthCommand -> GetTextLengthCommand
             ChangeCommandName(doc, "GetWordLengthCommand", "GetTextLengthCommand", "Get Text Length");
 
-            // CheckTextCommand v_CheckMethod -> v_CompareMethod
-            ChangeAttributeName(doc, "CheckTextCommand", "v_CheckMethod", "v_CompareMethod");
+            // CheckText v_CompareMethod value Has Value -> Not Empty
+            ChangeAttributeValue(doc, "CheckTextCommand", "v_CompareMethod", new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value.ToLower() == "has value")
+                    {
+                        attr.SetValue("Not Empty");
+                    }
+                })
+            );
         }
 
         /// <summary>
