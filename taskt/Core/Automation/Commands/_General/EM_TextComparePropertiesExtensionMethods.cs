@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
             return "^" + str.Replace(".", "\\.")
                         .Replace("^", "\\^")
                         .Replace("$", "\\$")
-                        .Replace("*", ".+")
+                        .Replace("*", ".*")
                         .Replace("?", ".") + "$";
         }
 
