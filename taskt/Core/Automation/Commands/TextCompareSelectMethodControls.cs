@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Is Empty")]
         [PropertyUISelectionOption("Is Not a Number")]
         [PropertyUISelectionOption("Is Not a Boolean")]
-        [PropertyUISelectionOption("Is a Boolean Loose Loose")]
+        [PropertyUISelectionOption("Is Not a Boolean Loose")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
