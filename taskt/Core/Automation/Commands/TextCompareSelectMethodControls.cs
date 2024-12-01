@@ -17,6 +17,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Not Starts with")]
         [PropertyUISelectionOption("Not Ends with")]
         [PropertyUISelectionOption("Not Match")]
+        [PropertyUISelectionOption("Wildcard")]
+        [PropertyUISelectionOption("Not Wildcard")]
         [PropertyUISelectionOption("Not Empty")]
         [PropertyUISelectionOption("Is a Number")]
         [PropertyUISelectionOption("Is a Boolean")]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -83,6 +84,18 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// convert Wildcard to Regex, supports *, ?
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static string ConvertWildcardToRegex(string str)
+        {
+            return "^" + str.Replace(".", "\\.")
+                        .Replace("*", ".+")
+                        .Replace("?", ".") + "$";
+        }
+
+        /// <summary>
         /// create compare function
         /// </summary>
         /// <param name="command"></param>
@@ -143,6 +156,20 @@ namespace taskt.Core.Automation.Commands
                     ret = new Func<string, string, bool>((trgStr, condition) =>
                     {
                         return !preFunc(trgStr).Equals(preFunc(condition));
+                    });
+                    break;
+                case "wildcard":
+                    ret = new Func<string, string, bool>((trgStr, condition) =>
+                    {
+                        var regCondition = ConvertWildcardToRegex(condition);
+                        return Regex.IsMatch(preFunc(trgStr), preFunc(regCondition));
+                    });
+                    break;
+                case "not wildcard":
+                    ret = new Func<string, string, bool>((trgStr, condition) =>
+                    {
+                        var regCondition = ConvertWildcardToRegex(condition);
+                        return !Regex.IsMatch(preFunc(trgStr), preFunc(regCondition));
                     });
                     break;
                 case "not empty":
