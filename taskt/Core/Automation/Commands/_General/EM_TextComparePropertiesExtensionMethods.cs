@@ -115,7 +115,7 @@ namespace taskt.Core.Automation.Commands
                         return preFunc(trgStr).EndsWith(preFunc(condition));
                     });
                     break;
-                case "exact math":
+                case "exact match":
                     ret = new Func<string, string, bool>((trgStr, condition) =>
                     {
                         return preFunc(trgStr).Equals(preFunc(condition));
