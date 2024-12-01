@@ -3537,8 +3537,8 @@ namespace taskt.Core.Script
                     switch (GetCommandName(el))
                     {
                         case "CheckTextCommand":
-                            return (el.Attribute("v_CheckMethod").Value.ToLower() == "index of");
-                            
+                            return (el.Attribute("v_CheckMethod")?.Value.ToLower() ?? "") == "index of";
+
                         default:
                             return false;
                     }
@@ -3553,7 +3553,7 @@ namespace taskt.Core.Script
                 switch (GetCommandName(el))
                 {
                     case "CheckTextCommand":
-                        return (el.Attribute("v_CheckMethod").Value.ToLower() == "last index of");
+                        return (el.Attribute("v_CheckMethod")?.Value.ToLower() ?? "") == "last index of";
 
                     default:
                         return false;
@@ -3585,6 +3585,9 @@ namespace taskt.Core.Script
 
             // GetWordLengthCommand -> GetTextLengthCommand
             ChangeCommandName(doc, "GetWordLengthCommand", "GetTextLengthCommand", "Get Text Length");
+
+            // CheckTextCommand v_CheckMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "CheckTextCommand", "v_CheckMethod", "v_CompareMethod");
         }
 
         /// <summary>
