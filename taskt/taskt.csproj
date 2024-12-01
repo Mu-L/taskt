@@ -645,7 +645,6 @@
     <Compile Include="Core\Automation\Commands\_General\ILReplaceValueProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ITextCompareProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\RECT.cs" />
-    <Compile Include="Core\Automation\CompareMethodControls.cs" />
     <Compile Include="Core\Automation\Engine\EM_AppInstancesPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Engine\EM_ScriptVariablePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Engine\IAppInstancesProperties.cs" />
