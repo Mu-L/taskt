@@ -88,6 +88,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         public string v_HandleResult { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Clear Clipboard After Paste")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyValidationRule("Clear Clipboard", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_ClearClipboardAfterPaste { get; set; }
+
         public EnterKeysCommand()
         {
             //this.CommandName = "SendKeysCommand";
@@ -231,6 +239,10 @@ namespace taskt.Core.Automation.Commands
                             textToSend = "^v";  // Ctrl+V
                         }
                         SendKeys.SendWait(textToSend);
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearClipboardAfterPaste), engine))
+                        {
+                            ClipboardControls.ClearClipboard();
+                        }
                     }
 
                     var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);

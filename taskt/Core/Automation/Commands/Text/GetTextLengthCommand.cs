@@ -7,14 +7,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text")]
     [Attributes.ClassAttributes.SubGruop("Check/Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Word Length")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text Length")]
     [Attributes.ClassAttributes.Description("This command allows you to retrieve the length of a Text or Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to find the length of a Text or Variable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class GetWordLengthCommand : ScriptCommand
+    public sealed class GetTextLengthCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
-        public GetWordLengthCommand()
+        public GetTextLengthCommand()
         {
             //this.CommandName = "GetLengthCommand";
             //this.SelectionName = "Get Word Length";
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
             //var stringLength = stringRequiringLength.Length;
 
             //store word count into variable
-            stringRequiringLength.Length.ToString().StoreInUserVariable(engine, v_applyToVariableName);
+            stringRequiringLength.Length.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

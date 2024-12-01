@@ -432,6 +432,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_11(doc);
             convertTo3_5_2_13(doc);
             convertTo3_5_2_14(doc);
+            convertTo3_5_2_15(doc);
             return doc;
         }
 
@@ -3499,6 +3500,119 @@ namespace taskt.Core.Script
                     }
                 }
             }
+        }
+
+        private static void convertTo3_5_2_15(XDocument doc)
+        {
+            // GetFilesCommand, GetFoldersCommand v_SearchMethod -> v_CompareMethod, v_UserVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "GetFilesCommand":
+                        case "GetFoldersCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), new List<(string, string)>() 
+                { 
+                    ("v_SearchMethod", "v_CompareMethod"),
+                    ("v_UserVariableName", "v_Result"),
+                }
+            );
+
+            // CheckTextCommand v_CheckMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "CheckTextCommand", "v_CheckMethod", "v_CompareMethod");
+
+            // CheckTextCommand -> TextGetIndexOfCommand
+            var indexAttrPairs = new List<(string, string)>()
+                                {
+                                    ("v_userVariableName", "v_Text"),
+                                    ("v_CheckParameter", "v_SearchText"),
+                                    ("v_applyToVariableName", "v_Result"),
+                                    ("v_CaseSensitive", "v_CaseSensitive"),
+                                    ("v_Comment", "v_Comment"),
+                                };
+
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckTextCommand":
+                            return (el.Attribute("v_CompareMethod")?.Value.ToLower() ?? "") == "index of";
+
+                        default:
+                            return false;
+                    }
+                }),
+                "TextGetIndexOfCommand", "Get Index Of",
+                indexAttrPairs
+            );
+
+            // CheckTextCommand -> TextLastGetIndexOfCommand
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el))
+                {
+                    case "CheckTextCommand":
+                        return (el.Attribute("v_CompareMethod")?.Value.ToLower() ?? "") == "last index of";
+
+                    default:
+                        return false;
+                }
+            }),
+                "TextGetLastIndexOfCommand", "Get Last Index Of",
+                indexAttrPairs
+            );
+
+            // TextGetIndexOf, TextGetLastIndexOf v_SearchStartIndex
+            var idxCmds = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
+                switch (GetCommandName(el)) 
+                {
+                    case "TextGetIndexOfCommand":
+                    case "TextGetLastIndexOfCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }));
+            foreach(var cmd in idxCmds)
+            {
+                if (cmd.Attribute("v_SearchStartPosition") == null)
+                {
+                    cmd.SetAttributeValue("v_SearchStartPosition", "");
+                }
+            }
+
+            // GetWordLengthCommand -> GetTextLengthCommand
+            ChangeCommandName(doc, "GetWordLengthCommand", "GetTextLengthCommand", "Get Text Length");
+
+            // CheckText v_CompareMethod value Has Value -> Not Empty
+            ChangeAttributeValue(doc, "CheckTextCommand", "v_CompareMethod", new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value.ToLower() == "has value")
+                    {
+                        attr.SetValue("Not Empty");
+                    }
+                })
+            );
+
+            // SplitTextCommand v_splitCharacter
+            ChangeAttributeValue(doc, "SplitTextCommand", "v_splitCharacter", new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value)
+                    {
+                        case "[crLF]":
+                            attr.SetValue(IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Char_NewLine.VariableName));
+                            break;
+                        case "[chars]":
+                            attr.SetValue(IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Text_Split_Charactor.VariableName));
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>

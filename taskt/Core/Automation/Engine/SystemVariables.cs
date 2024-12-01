@@ -120,6 +120,11 @@ namespace taskt.Core.Automation.Engine
         /// specify previous worksheet
         /// </summary>
         public static readonly ScriptVariable Excel_PreviousWorkSheet = new ScriptVariable { VariableName = "Excel.PreviousWorksheet", VariableValue = "" };
+
+        /// <summary>
+        /// Text Split charactor
+        /// </summary>
+        public static readonly ScriptVariable Text_Split_Charactor = new ScriptVariable { VariableName = "TextSplit.Charactor", VariableValue = "" };
         #endregion
 
         #region Enum
@@ -132,6 +137,7 @@ namespace taskt.Core.Automation.Engine
             Window_Position,
             Window_Size,
             Excel_Worksheet,
+            Text_Split,
         };
 
         #endregion

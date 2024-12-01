@@ -43,7 +43,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Action")]
         public string v_StopwatchAction { get; set; }
 
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyIsOptional(true)]
@@ -81,32 +80,32 @@ namespace taskt.Core.Automation.Commands
             System.Diagnostics.Stopwatch stopwatch;
             switch (action)
             {
-                case "Start Stopwatch":
+                case "start stopwatch":
                     //start a new stopwatch
                     stopwatch = new System.Diagnostics.Stopwatch();
                     engine.AddAppInstance(instanceName, stopwatch);
                     stopwatch.Start();
                     break;
 
-                case "Stop Stopwatch":
+                case "stop stopwatch":
                     //stop existing stopwatch
                     stopwatch = (System.Diagnostics.Stopwatch)engine.AppInstances[instanceName];
                     stopwatch.Stop();
                     break;
 
-                case "Restart Stopwatch":
+                case "restart stopwatch":
                     //restart which sets to 0 and automatically starts
                     stopwatch = (System.Diagnostics.Stopwatch)engine.AppInstances[instanceName];
-                    stopwatch.Restart();
+                    stopwatch.Start();
                     break;
 
-                case "Reset Stopwatch":
+                case "reset stopwatch":
                     //reset which sets to 0
                     stopwatch = (System.Diagnostics.Stopwatch)engine.AppInstances[instanceName];
                     stopwatch.Reset();
                     break;
 
-                case "Measure Stopwatch":
+                case "measure stopwatch":
                     //check elapsed which gives measure
                     stopwatch = (System.Diagnostics.Stopwatch)engine.AppInstances[instanceName];
                     string elapsedTime;
