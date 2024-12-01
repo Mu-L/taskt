@@ -42,6 +42,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_applyConvertToUserVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Remove Empty Item")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyValidationRule("Remove Empty Item", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_RemoveEmptyItem { get; set; }
+
         public SplitTextCommand()
         {
             //this.CommandName = "SplitTextCommand";
@@ -77,6 +85,17 @@ namespace taskt.Core.Automation.Commands
                 splitString = stringVariable.Split(new string[] { split }, StringSplitOptions.None).ToList();
             }
             
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_RemoveEmptyItem), engine))
+            {
+                for (int i = splitString.Count - 1; i >= 0; i--) 
+                {
+                    if (string.IsNullOrEmpty(splitString[i]))
+                    {
+                        splitString.RemoveAt(i);
+                    }
+                }
+            }
+
             //splitString.StoreInUserVariable(engine, v_applyConvertToUserVariableName);
             this.StoreListInUserVariable(splitString, nameof(v_applyConvertToUserVariableName), engine);
         }
