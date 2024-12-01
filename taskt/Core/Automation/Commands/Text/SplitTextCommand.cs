@@ -27,12 +27,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Delimiter")]
         [InputSpecification("Delimiter", true)]
         [PropertyDetailSampleUsage("**,**", PropertyDetailSampleUsage.ValueType.Value, "Delimiter")]
-        [PropertyDetailSampleUsage("**[crLF]**", "Specify **Line Break** for Delimiter")]
-        [PropertyDetailSampleUsage("**[chars]**", "Split by one character")]
+        [PropertyDetailSampleUsage("**{{{Char.NewLine}}}**", "Specify **Line Break** for Delimiter")]
+        [PropertyDetailSampleUsage("**{{{TextSplit.Charactor}}}**", "Split by one character")]
         [PropertyDetailSampleUsage("**{{{vChar}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Delimiter")]
         [PropertyDetailSampleUsage("**{{{Char.Space}}}**", "Split by **Space**. Please specify **Disable Auto Calculation** before this command.", false)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Text_Split)]
         [PropertyValidationRule("Delimiter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Delimiter")]
         public string v_splitCharacter { get; set; }
@@ -53,22 +54,29 @@ namespace taskt.Core.Automation.Commands
         {
             var stringVariable = v_userVariableName.ExpandValueOrUserVariable(engine);
 
-            var split = v_splitCharacter.ExpandValueOrUserVariable(engine);
             List<string> splitString;
-
-            switch (split)
+            if (v_splitCharacter == VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Text_Split_Charactor.VariableName, engine))
             {
-                case "[crLF]":
-                    splitString = stringVariable.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
-                    break;
-                case "[chars]":
-                    splitString = stringVariable.ToCharArray().Select(c => c.ToString()).ToList();
-                    break;
-                default:
-                    splitString = stringVariable.Split(new string[] { split }, StringSplitOptions.None).ToList();
-                    break;
+                splitString = stringVariable.ToCharArray().Select(c => c.ToString()).ToList();
             }
-
+            else
+            {
+                var split = v_splitCharacter.ExpandValueOrUserVariable(engine);
+                //switch (split)
+                //{
+                //    case "[crLF]":
+                //        splitString = stringVariable.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+                //        break;
+                //    case "[chars]":
+                //        splitString = stringVariable.ToCharArray().Select(c => c.ToString()).ToList();
+                //        break;
+                //    default:
+                //        splitString = stringVariable.Split(new string[] { split }, StringSplitOptions.None).ToList();
+                //        break;
+                //}
+                splitString = stringVariable.Split(new string[] { split }, StringSplitOptions.None).ToList();
+            }
+            
             //splitString.StoreInUserVariable(engine, v_applyConvertToUserVariableName);
             this.StoreListInUserVariable(splitString, nameof(v_applyConvertToUserVariableName), engine);
         }

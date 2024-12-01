@@ -1648,6 +1648,9 @@ namespace taskt.UI.CustomControls
                         systemVariables.Add(Excel_NextWorkSheet.VariableName);
                         systemVariables.Add(Excel_PreviousWorkSheet.VariableName);
                         break;
+                    case LimitedSystemVariableNames.Text_Split:
+                        systemVariables.Add(Text_Split_Charactor.VariableName);
+                        break;
                 }
             }
 

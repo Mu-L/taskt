@@ -3598,6 +3598,21 @@ namespace taskt.Core.Script
                     }
                 })
             );
+
+            // SplitTextCommand v_splitCharacter
+            ChangeAttributeValue(doc, "SplitTextCommand", "v_splitCharacter", new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value)
+                    {
+                        case "[crLF]":
+                            attr.SetValue(IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Char_NewLine.VariableName));
+                            break;
+                        case "[chars]":
+                            attr.SetValue(IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Text_Split_Charactor.VariableName));
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>
