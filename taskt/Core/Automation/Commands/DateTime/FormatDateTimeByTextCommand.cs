@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Format DateTime")]
-    [Attributes.ClassAttributes.Description("This command allows you to Format DateTime.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime.")]
+    [Attributes.ClassAttributes.CommandSettings("Format DateTime By Text")]
+    [Attributes.ClassAttributes.Description("This command allows you to Format DateTime By Text.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime By Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class FormatDateTimeCommand : AFormatDateTimeCommands
+    public sealed class FormatDateTimeByTextCommand : AFormatDateTimeCommands
     {
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
-        //public string v_DateTime { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("DateTime Text")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**2020-15-1**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
+        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "DateTime")]
+        [PropertyParameterOrder(5000)]
+        [PropertyValidationRule("DateTime", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DateTime")]
+        public override string v_DateTime { get; set; }
 
         //[XmlAttribute]
         //[PropertyDescription("DateTime Format")]
@@ -40,21 +50,29 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         //public string v_Result { get; set; }
 
-        public FormatDateTimeCommand()
+        public FormatDateTimeByTextCommand()
         {
-            //this.CommandName = "FormatDateTimeCommand";
-            //this.SelectionName = "Format DateTime";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var myDT = this.ExpandValueOrVariableAsDateTime(engine);
-            
-            string format = v_Format.ExpandValueOrUserVariable(engine);
+            using (var v = new InnerScriptVariable(engine)) 
+            {
+                var cdt = new CreateDateTimeFromTextCommand()
+                {
+                    v_DateTime = v.VariableName,
+                    v_Text = this.v_DateTime,
+                };
+                cdt.RunCommand(engine);
 
-            myDT.ToString(format).StoreInUserVariable(engine, v_Result);
+                var fdt = new FormatDateTimeCommand()
+                {
+                    v_DateTime = v.VariableName,
+                    v_Format = this.v_Format,
+                    v_Result = this.v_Result,
+                };
+                fdt.RunCommand(engine);
+            }
         }
     }
 }
