@@ -21,16 +21,17 @@ namespace taskt.Core.Automation.Commands
         //public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Text Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**2000-01-01**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
-        [PropertyDetailSampleUsage("**{{{vText}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "DateTime")]
-        [Remarks("Recommended to Disable the Auto Calculation")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Text")]
+        //[PropertyDescription("Text Value")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[PropertyDetailSampleUsage("**2000-01-01**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
+        //[PropertyDetailSampleUsage("**{{{vText}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "DateTime")]
+        //[Remarks("Recommended to Disable the Auto Calculation")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Text")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_DateTimeText))]
         [PropertyParameterOrder(6000)]
         public string v_Text { get; set; }
 

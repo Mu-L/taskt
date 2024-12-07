@@ -18,16 +18,17 @@ namespace taskt.Core.Automation.Commands
     public sealed class FormatDateTimeByTextCommand : AFormatDateTimeCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("DateTime Text")]
-        [InputSpecification("")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDetailSampleUsage("**2020-15-1**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
-        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "DateTime")]
-        [PropertyParameterOrder(5000)]
-        [PropertyValidationRule("DateTime", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DateTime")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("DateTime Text")]
+        //[InputSpecification("")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDetailSampleUsage("**2020-15-1**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
+        //[PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "DateTime")]
+        //[PropertyParameterOrder(5000)]
+        //[PropertyValidationRule("DateTime", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DateTime")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_DateTimeText))]
         public override string v_DateTime { get; set; }
 
         //[XmlAttribute]
