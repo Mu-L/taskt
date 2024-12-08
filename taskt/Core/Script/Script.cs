@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using MSHTML;
+using SimpleNLG;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -433,6 +434,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_13(doc);
             convertTo3_5_2_14(doc);
             convertTo3_5_2_15(doc);
+            convertTo3_5_2_16(doc);
             return doc;
         }
 
@@ -3613,6 +3615,42 @@ namespace taskt.Core.Script
                     }
                 })
             );
+        }
+
+        private static void convertTo3_5_2_16(XDocument doc)
+        {
+            XNamespace xs = "http://www.w3.org/2001/XMLSchema";
+            int GetColumnsCount(XElement elem) 
+            {
+                return elem.Element(xs + "schema").Element(xs + "element").Element(xs + "complexType")
+                                .Element(xs + "choice").Element(xs + "element").Element(xs + "complexType")
+                                .Element(xs + "sequence").Elements(xs + "element").Count();
+            };
+
+            // Execute REAT API v_RESTParameters <-> v_AdvancedParameters
+            var rest = GetCommands(doc, "HTTPExecuteRESTAPICommand");
+            
+            foreach (var cmd in rest)
+            {
+                var advParams = cmd.Element("v_AdvancedParameters");
+                var restParams = cmd.Element("v_RESTParameters");
+
+                var advCols = GetColumnsCount(advParams);
+                var restCols = GetColumnsCount(restParams);
+
+                // bad params, swap!
+                if ((advCols == 3) && (restCols == 4))
+                {
+                    var badAdvElems = advParams.Elements().ToList();
+                    var badRestElems = restParams.Elements().ToList();
+
+                    advParams.RemoveAll();
+                    restParams.RemoveAll();
+
+                    advParams.Add(badRestElems);
+                    restParams.Add(badAdvElems);
+                }
+            }
         }
 
         /// <summary>
