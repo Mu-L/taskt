@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -41,6 +42,57 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Variable")]
         [PropertyParameterOrder(5000)]
         public static string v_OutputDateTime { get; }
+
+        /// <summary>
+        /// DateTime Text
+        /// </summary>
+        [PropertyDescription("DateTime Text")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**2000-01-01**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
+        [PropertyDetailSampleUsage("**{{{vText}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "DateTime")]
+        [Remarks("Recommended to Disable the Auto Calculation")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("DateTime Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DateTime Text")]
+        [PropertyParameterOrder(5000)]
+        public static string v_DateTimeText { get; }
+
+        /// <summary>
+        /// Excel Serial DateTime
+        /// </summary>
+        [PropertyDescription("Excel Serial DateTime")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**43210**", "Specify **43210** for Excel Serial. It's means 2018-04-20.")]
+        [PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Excel Serial")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Excel Serial", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Excel Serial")]
+        [PropertyParameterOrder(5000)]
+        public static string v_ExcelSerial { get; }
+
+        /// <summary>
+        /// Unix Time
+        /// </summary>
+        [PropertyDescription("Unix Time")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**1577836800**", "Specify **1577836800** for Unix Time. It's means 2020-01-01.")]
+        [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Unix Time")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Unix Time", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Unix Time")]
+        [PropertyParameterOrder(5000)]
+        public static string v_UnixTime { get; }
 
         ///// <summary>
         ///// Expand user variable As DateTime
