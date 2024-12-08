@@ -50,12 +50,12 @@ Feel free to open up a feature request or report a bug/issue.
 Please note whatever software that taskt is automating can affect the minimum software requirements. 
 
 ## Minimum
- * Windows 7/8.1/10/Server 2012/Server 2016/Server 2019 (32bit and 64bit)
+ * Windows 7/8.1/10/11/Server 2012/2016/2019 (32bit and 64bit)
  * 1GB ram
  * 200MB disk space
  * 1 vCPU
  * .NET Framework 4.8
- * (We think it will probably work in Windows 11 and Windows Server 2022 :-)
+ * (We think it will probably work in Windows Server 2022 :-)
 
 **Attension**: Windows 7, Windows 8.1, Windows Server 2012, Windows Server 2016 are no longer supported.
 
