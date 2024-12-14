@@ -3696,6 +3696,9 @@ namespace taskt.Core.Script
                     }
                 })
             );
+
+            // SeleniumBrowserSwitchWebBrowserWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowAndTabCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchWebBrowserWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "Switch Web Browser Window And Tab");
         }
 
         /// <summary>
