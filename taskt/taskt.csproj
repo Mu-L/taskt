@@ -815,7 +815,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCopyWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\GetFileInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToListCommand.cs" />
@@ -913,8 +913,8 @@
     <Compile Include="Core\Automation\Commands\_RemovedCommands\GetDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\GetDataRowValueCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File\GetFilesCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Folder\GetFoldersCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\GetFilesPathAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\GetFoldersPathAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetListCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\MoveFolderCommand.cs" />
