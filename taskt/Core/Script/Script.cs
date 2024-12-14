@@ -3667,6 +3667,19 @@ namespace taskt.Core.Script
 
             // ExcelGetLastRowCommand -> ExcelGetLastRowIndexCommand
             ChangeCommandName(doc, "ExcelGetLastRowCommand", "ExcelGetLastRowIndexCommand", "Get Last Row Index");
+
+            // SeleniumBrowserGetWebBrowserInformationCommand v_InfoType value
+            ChangeAttributeValue(doc, "SeleniumBrowserGetWebBrowserInformationCommand", "v_InfoType",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "handle id list":
+                            attr.SetValue("Handle IDs JSON Array");
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>
