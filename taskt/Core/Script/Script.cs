@@ -3683,6 +3683,19 @@ namespace taskt.Core.Script
                     }
                 })
             );
+
+            // SeleniumBrowserSwitchWebBrowserWindowCommand v_WindowMatchType
+            ChangeAttributeValue(doc, "SeleniumBrowserSwitchWebBrowserWindowCommand", "v_WindowMatchType",
+                new Action<XAttribute>(attr =>
+                {
+                    switch (attr.Value.ToLower())
+                    {
+                        case "handle id":
+                            attr.SetValue("Handle");
+                            break;
+                    }
+                })
+            );
         }
 
         /// <summary>

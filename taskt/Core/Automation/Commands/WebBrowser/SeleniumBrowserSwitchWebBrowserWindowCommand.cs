@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Type of Match to Make")]
         [PropertyUISelectionOption("Window URL")]
         [PropertyUISelectionOption("Window Title")]
-        [PropertyUISelectionOption("Handle ID")]
+        [PropertyUISelectionOption("Handle")]
         [InputSpecification("", true)]
         [PropertyFirstValue("Window URL")]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
                         return compFunc(iw.Title, str);
                     });
                     break;
-                case "handle id":
+                case "handle":
                     retFunc = new Func<IWebDriver, string, bool>((iw, str) =>
                     {
                         return compFunc(iw.CurrentWindowHandle, str);
