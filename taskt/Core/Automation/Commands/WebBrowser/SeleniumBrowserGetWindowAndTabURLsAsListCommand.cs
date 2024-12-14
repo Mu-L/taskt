@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser")]
     [Attributes.ClassAttributes.SubGruop("Window/Tab")]
-    [Attributes.ClassAttributes.CommandSettings("Get Window And Tab URLs")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window And Tab URLs As List")]
     [Attributes.ClassAttributes.Description("This command allows you to Get Page URLs of Windows and Tabs.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Page URLs of Windows and Tabs.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
