@@ -3757,6 +3757,34 @@ namespace taskt.Core.Script
 
             // WaitForFileToExists v_FileName -> v_TargetFilePath
             ChangeAttributeName(doc, "WaitForFileToExistCommand", "v_FileName", "v_TargetFilePath");
+
+            // Folder commands and GetFilesPathAsList v_SourceFolderPath -> v_TargetFolderPath
+            ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
+                {
+                    switch (GetCommandName(elem))
+                    {
+                        case "CopyFolderCommand":
+                        case "DeleteFolderCommand":
+                        case "ExtractionFolderPathCommand":
+                        case "GetFoldersPathAsListCommand":
+                        case "MoveFolderCommand":
+                        case "RenameFolderCommand":
+                        case "GetFilesPathAsListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_SourceFolderPath", "v_TargetFolderPath"
+            );
+
+            // CheckFolderExistsCommand v_TargetFolderName - > v_TargetFolderPath
+            ChangeAttributeName(doc, "CheckFolderExistsCommand", "v_TargetFolderName", "v_TargetFolderPath");
+
+            // CreateFolderCommand v_DestinationDirectory -> v_TargetFolderPath
+            ChangeAttributeName(doc, "CreateFolderCommand", "v_DestinationDirectory", "v_TargetFolderPath");
+
+            // WaitForFolderToExistCommand v_FolderName -> v_TargetFolderPath
+            ChangeAttributeName(doc, "WaitForFolderToExistCommand", "v_FolderName", "v_TargetFolderPath");
         }
 
         /// <summary>

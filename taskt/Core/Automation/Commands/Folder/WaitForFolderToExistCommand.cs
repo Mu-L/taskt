@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        public string v_FolderName { get; set; }
+        public string v_TargetFolderPath { get; set; }
 
 
         [XmlAttribute]

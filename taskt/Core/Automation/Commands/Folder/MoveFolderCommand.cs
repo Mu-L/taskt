@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Target Folder")]
         [PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Target Folder")]
-        public string v_SourceFolderPath { get; set; }
+        public string v_TargetFolderPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
