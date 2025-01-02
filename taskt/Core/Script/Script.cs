@@ -3723,6 +3723,40 @@ namespace taskt.Core.Script
                     ("v_applyToVariableName", "v_Result"),
                 }
             );
+
+            // File Commands v_SourceFilePath -> v_TargetFilePath
+            ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
+                {
+                    switch (GetCommandName(elem))
+                    {
+                        case "CopyFileCommand":
+                        case "DeleteFileCommand":
+                        case "ExtractionFilePathCommand":
+                        case "MoveFileCommand":
+                        case "RenameFileCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_SourceFilePath", "v_TargetFilePath"
+            );
+
+            // File Commands v_TargetFileName -> v_TargetFilePath
+            ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
+                {
+                    switch (GetCommandName(elem))
+                    {
+                        case "CheckFileExistsCommand":
+                        case "GetFileInformationCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_TargetFileName", "v_TargetFilePath"
+            );
+
+            // WaitForFileToExists v_FileName -> v_TargetFilePath
+            ChangeAttributeName(doc, "WaitForFileToExistCommand", "v_FileName", "v_TargetFilePath");
         }
 
         /// <summary>
