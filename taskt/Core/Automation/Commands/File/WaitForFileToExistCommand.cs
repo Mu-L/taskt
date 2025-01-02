@@ -20,7 +20,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_FileName { get; set; }
 
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         [PropertyFirstValue("60")]
