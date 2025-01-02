@@ -436,6 +436,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_15(doc);
             convertTo3_5_2_16(doc);
             convertTo3_5_2_17(doc);
+            convertTo3_5_2_18(doc);
             return doc;
         }
 
@@ -3699,6 +3700,29 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserSwitchWebBrowserWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowAndTabCommand
             ChangeCommandName(doc, "SeleniumBrowserSwitchWebBrowserWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowAndTabCommand", "Switch Web Browser Window And Tab");
+        }
+
+        private static void convertTo3_5_2_18(XDocument doc)
+        {
+            // SeleniumBrowserGetWebBrowserInformationCommand Handles JSON Array -> SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand
+            ChangeToOtherCommand(doc, new Func<XElement, bool>(elem =>
+                {
+                    if ((GetCommandName(elem) == "SeleniumBrowserGetWebBrowserInformationCommand") &&
+                        (elem.Attribute("v_InfoType").Value.ToLower() == "handles json array"))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }), 
+                "SeleniumBrowserGetWindowAndTabHandlesAsJSONCommand", "Get Window And Tab Handles As JSON",
+                new List<(string, string)>()
+                {
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
         }
 
         /// <summary>
