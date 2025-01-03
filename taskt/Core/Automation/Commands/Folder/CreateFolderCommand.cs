@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        public string v_CreatedFolderPath { get; set; }
+        public string v_ResultPath { get; set; }
 
         public CreateFolderCommand()
         {
@@ -99,9 +99,9 @@ namespace taskt.Core.Automation.Commands
                         System.IO.Directory.CreateDirectory(finalPath);
                     }
 
-                    if (!string.IsNullOrEmpty(v_CreatedFolderPath))
+                    if (!string.IsNullOrEmpty(v_ResultPath))
                     {
-                        finalPath.StoreInUserVariable(engine, v_CreatedFolderPath);
+                        finalPath.StoreInUserVariable(engine, v_ResultPath);
                     }
                 })
             );

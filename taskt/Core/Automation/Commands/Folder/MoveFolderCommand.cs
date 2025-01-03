@@ -60,12 +60,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
         [PropertyDescription("Variable Name to Store Folder Path Before Move")]
-        public string v_ResultPath { get; set; }
+        public string v_BeforeFolderPathResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
         [PropertyDescription("Variable Name to Store Folder Path After Move")]
-        public string v_AfterFilePathResult { get; set; }
+        public string v_AfterFolderPathResult { get; set; }
 
         public MoveFolderCommand()
         {
@@ -142,9 +142,9 @@ namespace taskt.Core.Automation.Commands
 
                     Directory.Move(path, finalPath);
 
-                    if (!string.IsNullOrEmpty(v_AfterFilePathResult))
+                    if (!string.IsNullOrEmpty(v_AfterFolderPathResult))
                     {
-                        finalPath.StoreInUserVariable(engine, v_AfterFilePathResult);
+                        finalPath.StoreInUserVariable(engine, v_AfterFolderPathResult);
                     }
                 })
             );

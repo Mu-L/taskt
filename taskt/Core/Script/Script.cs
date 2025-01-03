@@ -3785,6 +3785,36 @@ namespace taskt.Core.Script
 
             // WaitForFolderToExistCommand v_FolderName -> v_TargetFolderPath
             ChangeAttributeName(doc, "WaitForFolderToExistCommand", "v_FolderName", "v_TargetFolderPath");
+
+            // CopyFolderCommand, MoveFolderCommand v_ResultPath -> v_BeforeFolderPathResult
+            ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
+                {
+                    switch (GetCommandName(elem))
+                    {
+                        case "CopyFolderCommand":
+                        case "MoveFolderCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_ResultPath", "v_BeforeFolderPathResult"
+            );
+            // CopyFolderCommand, MoveFolderCommand v_AfterFilePathResult -> v_AfterFolderPathResult
+            ChangeAttributeName(doc, new Func<XElement, bool>(elem =>
+                {
+                    switch (GetCommandName(elem))
+                    {
+                        case "CopyFolderCommand":
+                        case "MoveFolderCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_AfterFilePathResult", "v_AfterFolderPathResult"
+            );
+
+            // CreateFolderCommand v_CreatedFolderPath -> v_ResultPath
+            ChangeAttributeName(doc, "CreateFolderCommand", "v_CreatedFolderPath", "v_ResultPath");
         }
 
         /// <summary>
