@@ -371,6 +371,14 @@
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeByExcelSerialCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeByTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\IDateTimeResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathBeforeAfterResultCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathResultCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileFilePathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFilePathBeforeAfterPathResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFilePathExistsPathProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFilePathPathResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFilePathProperties.cs" />
     <Compile Include="Core\Automation\Commands\List\RemoveListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ADataTableBothRowCommands.cs" />
