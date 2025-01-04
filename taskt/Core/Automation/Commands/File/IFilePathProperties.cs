@@ -3,7 +3,7 @@
     /// <summary>
     /// for to specifiy file path properties
     /// </summary>
-    public interface IFilePathProperties : ILExpandableProperties
+    public interface IFilePathProperties : ICanHandleFilePath
     {
         /// <summary>
         /// target file path
