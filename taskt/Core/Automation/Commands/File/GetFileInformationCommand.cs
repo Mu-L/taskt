@@ -25,12 +25,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Information Type.")]
-        [PropertyUISelectionOption("File size")]
-        [PropertyUISelectionOption("Readonly file")]
-        [PropertyUISelectionOption("Hidden file")]
-        [PropertyUISelectionOption("Creation time")]
-        [PropertyUISelectionOption("Last write time")]
-        [PropertyUISelectionOption("Last access time")]
+        [PropertyUISelectionOption("File Size")]
+        [PropertyUISelectionOption("Readonly File")]
+        [PropertyUISelectionOption("Hidden File")]
+        [PropertyUISelectionOption("Creation Time")]
+        [PropertyUISelectionOption("Last Write Time")]
+        [PropertyUISelectionOption("Last Access Time")]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_InfoType { get; set; }
@@ -124,14 +124,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void AddInstance(InstanceCounter counter)
         {
-            string type = (String.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
+            string type = (string.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
 
             switch(type)
             {
                 case "readonly file":
                 case "hidden file":
                     var boolType = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true);
-                    var ins = (String.IsNullOrEmpty(v_Result) ? "" : v_Result);
+                    var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
                     counter.addInstance(ins, boolType, true);
                     counter.addInstance(ins, boolType, false);
                     break;
@@ -140,14 +140,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void RemoveInstance(InstanceCounter counter)
         {
-            string type = (String.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
+            string type = (string.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
 
             switch (type)
             {
                 case "readonly file":
                 case "hidden file":
                     var boolType = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true);
-                    var ins = (String.IsNullOrEmpty(v_Result) ? "" : v_Result);
+                    var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
                     counter.removeInstance(ins, boolType, true);
                     counter.removeInstance(ins, boolType, false);
                     break;
