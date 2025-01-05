@@ -26,6 +26,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Information Type.")]
         [PropertyUISelectionOption("File Size")]
+        [PropertyUISelectionOption("File Size (KB)")]
+        [PropertyUISelectionOption("File Size (MB)")]
+        [PropertyUISelectionOption("File Size (GB)")]
         [PropertyUISelectionOption("Readonly File")]
         [PropertyUISelectionOption("Hidden File")]
         [PropertyUISelectionOption("Creation Time")]
@@ -99,6 +102,15 @@ namespace taskt.Core.Automation.Commands
                     {
                         case "file size":
                             ret = fileInfo.Length.ToString();
+                            break;
+                        case "file size (kb)":
+                            ret = (fileInfo.Length / 1024.0).ToString();
+                            break;
+                        case "file size (mb)":
+                            ret = (fileInfo.Length / 1048576.0).ToString();
+                            break;
+                        case "file size (gb)":
+                            ret = (fileInfo.Length / 1073741824.0).ToString();
                             break;
                         case "readonly file":
                             ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
