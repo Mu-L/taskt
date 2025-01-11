@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_camera))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class TakeScreenshotCommand : ScriptCommand
+    public sealed class TakeScreenshotCommand : ScriptCommand, ICanHandleFilePath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -118,7 +118,9 @@ namespace taskt.Core.Automation.Commands
                     System.Threading.Thread.Sleep(waitTime);
 
                     var image = WindowControls.CaptureWindow(whnd);
-                    var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
+                    //var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
+                    // MEMO: now, this.ExpandValueOrUserVariableAsFilePath has 2 methods
+                    var outputFile = EM_CanHandleFilePathExtentionMethods.ExpandValueOrUserVariableAsFilePath(this, nameof(v_FilePath), engine);
 
                     image.Save(outputFile);
                 })
