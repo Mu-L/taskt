@@ -437,6 +437,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_16(doc);
             convertTo3_5_2_17(doc);
             convertTo3_5_2_18(doc);
+            convertTo3_5_2_19(doc);
             return doc;
         }
 
@@ -3881,6 +3882,17 @@ namespace taskt.Core.Script
                     }
                 }), "v_DestinationDirectory", "v_DestinationFolderPath"
             );
+        }
+
+        private static void convertTo3_5_2_19(XDocument doc)
+        {
+            // RenameFileCommand v_ExtentionOption -> v_ExtensionOption, v_NewExtention -> v_NewExtension, v_NewName -> v_NewFileName
+            ChangeMultiAttributeNames(doc, "RenameFileCommand", new List<(string, string)>
+            {
+                ("v_ExtentionOption", "v_ExtensionOption"),
+                ("v_NewExtention", "v_NewExtension"),
+                ("v_NewName", "v_NewFileName"),
+            });
         }
 
         /// <summary>

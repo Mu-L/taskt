@@ -29,10 +29,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vNewFileName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Name")]
         [PropertyValidationRule("New FileName", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New FileName")]
-        public string v_NewName { get; set; }
+        public string v_NewFileName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Extension Option")]
         [PropertyUISelectionOption("Auto")]
         [PropertyUISelectionOption("Force Combine New Extension")]
         [PropertyUISelectionOption("Contains New File Name")]
@@ -44,18 +45,18 @@ namespace taskt.Core.Automation.Commands
         [PropertySecondaryLabel(true)]
         [PropertyIsOptional(true, "Auto")]
         [PropertySelectionChangeEvent(nameof(cmbExtensionOption_SelectionChange))]
-        public string v_ExtentionOption { get; set; }
+        public string v_ExtensionOption { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("New File Extention")]
-        [InputSpecification("New File Extention", true)]
+        [PropertyDescription("New File Extension")]
+        [InputSpecification("New File Extension", true)]
         [PropertyDetailSampleUsage("**txt**", PropertyDetailSampleUsage.ValueType.Value, "Extension")]
         [PropertyDetailSampleUsage("**{{{vExtension}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Extension")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("New Extension", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        public string v_NewExtention { get; set; }
+        public string v_NewExtension { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -127,15 +128,15 @@ namespace taskt.Core.Automation.Commands
                 new Action<string>(sourceFile =>
                 {
                     var currentFileName = Path.GetFileName(sourceFile);
-                    var newFileName = v_NewName.ExpandValueOrUserVariableAsFileName(engine);
+                    var newFileName = v_NewFileName.ExpandValueOrUserVariableAsFileName(engine);
 
-                    var newExtension = v_NewExtention.ExpandValueOrUserVariable(engine);
+                    var newExtension = v_NewExtension.ExpandValueOrUserVariable(engine);
                     if (!newExtension.StartsWith("."))
                     {
                         newExtension = "." + newExtension;
                     }
 
-                    var newFileOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExtentionOption), engine);
+                    var newFileOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExtensionOption), engine);
                     switch (newFileOption)
                     {
                         case "auto":
@@ -195,7 +196,7 @@ namespace taskt.Core.Automation.Commands
         private void cmbExtensionOption_SelectionChange(object sender, EventArgs e)
         {
             var cmb = (System.Windows.Forms.ComboBox)sender;
-            ControlsList.SecondLabelProcess(nameof(v_ExtentionOption), nameof(v_ExtentionOption), cmb.SelectedItem.ToString());
+            ControlsList.SecondLabelProcess(nameof(v_ExtensionOption), nameof(v_ExtensionOption), cmb.SelectedItem.ToString());
         }
     }
 }
