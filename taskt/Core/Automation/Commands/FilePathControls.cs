@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -190,7 +191,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return (path.Substring(0, r.index), r.variableName, path.Substring(r.index + r.variableName.Length + 1));
+                return (path.Substring(0, r.index), r.variableName, path.Substring(r.index + r.variableName.Length));
             }
         }
 
@@ -218,13 +219,13 @@ namespace taskt.Core.Automation.Commands
             var counterVariableName = VariableNameControls.GetVariableName(wrappedCounterVariableName, engine);
 
             // URL Check
-            var checkPath = beforeVariable + "0" + afterVariable;
+            var checkPath = $"{beforeVariable}0{afterVariable}";
             if (IsURL(checkPath))
             {
                 // path is URL, FileCounter, supportExtension does not work
                 if (!setting.allowURL)
                 {
-                    throw new Exception("Path is URL. Value: '" + beforeVariable + wrappedCounterVariableName + afterVariable + "'");
+                    throw new Exception($"Path is URL. Value: '{beforeVariable}{wrappedCounterVariableName}{afterVariable}'");
                 }
                 else
                 {
@@ -234,69 +235,136 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 // not URL
-                // check folder path
-                if (!IsFullPath(checkPath))
+                //// check folder path
+                //if (!IsFullPath(checkPath))
+                //{
+                //    beforeVariable = Path.Combine(Path.GetDirectoryName(engine.FileName), beforeVariable);
+                //}
+                //// check extension
+                //if (!HasExtension(checkPath) && (setting.supportExtension == PropertyFilePathSetting.ExtensionBehavior.RequiredExtension))
+                //{
+                //    var extensions = setting.GetExtensions();
+                //    if (extensions.Count > 0)
+                //    {
+                //        afterVariable = afterVariable + "." + extensions[0];
+                //    }
+                //}
+
+                //string fmt = "";
+                //switch (counterVariableName)
+                //{
+                //    case "FileCounter.F0":
+                //        fmt = "0";
+                //        break;
+                //    case "FileCounter.F00":
+                //        fmt = "00";
+                //        break;
+                //    case "FileCounter.F000":
+                //        fmt = "000";
+                //        break;
+                //}
+
+                //int max = engine.engineSettings.MaxFileCounter;
+                //switch(setting.supportFileCounter)
+                //{
+                //    case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
+                //        for (int i = 1; i <= max; i++)
+                //        {
+                //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
+                //            if (!File.Exists(testPath))
+                //            {
+                //                return testPath;
+                //            }
+                //        }
+                //        break;
+
+                //    case PropertyFilePathSetting.FileCounterBehavior.LastExists:
+                //        for (int i = 1; i <= max; i++)
+                //        {
+                //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
+                //            if (!File.Exists(testPath))
+                //            {
+                //                if (i > 1)
+                //                {
+                //                    return beforeVariable + (i - 1).ToString(fmt) + afterVariable;
+                //                }
+                //                else
+                //                {
+                //                    return testPath;
+                //                }
+                //            }
+                //        }
+                //        break;
+                //}
+                //// not found :-(
+                //return beforeVariable + max.ToString(fmt) + afterVariable;
+
+                int digits = 0;
+                if (counterVariableName == SystemVariables.FileCounter_F0.VariableName)
                 {
-                    beforeVariable = Path.Combine(Path.GetDirectoryName(engine.FileName), beforeVariable);
+                    digits = 1;
                 }
-                // check extension
-                if (!HasExtension(checkPath) && (setting.supportExtension == PropertyFilePathSetting.ExtensionBehavior.RequiredExtension))
+                else if (counterVariableName == SystemVariables.FileCounter_F00.VariableName)
                 {
-                    var extensions = setting.GetExtensions();
-                    if (extensions.Count > 0)
+                    digits = 2;
+                }
+                else if (counterVariableName == SystemVariables.FileCounter_F000.VariableName)
+                {
+                    digits = 3;
+                }
+
+                if (digits > 0)
+                {
+                    var folderPath = Path.GetDirectoryName(beforeVariable);
+                    var fileNameBeforeCounter = Path.GetFileName(beforeVariable);
+
+                    var fileNameAfterCounter = Path.GetFileNameWithoutExtension(afterVariable);
+                    var fileExtension = Path.GetExtension(afterVariable);
+
+                    string res;
+                    switch (setting.supportFileCounter)
                     {
-                        afterVariable = afterVariable + "." + extensions[0];
+                        case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
+                            using (var fn = new InnerScriptVariable(engine))
+                            {
+                                var notExists = new GetNonExistentFilePathCommand()
+                                {
+                                    v_TargetFolderPath = folderPath,
+                                    v_BeforeFileCounter = fileNameBeforeCounter,
+                                    v_Digits = digits.ToString(),
+                                    v_AfterFileCounter = fileNameAfterCounter,
+                                    v_Extension = fileExtension,
+                                    v_Result = fn.VariableName,
+                                };
+                                notExists.RunCommand(engine);
+                                res = fn.VariableValue.ToString();
+                            }
+                            break;
+                        case PropertyFilePathSetting.FileCounterBehavior.LastExists:
+                            using (var fn = new InnerScriptVariable(engine))
+                            {
+                                var lastExists = new GetLastExistentNumberedFilePathCommand()
+                                {
+                                    v_TargetFolderPath = folderPath,
+                                    v_BeforeFileCounter = fileNameBeforeCounter,
+                                    v_Digits = digits.ToString(),
+                                    v_AfterFileCounter = fileNameAfterCounter,
+                                    v_Extension = fileExtension,
+                                    v_Result = fn.VariableName,
+                                };
+                                lastExists.RunCommand(engine);
+                                res = fn.VariableValue.ToString();
+                            }
+                            break;
+                        default:
+                            throw new Exception($"Strange FilePathSetting Attribute Value. Value: '{setting.supportFileCounter.ToString()}'");
                     }
+                    return res;
                 }
-
-                string fmt = "";
-                switch (counterVariableName)
+                else
                 {
-                    case "FileCounter.F0":
-                        fmt = "0";
-                        break;
-                    case "FileCounter.F00":
-                        fmt = "00";
-                        break;
-                    case "FileCounter.F000":
-                        fmt = "000";
-                        break;
+                    throw new Exception($"Strange File Counter Variable. Name: '{counterVariableName}'");
                 }
-
-                int max = engine.engineSettings.MaxFileCounter;
-                switch(setting.supportFileCounter)
-                {
-                    case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
-                        for (int i = 1; i <= max; i++)
-                        {
-                            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
-                            if (!File.Exists(testPath))
-                            {
-                                return testPath;
-                            }
-                        }
-                        break;
-
-                    case PropertyFilePathSetting.FileCounterBehavior.LastExists:
-                        for (int i = 1; i <= max; i++)
-                        {
-                            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
-                            if (!File.Exists(testPath))
-                            {
-                                if (i > 1)
-                                {
-                                    return beforeVariable + (i - 1).ToString(fmt) + afterVariable;
-                                }
-                                else
-                                {
-                                    return testPath;
-                                }
-                            }
-                        }
-                        break;
-                }
-                // not found :-(
-                return beforeVariable + max.ToString(fmt) + afterVariable;
             }
         }
 
