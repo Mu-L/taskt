@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RenameFileCommand : ScriptCommand
+    public sealed class RenameFileCommand : ScriptCommand, ICanHandleFileName
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -128,7 +128,8 @@ namespace taskt.Core.Automation.Commands
                 new Action<string>(sourceFile =>
                 {
                     var currentFileName = Path.GetFileName(sourceFile);
-                    var newFileName = v_NewFileName.ExpandValueOrUserVariableAsFileName(engine);
+                    //var newFileName = v_NewFileName.ExpandValueOrUserVariableAsFileName(engine);
+                    var newFileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_NewFileName), engine);
 
                     var newExtension = v_NewExtension.ExpandValueOrUserVariable(engine);
                     if (!newExtension.StartsWith("."))
