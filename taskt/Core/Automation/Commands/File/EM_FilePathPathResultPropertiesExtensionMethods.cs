@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             var variableName = command.ToScriptCommand().GetRawPropertyValueAsString(nameof(command.v_ResultPath), "Result Path");
             if (!string.IsNullOrEmpty(variableName))
             {
-                command.StoreFilePathInUserVariable(path, variableName, engine);
+                command.StoreFilePathInUserVariable(path, nameof(command.v_ResultPath), engine);
             }
         }
     }
