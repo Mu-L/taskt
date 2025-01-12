@@ -15,25 +15,26 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public sealed class CheckFileExistsCommand : AFileExistsFilePathResultCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
-        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
-        public string v_TargetFilePath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        //[PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
+        //public string v_TargetFilePath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the File Exists, Result is **TRUE**")]
+        [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        [PropertyFirstValue("0")]
-        [PropertyIsOptional(true, "0")]
-        public string v_WaitTimeForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //[PropertyFirstValue("0")]
+        //[PropertyIsOptional(true, "0")]
+        //public string v_WaitTimeForFile { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        public string v_ResultPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //public string v_ResultPath { get; set; }
 
         public CheckFileExistsCommand()
         {
@@ -54,7 +55,17 @@ namespace taskt.Core.Automation.Commands
             //{
             //    false.StoreInUserVariable(engine, v_UserVariableName);
             //}
-            FilePathControls.FileAction(this, engine,
+            //FilePathControls.FileAction(this, engine,
+            //    new Action<string>(path =>
+            //    {
+            //        true.StoreInUserVariable(engine, v_Result);
+            //    }),
+            //    new Action<Exception>(ex =>
+            //    {
+            //        false.StoreInUserVariable(engine, v_Result);
+            //    })
+            //);
+            this.FileAction(engine,
                 new Action<string>(path =>
                 {
                     true.StoreInUserVariable(engine, v_Result);
