@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExtractionFilePathCommand : ScriptCommand
+    public sealed class ExtractionFilePathCommand : ScriptCommand, IFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -50,7 +50,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_TargetFilePath), engine);
+            //var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_TargetFilePath), engine);
+            var filePath = this.ExpandValueOrUserVariableAsFilePath(engine);
             string format = v_Format.ExpandValueOrUserVariable(engine);
 
             string result = FilePathControls.FormatFileFolderPath(filePath, format);
