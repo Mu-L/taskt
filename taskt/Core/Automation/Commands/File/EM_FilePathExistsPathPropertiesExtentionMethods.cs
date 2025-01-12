@@ -35,8 +35,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// Wait For File
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="waitTime"></param>
+        /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns>file path</returns>
         /// <exception cref="Exception"></exception>

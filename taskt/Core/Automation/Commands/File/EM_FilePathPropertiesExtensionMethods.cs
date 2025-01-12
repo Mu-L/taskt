@@ -9,7 +9,6 @@
         /// expand value or user variable to FilePath. this method use PropertyFilePathSetting
         /// </summary>
         /// <param name="command"></param>
-        /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         public static string ExpandValueOrUserVariableAsFilePath(this IFilePathProperties command, Engine.AutomationEngineInstance engine)
