@@ -1,0 +1,55 @@
+﻿using System;
+
+namespace taskt.Core.Automation.Commands
+{
+    /// <summary>
+    /// for IFilePathExistsFilePathResult Extension methods
+    /// </summary>
+    public static class EM_FilePathPathResultPropertiesExtensionMethods
+    {
+        /// <summary>
+        /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void FileAction(this IFilePathPathResultProperties command, Engine.AutomationEngineInstance engine, Action<string> actionFunc, Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var path = command.WaitForFile(engine);
+
+                actionFunc(path);
+
+                command.StoreResultFilePathInUserVariable(path, engine);
+            }
+            catch (Exception ex)
+            {
+                if (errorFunc != null)
+                {
+                    errorFunc(ex);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        /// <summary>
+        /// store file path result in User variable
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="path"></param>
+        /// <param name="engine"></param>
+        public static void StoreResultFilePathInUserVariable(this IFilePathPathResultProperties command, string path, Engine.AutomationEngineInstance engine)
+        {
+            var variableName = command.ToScriptCommand().GetRawPropertyValueAsString(nameof(command.v_ResultPath), "Result Path");
+            if (!string.IsNullOrEmpty(variableName))
+            {
+                command.StoreFilePathInUserVariable(path, variableName, engine);
+            }
+        }
+    }
+}

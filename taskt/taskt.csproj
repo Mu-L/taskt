@@ -377,6 +377,7 @@
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFileNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFilePathExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\File\EM_FilePathPathResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_FilePathExistsPathPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_FilePathPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\GetLastExistentNumberdFilePathCommand.cs" />
