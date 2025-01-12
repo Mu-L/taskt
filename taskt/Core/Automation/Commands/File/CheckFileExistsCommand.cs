@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CheckFileExistsCommand : AFileExistsFilePathResultCommands
+    public sealed class CheckFileExistsCommand : AFileExistsFilePathPathResultCommands
     {
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]

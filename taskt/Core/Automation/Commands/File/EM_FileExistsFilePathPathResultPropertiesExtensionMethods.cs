@@ -3,9 +3,9 @@
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for IFilePathExistsFilePathResult Extension methods
+    /// for IFileExistsFilePathPathResult Extension methods
     /// </summary>
-    public static class EM_FilePathPathResultPropertiesExtensionMethods
+    public static class EM_FileExistsFilePathPathResultPropertiesExtensionMethods
     {
         /// <summary>
         /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc.

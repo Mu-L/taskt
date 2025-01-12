@@ -3,7 +3,7 @@
     /// <summary>
     /// for exists file path properties
     /// </summary>
-    public interface IFilePathExistsPathProperties : IFilePathProperties
+    public interface IFileExistsFilePathProperties : IFilePathProperties
     {
         /// <summary>
         /// wait time for file (sec)

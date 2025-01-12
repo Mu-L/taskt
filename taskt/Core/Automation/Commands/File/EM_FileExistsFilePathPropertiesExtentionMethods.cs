@@ -4,9 +4,9 @@ using System.IO;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for IFilePathExistsPathProperties extension methods
+    /// for IFileExistsFilePathProperties extension methods
     /// </summary>
-    public static class EM_FilePathExistsPathPropertiesExtentionMethods
+    public static class EM_FileExistsFilePathPropertiesExtentionMethods
     {
         /// <summary>
         /// expand value or User variable as Wait Time for File
@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static int ExpandValueOrUserVariableAsWaitTimeForFile(this IFilePathExistsPathProperties command, Engine.AutomationEngineInstance engine)
+        public static int ExpandValueOrUserVariableAsWaitTimeForFile(this IFileExistsFilePathProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ToScriptCommand().ExpandValueOrUserVariableAsInteger(nameof(command.v_WaitTimeForFile), "Wait Time For File", engine);
         }
@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (string, int) ExpandValueOrUserVariableAsFilePathAndWaitTimeForFile(this IFilePathExistsPathProperties command, Engine.AutomationEngineInstance engine)
+        public static (string, int) ExpandValueOrUserVariableAsFilePathAndWaitTimeForFile(this IFileExistsFilePathProperties command, Engine.AutomationEngineInstance engine)
         {
             var f = command.ExpandValueOrUserVariableAsFilePath(engine);
             var w = command.ExpandValueOrUserVariableAsWaitTimeForFile(engine);
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns>file path</returns>
         /// <exception cref="Exception"></exception>
-        public static string WaitForFile(this IFilePathExistsPathProperties command, Engine.AutomationEngineInstance engine)
+        public static string WaitForFile(this IFileExistsFilePathProperties command, Engine.AutomationEngineInstance engine)
         {
             (var path, var waitTime) = command.ExpandValueOrUserVariableAsFilePathAndWaitTimeForFile(engine);
 

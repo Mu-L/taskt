@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// execute some action to exists file commands
     /// </summary>
-    public abstract class AFileExistsFilePathCommands : AFileFilePathCommands, IFilePathExistsPathProperties
+    public abstract class AFileExistsFilePathCommands : AFileFilePathCommands, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
