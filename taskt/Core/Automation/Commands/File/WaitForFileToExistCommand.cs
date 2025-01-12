@@ -13,21 +13,21 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class WaitForFileToExistCommand : ScriptCommand
+    public sealed class WaitForFileToExistCommand : AFileExistsFilePathResultCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
-        public string v_TargetFilePath { get; set; }
+        public override string v_TargetFilePath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        [PropertyFirstValue("60")]
-        public string v_WaitTimeForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //[PropertyFirstValue("60")]
+        //public string v_WaitTimeForFile { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        public string v_ResultPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //public string v_ResultPath { get; set; }
 
         public WaitForFileToExistCommand()
         {
@@ -48,7 +48,14 @@ namespace taskt.Core.Automation.Commands
             //});
             //this.WaitProcess(nameof(v_WaitTime), "File", fileCheckFunc, engine);
 
-            FilePathControls.FileAction(this, engine,
+            //FilePathControls.FileAction(this, engine,
+            //    new Action<string>(path =>
+            //    {
+            //        // nothing to do
+            //    })
+            //);
+
+            this.FileAction(engine,
                 new Action<string>(path =>
                 {
                     // nothing to do
