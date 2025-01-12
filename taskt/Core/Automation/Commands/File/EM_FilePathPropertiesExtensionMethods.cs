@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace taskt.Core.Automation.Commands
+﻿namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// extension methods for IFilePathProperties
+    /// </summary>
     public static class EM_FilePathPropertiesExtensionMethods
     {
-
+        /// <summary>
+        /// expand value or user variable to FilePath. this method use PropertyFilePathSetting
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariableAsFilePath(this IFilePathProperties command, Engine.AutomationEngineInstance engine)
+        {
+            return command.ExpandValueOrUserVariableAsFilePath(nameof(command.v_TargetFilePath), engine);
+        }
     }
 }

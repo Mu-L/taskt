@@ -44,6 +44,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// check file path is valid
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static bool IsValidPathString(string path)
+        {
+            var invs = Path.GetInvalidPathChars();
+            return (path.IndexOfAny(invs) < 0);
+        }
+
+        /// <summary>
         /// check file path contains FileCounter variable
         /// </summary>
         /// <param name="path">don't convert variable</param>
@@ -311,14 +322,36 @@ namespace taskt.Core.Automation.Commands
                 p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
             }
 
-            var invs = Path.GetInvalidPathChars();
-            if (p.IndexOfAny(invs) < 0)
+            //var invs = Path.GetInvalidPathChars();
+            //if (p.IndexOfAny(invs) < 0)
+            if (IsValidPathString(p))
             {
                 return p;
             }
             else
             {
                 throw new Exception($"File Path contains Invalid chars. Path: '{p}'");
+            }
+        }
+
+        /// <summary>
+        /// Store File Path in user variable
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="path"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <exception cref="Exception"></exception>
+        public static void StoreFilePathInUserVariable(this ICanHandleFilePath command, string path, string parameterName, AutomationEngineInstance engine)
+        {
+            if (IsValidPathString(path))
+            {
+                var variableName = command.ToScriptCommand().GetRawPropertyValueAsString(parameterName, "File Path");
+                ExtensionMethods.StoreInUserVariable(variableName, path, engine);
+            }
+            else
+            {
+                throw new Exception($"Invalid File Path. Can not Store In User Variables. Path: '{path}'");
             }
         }
     }
