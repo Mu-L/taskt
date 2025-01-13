@@ -3938,6 +3938,26 @@ namespace taskt.Core.Script
                     ("v_WaitForFile", "v_WaitTimeForFile"),
                 }
             );
+
+            // RunPowerShell/BatchScrpitFile v_ScriptPath -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "RunBatchScriptFileCommand":
+                        case "RunPowerShellScriptFileCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>
+                {
+                    ("v_ScriptPath", "v_TargetFilePath"),
+                    ("v_WaitForFile", "v_WaitTimeForFile"),
+                }
+            );
         }
 
         /// <summary>
