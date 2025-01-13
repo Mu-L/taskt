@@ -14,12 +14,12 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RenameFileCommand : ScriptCommand, ICanHandleFileName
+    public sealed class RenameFileCommand : AFileExistsFilePathBeforeAfterResultCommands, ICanHandleFileName
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
-        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
-        public string v_TargetFilePath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        //[PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
+        //public string v_TargetFilePath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -29,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vNewFileName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Name")]
         [PropertyValidationRule("New FileName", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New FileName")]
+        [PropertyParameterOrder(6000)]
         public string v_NewFileName { get; set; }
 
         [XmlAttribute]
@@ -45,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertySecondaryLabel(true)]
         [PropertyIsOptional(true, "Auto")]
         [PropertySelectionChangeEvent(nameof(cmbExtensionOption_SelectionChange))]
+        [PropertyParameterOrder(7000)]
         public string v_ExtensionOption { get; set; }
 
         [XmlAttribute]
@@ -56,6 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("New Extension", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(8000)]
         public string v_NewExtension { get; set; }
 
         [XmlAttribute]
@@ -66,25 +69,26 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Ignore**", "Nothing to do")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(9000)]
         public string v_IfFileNameSame { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitTimeForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //public string v_WaitTimeForFile { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyDescription("Variable Name to Store File Path Before Rename")]
-        public string v_BeforeFilePathResult { get; set; }
-
-        [XmlAttribute]
+        //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Store File Path After Rename")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
-        public string v_AfterFilePathResult { get; set; }
+        //[PropertyDescription("Variable Name to Store File Path Before Rename")]
+        //public string v_BeforeFilePathResult { get; set; }
+
+        //[XmlAttribute]
+        ////[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Store File Path After Rename")]
+        //[PropertyIsOptional(true)]
+        //[PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
+        //public string v_AfterFilePathResult { get; set; }
 
         public RenameFileCommand()
         {
@@ -124,11 +128,79 @@ namespace taskt.Core.Automation.Commands
             ////rename file
             //File.Move(sourceFile, destinationPath);
 
-            FilePathControls.FileAction(this, engine,
-                new Action<string>(sourceFile =>
+            //FilePathControls.FileAction(this, engine,
+            //    new Action<string>(sourceFile =>
+            //    {
+            //        var currentFileName = Path.GetFileName(sourceFile);
+            //        //var newFileName = v_NewFileName.ExpandValueOrUserVariableAsFileName(engine);
+            //        var newFileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_NewFileName), engine);
+
+            //        var newExtension = v_NewExtension.ExpandValueOrUserVariable(engine);
+            //        if (!newExtension.StartsWith("."))
+            //        {
+            //            newExtension = "." + newExtension;
+            //        }
+
+            //        var newFileOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExtensionOption), engine);
+            //        switch (newFileOption)
+            //        {
+            //            case "auto":
+            //                if (!Path.HasExtension(newFileName))
+            //                {
+            //                    if (newExtension == ".")
+            //                    {
+            //                        newFileName += Path.GetExtension(currentFileName);
+            //                    }
+            //                    else
+            //                    {
+            //                        newFileName += newExtension;
+            //                    }
+            //                }
+            //                break;
+            //            case "force combine new extension":
+            //                newFileName += newExtension;
+            //                break;
+            //            case "contains new file name":
+            //                // nothing to do
+            //                break;
+            //            case "use before rename path":
+            //                newFileName += Path.GetExtension(currentFileName);
+            //                break;
+            //        }
+
+            //        // get source file name and info
+            //        FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+            //        // create destination
+            //        var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+
+            //        var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFileNameSame), engine);
+            //        if (currentFileName == newFileName)
+            //        {
+            //            switch (whenSame)
+            //            {
+            //                case "ignore":
+            //                    return;
+
+            //                case "error":
+            //                    throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
+            //            }
+            //        }
+
+            //        // rename file
+            //        File.Move(sourceFile, destinationPath);
+
+            //        if (!string.IsNullOrEmpty(v_AfterFilePathResult))
+            //        {
+            //            destinationPath.StoreInUserVariable(engine, v_AfterFilePathResult);
+            //        }
+            //    })
+            //);
+
+            this.FileAction(engine,
+                new Func<string, string>(path =>
                 {
-                    var currentFileName = Path.GetFileName(sourceFile);
-                    //var newFileName = v_NewFileName.ExpandValueOrUserVariableAsFileName(engine);
+                    var currentFileName = Path.GetFileName(path);
                     var newFileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_NewFileName), engine);
 
                     var newExtension = v_NewExtension.ExpandValueOrUserVariable(engine);
@@ -164,10 +236,10 @@ namespace taskt.Core.Automation.Commands
                             break;
                     }
 
-                    //get source file name and info
-                    FileInfo sourceFileInfo = new FileInfo(sourceFile);
+                    // get source file name and info
+                    var sourceFileInfo = new FileInfo(path);
 
-                    //create destination
+                    // create destination
                     var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
 
                     var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFileNameSame), engine);
@@ -176,20 +248,17 @@ namespace taskt.Core.Automation.Commands
                         switch (whenSame)
                         {
                             case "ignore":
-                                return;
+                                return destinationPath;
 
                             case "error":
-                                throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
+                                throw new Exception($"File Name before and after the changes is same. Name '{newFileName}'");
                         }
                     }
 
-                    //rename file
-                    File.Move(sourceFile, destinationPath);
+                    // rename file
+                    File.Move(path, destinationPath);
 
-                    if (!string.IsNullOrEmpty(v_AfterFilePathResult))
-                    {
-                        destinationPath.StoreInUserVariable(engine, v_AfterFilePathResult);
-                    }
+                    return destinationPath;
                 })
             );
         }
