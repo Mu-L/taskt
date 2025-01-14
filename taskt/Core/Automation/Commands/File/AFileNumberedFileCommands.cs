@@ -10,6 +10,8 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        [PropertyIsOptional(true, "Script File Folder")]
+        [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_TargetFolderPath { get; set; }
 
         [XmlAttribute]
