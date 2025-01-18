@@ -15,15 +15,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_stop_process))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class UnloadScriptFileCommand : ScriptCommand
+    public sealed class UnloadScriptFileCommand : AFileExistsFilePathCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
-        [PropertyDescription("Path to the Script File to Pre-Load. Use 'Run Script File' with the same path to execute.")]
+        [PropertyDescription("Script File Path to Pre-Load. Use 'Run Script File' with the same path to execute.")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.xml**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xml")]
-        public string v_TargetFilePath { get; set; }
+        public override string v_TargetFilePath { get; set; }
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -33,11 +33,12 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Selecting this field changes the parameters that will be required in the next step")]
         [PropertyIsOptional(true, "Continue if not found")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(6000)]
         public string v_ErrorPreference { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitTimeForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //public string v_WaitTimeForFile { get; set; }
 
 
         public UnloadScriptFileCommand()
@@ -52,17 +53,18 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
-            var startFile = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            // startFile = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var scriptFile = this.WaitForFile(engine);
 
             var errorPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorPreference), engine);
 
-            if (engine.PreloadedTasks.ContainsKey(startFile))
+            if (engine.PreloadedTasks.ContainsKey(scriptFile))
             {
-                engine.PreloadedTasks.Remove(startFile);
+                engine.PreloadedTasks.Remove(scriptFile);
             }
             else if (errorPreference == "error if not found")
             {
-                throw new Exception($"The task {startFile} was not loaded.  Throwing error due to selected preference.");
+                throw new Exception($"The task {scriptFile} was not loaded.  Throwing error due to selected preference.");
             }
         }
     }
