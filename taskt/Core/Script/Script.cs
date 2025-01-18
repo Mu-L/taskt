@@ -3958,6 +3958,9 @@ namespace taskt.Core.Script
                     ("v_WaitForFile", "v_WaitTimeForFile"),
                 }
             );
+
+            // RunJavaScriptFileCommand v_FilePath -> v_TargetFilePath
+            ChangeAttributeName(doc, "RunJavaScriptFileCommand", "v_FilePath", "v_TargetFilePath");
         }
 
         /// <summary>
