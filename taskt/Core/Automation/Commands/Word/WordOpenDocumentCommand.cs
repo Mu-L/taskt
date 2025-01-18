@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class WordOpenDocumentCommand : ScriptCommand
+    public sealed class WordOpenDocumentCommand : ScriptCommand, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
@@ -42,9 +42,10 @@ namespace taskt.Core.Automation.Commands
             var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
-            var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            //var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var wordFilePath = this.WaitForFile(engine);
 
-            wordInstance.Documents.Open(vFilePath);
+            wordInstance.Documents.Open(wordFilePath);
         }
     }
 }

@@ -559,45 +559,45 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region wait for file
-        /// <summary>
-        /// Wait For File
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="waitTime"></param>
-        /// <param name="engine"></param>
-        /// <returns>file path</returns>
-        /// <exception cref="Exception"></exception>
-        public static string WaitForFile(string path, int waitTime, Engine.AutomationEngineInstance engine)
-        {
-            var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
-            {
-                if (IsURL(path))
-                {
-                    // if path is URL, don't check existance
-                    return (true, path);
-                }
-                else
-                {
-                    if (File.Exists(path))
-                    {
-                        return (true, path);
-                    }
-                    else
-                    {
-                        return (false, null);
-                    }
-                }
-            }), engine);
+        ///// <summary>
+        ///// Wait For File
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="waitTime"></param>
+        ///// <param name="engine"></param>
+        ///// <returns>file path</returns>
+        ///// <exception cref="Exception"></exception>
+        //public static string WaitForFile(string path, int waitTime, Engine.AutomationEngineInstance engine)
+        //{
+        //    var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
+        //    {
+        //        if (IsURL(path))
+        //        {
+        //            // if path is URL, don't check existance
+        //            return (true, path);
+        //        }
+        //        else
+        //        {
+        //            if (File.Exists(path))
+        //            {
+        //                return (true, path);
+        //            }
+        //            else
+        //            {
+        //                return (false, null);
+        //            }
+        //        }
+        //    }), engine);
 
-            if (ret is string returnPath)
-            {
-                return returnPath;
-            }
-            else
-            {
-                throw new Exception("Strange Value returned in WaitForFile. Type: " + ret.GetType().FullName);
-            }
-        }
+        //    if (ret is string returnPath)
+        //    {
+        //        return returnPath;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Strange Value returned in WaitForFile. Type: " + ret.GetType().FullName);
+        //    }
+        //}
 
         ///// <summary>
         ///// wait for file. this method NOT use PropertyFilePathSetting
@@ -619,20 +619,20 @@ namespace taskt.Core.Automation.Commands
         //    return WaitForFile(path, waitTime, engine);
         //}
 
-        /// <summary>
-        /// wait for file. this method use PropertyFilePathSetting
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="pathName">use PropertyFilePathSetting</param>
-        /// <param name="waitTimeName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static string WaitForFile(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
-        {
-            var path = command.ExpandValueOrUserVariableAsFilePath(pathName, engine);
-            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
-            return WaitForFile(path, waitTime, engine);
-        }
+        ///// <summary>
+        ///// wait for file. this method use PropertyFilePathSetting
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="pathName">use PropertyFilePathSetting</param>
+        ///// <param name="waitTimeName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static string WaitForFile(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var path = command.ExpandValueOrUserVariableAsFilePath(pathName, engine);
+        //    var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+        //    return WaitForFile(path, waitTime, engine);
+        //}
 
         ///// <summary>
         ///// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc.

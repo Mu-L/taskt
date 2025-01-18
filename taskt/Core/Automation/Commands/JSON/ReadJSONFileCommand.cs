@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ReadJSONFileCommand : ScriptCommand
+    public sealed class ReadJSONFileCommand : ScriptCommand, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         //[PropertyDescription("Path to the File")]
@@ -62,9 +62,10 @@ namespace taskt.Core.Automation.Commands
             //{
             //    filePath = v_FilePath.ConvertToUserVariable(engine);
             //}
-            string filePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            //string filePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);[
+            var filePath = this.WaitForFile(engine);
 
-            ScriptCommand readFile = new ReadTextFileCommand
+            var readFile = new ReadTextFileCommand
             {
                 v_TargetFilePath = filePath,
                 v_userVariableName = this.v_Result

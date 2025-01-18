@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExcelOpenWorkbookCommand : AExcelInstanceCommands
+    public sealed class ExcelOpenWorkbookCommand : AExcelInstanceCommands, IFileExistsFilePathProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -71,7 +71,8 @@ namespace taskt.Core.Automation.Commands
             //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            //var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var excelFilePath = this.WaitForFile(engine);
 
             var pass = v_Password.ExpandValueOrUserVariable(engine);
 
@@ -89,11 +90,11 @@ namespace taskt.Core.Automation.Commands
             {
                 if (string.IsNullOrEmpty(pass))
                 {
-                    excelInstance.Workbooks.Open(vFilePath);
+                    excelInstance.Workbooks.Open(excelFilePath);
                 }
                 else
                 {
-                    excelInstance.Workbooks.Open(vFilePath, Password: pass);
+                    excelInstance.Workbooks.Open(excelFilePath, Password: pass);
                 }
             };
 

@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ReadTextFileCommand : ScriptCommand
+    public sealed class ReadTextFileCommand : ScriptCommand, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
@@ -74,7 +74,8 @@ namespace taskt.Core.Automation.Commands
             //    result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
             //}
 
-            var filePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            //var filePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var filePath = this.WaitForFile(engine);
             string result;
             if (FilePathControls.IsURL(filePath))
             {

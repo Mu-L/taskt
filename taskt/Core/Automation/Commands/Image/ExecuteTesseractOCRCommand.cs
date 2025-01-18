@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_camera))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExecuteTesseractOCRCommand : ScriptCommand
+    public class ExecuteTesseractOCRCommand : ScriptCommand, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -70,7 +70,8 @@ namespace taskt.Core.Automation.Commands
 
                     if (v_TargetFilePath != string.Empty)
                     {
-                        var imagePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+                        //var imagePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+                        var imagePath = this.WaitForFile(engine);
                         img = Pix.LoadFromFile(imagePath);
                     }
                     else if (v_ImageVar != string.Empty)
