@@ -108,9 +108,9 @@ namespace taskt.Core.Automation.Commands
             proc.WaitForExit();
 
             //store output into variable
-            StreamReader reader = proc.StandardOutput;
+            var reader = proc.StandardOutput;
             
-            if (!String.IsNullOrEmpty(v_applyToVariableName))
+            if (!string.IsNullOrEmpty(v_applyToVariableName))
             {
                 string output = reader.ReadToEnd();
                 output.StoreRawDataInUserVariable(engine, v_applyToVariableName);
