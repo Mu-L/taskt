@@ -3919,7 +3919,7 @@ namespace taskt.Core.Script
                 }
             );
 
-            // LoadScriptFile/RunScriptFile v_tasktFile -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
+            // LoadScriptFile/RunScriptFile/UnloadScriptFile v_tasktFile -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
             ChangeMultiAttributeNames(doc,
                 new Func<XElement, bool>(el =>
                 {
@@ -3927,6 +3927,7 @@ namespace taskt.Core.Script
                     {
                         case "LoadScriptFileCommand":
                         case "RunScriptFileCommand":
+                        case "UnloadScriptFileCommand":
                             return true;
                         default:
                             return false;
