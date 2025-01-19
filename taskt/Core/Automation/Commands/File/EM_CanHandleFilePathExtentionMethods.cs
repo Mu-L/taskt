@@ -115,17 +115,17 @@ namespace taskt.Core.Automation.Commands
         /// expand value or user variable as FilePath support FileCounterVariable
         /// </summary>
         /// <param name="parameterValue"></param>
-        /// <param name="setting"></param>
+        /// <param name="settings"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static string ExpandValueOrUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting setting, AutomationEngineInstance engine)
+        private static string ExpandValueOrUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting settings, AutomationEngineInstance engine)
         {
             // check contains FileCounter
             if (!ContainsFileCounterVariable(parameterValue, engine))
             {
                 // don't contains FileCounter
-                return ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+                return ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, settings, engine);
             }
 
             (var beforeVariable, var wrappedCounterVariableName, var afterVariable) = ParseFileCounterContainPath(parameterValue, engine);
@@ -139,7 +139,7 @@ namespace taskt.Core.Automation.Commands
             if (IsURL(checkPath))
             {
                 // path is URL, FileCounter, supportExtension does not work
-                if (!setting.allowURL)
+                if (!settings.allowURL)
                 {
                     throw new Exception($"Path is URL. Value: '{beforeVariable}{wrappedCounterVariableName}{afterVariable}'");
                 }
@@ -176,7 +176,7 @@ namespace taskt.Core.Automation.Commands
                 var fileExtension = Path.GetExtension(afterVariable);
 
                 string res;
-                switch (setting.supportFileCounter)
+                switch (settings.supportFileCounter)
                 {
                     case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
                         using (var fn = new InnerScriptVariable(engine))
@@ -211,7 +211,7 @@ namespace taskt.Core.Automation.Commands
                         }
                         break;
                     default:
-                        throw new Exception($"Strange FilePathSetting Attribute Value. Value: '{setting.supportFileCounter.ToString()}'");
+                        throw new Exception($"Strange FilePathSetting Attribute Value. Value: '{settings.supportFileCounter.ToString()}'");
                 }
                 return res;
             }
@@ -221,18 +221,18 @@ namespace taskt.Core.Automation.Commands
         /// expand value or User variable as FilePath not support FileCounterVariable
         /// </summary>
         /// <param name="parameterValue"></param>
-        /// <param name="setting"></param>
+        /// <param name="settings"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, AutomationEngineInstance engine)
+        private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting settings, AutomationEngineInstance engine)
         {
             var path = parameterValue.ExpandValueOrUserVariable(engine);
 
             if (IsURL(path))
             {
                 // path is URL
-                if (!setting.allowURL)
+                if (!settings.allowURL)
                 {
                     throw new Exception($"Path is URL. Value: '{path}'");
                 }
@@ -259,8 +259,8 @@ namespace taskt.Core.Automation.Commands
                 {
                     // don't has extension
 
-                    var extensions = setting.GetExtensions();
-                    switch (setting.supportExtension)
+                    var extensions = settings.GetExtensions();
+                    switch (settings.supportExtension)
                     {
                         case PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension:
                             return path;
@@ -297,6 +297,52 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// method call controller expand value or user variable as filepath
+        /// </summary>
+        /// <param name="parameterValue"></param>
+        /// <param name="settings"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static string ExpandValueOrUserVarialbeAsFilePath_Controller(string parameterValue, PropertyFilePathSetting settings, AutomationEngineInstance engine)
+        {
+            string p;
+            if ((settings.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
+                (settings.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
+            {
+                p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, settings, engine);
+            }
+            else
+            {
+                p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, settings, engine);
+            }
+
+            if (IsValidPathString(p))
+            {
+                return p;
+            }
+            else
+            {
+                throw new Exception($"File Path contains Invalid chars. Path: '{p}'");
+            }
+        }
+
+        /// <summary>
+        /// Expand Value or user variable as FilePath, specified FilePathSettings
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="settings"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariableAsFilePath(this ICanHandleFilePath command, string parameterName, PropertyFilePathSetting settings, AutomationEngineInstance engine)
+        {
+            var prop = command.ToScriptCommand().GetProperty(parameterName);
+            string parameterValue = prop.GetValue(command)?.ToString() ?? "";
+            return ExpandValueOrUserVarialbeAsFilePath_Controller(parameterValue, settings, engine);
+        }
+
+        /// <summary>
         /// expand value or user variable to FilePath. this method use PropertyFilePathSetting
         /// </summary>
         /// <param name="command"></param>
@@ -311,27 +357,27 @@ namespace taskt.Core.Automation.Commands
 
             var pathSetting = PropertyControls.GetCustomAttributeWithVirtual<PropertyFilePathSetting>(prop, vProp) ?? new PropertyFilePathSetting();
 
-            string p;
-            if ((pathSetting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
-                (pathSetting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
-            {
-                p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, pathSetting, engine);
-            }
-            else
-            {
-                p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
-            }
+            //string p;
+            //if ((pathSetting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
+            //    (pathSetting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
+            //{
+            //    p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, pathSetting, engine);
+            //}
+            //else
+            //{
+            //    p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
+            //}
 
-            //var invs = Path.GetInvalidPathChars();
-            //if (p.IndexOfAny(invs) < 0)
-            if (IsValidPathString(p))
-            {
-                return p;
-            }
-            else
-            {
-                throw new Exception($"File Path contains Invalid chars. Path: '{p}'");
-            }
+            //if (IsValidPathString(p))
+            //{
+            //    return p;
+            //}
+            //else
+            //{
+            //    throw new Exception($"File Path contains Invalid chars. Path: '{p}'");
+            //}
+
+            return ExpandValueOrUserVarialbeAsFilePath_Controller(parameterValue, pathSetting, engine);
         }
 
         /// <summary>
