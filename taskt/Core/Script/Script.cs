@@ -54,7 +54,7 @@ namespace taskt.Core.Script
         /// </summary>
         public ScriptAction AddNewParentCommand(ScriptCommand scriptCommand)
         {
-            ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
+            var newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
             Commands.Add(newExecutionCommand);
             return newExecutionCommand;
         }
@@ -75,7 +75,7 @@ namespace taskt.Core.Script
 
             int lineNumber = 1;
 
-            List<ScriptAction> subCommands = new List<ScriptAction>();
+            var subCommands = new List<ScriptAction>();
 
             foreach (ListViewItem commandItem in scriptCommands)
             {
@@ -177,7 +177,7 @@ namespace taskt.Core.Script
             var bkFile = Path.Combine(IO.Folders.GetBeforeConvertedFolderPath(), fileName);
             File.Copy(scriptFilePath, bkFile);
 
-            XDocument xmlScript = XDocument.Load(scriptFilePath);
+            var xmlScript = XDocument.Load(scriptFilePath);
 
             // pre-convert
             convertOldScript(xmlScript, engineSettings);
