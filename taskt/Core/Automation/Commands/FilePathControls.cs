@@ -114,52 +114,52 @@ namespace taskt.Core.Automation.Commands
             return !string.IsNullOrEmpty(Path.GetPathRoot(path));
         }
 
-        /// <summary>
-        /// check file path has extension
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool HasExtension(string path)
-        {
-            return (Path.GetExtension(path).Length > 0);
-        }
+        ///// <summary>
+        ///// check file path has extension
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <returns></returns>
+        //public static bool HasExtension(string path)
+        //{
+        //    return (Path.GetExtension(path).Length > 0);
+        //}
 
-        /// <summary>
-        /// get last FileCounter Variable name and position
-        /// </summary>
-        /// <param name="path">don't convert variable</param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        private static (string variableName, int index) GetLastFileCounter(string path, Engine.AutomationEngineInstance engine)
-        {
-            var f0 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F0.VariableName, engine);
-            var f00 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F00.VariableName, engine);
-            var f000 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F000.VariableName, engine);
+        ///// <summary>
+        ///// get last FileCounter Variable name and position
+        ///// </summary>
+        ///// <param name="path">don't convert variable</param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //private static (string variableName, int index) GetLastFileCounter(string path, Engine.AutomationEngineInstance engine)
+        //{
+        //    var f0 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F0.VariableName, engine);
+        //    var f00 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F00.VariableName, engine);
+        //    var f000 = VariableNameControls.GetWrappedVariableName(SystemVariables.FileCounter_F000.VariableName, engine);
 
-            var indices = new Dictionary<string, int>()
-            {
-                { f0, path.LastIndexOf(f0) },
-                { f00, path.LastIndexOf(f00) },
-                { f000, path.LastIndexOf(f000) },
-            };
-            var maxItem = indices.OrderByDescending(c => c.Value).First();
+        //    var indices = new Dictionary<string, int>()
+        //    {
+        //        { f0, path.LastIndexOf(f0) },
+        //        { f00, path.LastIndexOf(f00) },
+        //        { f000, path.LastIndexOf(f000) },
+        //    };
+        //    var maxItem = indices.OrderByDescending(c => c.Value).First();
 
-            return (maxItem.Key, maxItem.Value);
-        }
+        //    return (maxItem.Key, maxItem.Value);
+        //}
 
-        /// <summary>
-        /// check file path contains FileCounter variable
-        /// </summary>
-        /// <param name="path">don't convert variable</param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static bool ContainsFileCounter(string path, Engine.AutomationEngineInstance engine)
-        {
-            path = path ?? "";
-            (_, var index) = GetLastFileCounter(path, engine);
+        ///// <summary>
+        ///// check file path contains FileCounter variable
+        ///// </summary>
+        ///// <param name="path">don't convert variable</param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static bool ContainsFileCounter(string path, Engine.AutomationEngineInstance engine)
+        //{
+        //    path = path ?? "";
+        //    (_, var index) = GetLastFileCounter(path, engine);
 
-            return (index >= 0);
-        }
+        //    return (index >= 0);
+        //}
 
         /// <summary>
         /// check file path is URL
@@ -175,308 +175,308 @@ namespace taskt.Core.Automation.Commands
 
         #region convert methods
 
-        /// <summary>
-        /// Get Before FileCounter Text, FileCounter Variable Name, After FileCounter Text
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private static (string beforeCounter, string counterVariable, string afterCounter) ParseFileCounter(string path, Engine.AutomationEngineInstance engine)
-        {
-            var r = GetLastFileCounter(path, engine);
-            if (r.index < 0)
-            {
-                throw new Exception($"No FileCounter Variables contains. Path: '{path}'");
-            }
-            else
-            {
-                return (path.Substring(0, r.index), r.variableName, path.Substring(r.index + r.variableName.Length));
-            }
-        }
+        ///// <summary>
+        ///// Get Before FileCounter Text, FileCounter Variable Name, After FileCounter Text
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //private static (string beforeCounter, string counterVariable, string afterCounter) ParseFileCounter(string path, Engine.AutomationEngineInstance engine)
+        //{
+        //    var r = GetLastFileCounter(path, engine);
+        //    if (r.index < 0)
+        //    {
+        //        throw new Exception($"No FileCounter Variables contains. Path: '{path}'");
+        //    }
+        //    else
+        //    {
+        //        return (path.Substring(0, r.index), r.variableName, path.Substring(r.index + r.variableName.Length));
+        //    }
+        //}
 
-        /// <summary>
-        /// expand value or user variable as FilePath support FileCounter
-        /// </summary>
-        /// <param name="parameterValue"></param>
-        /// <param name="setting"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private static string ExpandValueOrUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
-        {
-            // check contains FileCounter
-            if (!ContainsFileCounter(parameterValue, engine))
-            {
-                // don't contains FileCounter
-                return ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
-            }
+        ///// <summary>
+        ///// expand value or user variable as FilePath support FileCounter
+        ///// </summary>
+        ///// <param name="parameterValue"></param>
+        ///// <param name="setting"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //private static string ExpandValueOrUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        //{
+        //    // check contains FileCounter
+        //    if (!ContainsFileCounter(parameterValue, engine))
+        //    {
+        //        // don't contains FileCounter
+        //        return ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+        //    }
 
-            (var beforeVariable, var wrappedCounterVariableName, var afterVariable) = ParseFileCounter(parameterValue, engine);
+        //    (var beforeVariable, var wrappedCounterVariableName, var afterVariable) = ParseFileCounter(parameterValue, engine);
 
-            beforeVariable = beforeVariable.ExpandValueOrUserVariable(engine);
-            afterVariable = afterVariable.ExpandValueOrUserVariable(engine);
-            var counterVariableName = VariableNameControls.GetVariableName(wrappedCounterVariableName, engine);
+        //    beforeVariable = beforeVariable.ExpandValueOrUserVariable(engine);
+        //    afterVariable = afterVariable.ExpandValueOrUserVariable(engine);
+        //    var counterVariableName = VariableNameControls.GetVariableName(wrappedCounterVariableName, engine);
 
-            // URL Check
-            var checkPath = $"{beforeVariable}0{afterVariable}";
-            if (IsURL(checkPath))
-            {
-                // path is URL, FileCounter, supportExtension does not work
-                if (!setting.allowURL)
-                {
-                    throw new Exception($"Path is URL. Value: '{beforeVariable}{wrappedCounterVariableName}{afterVariable}'");
-                }
-                else
-                {
-                    return checkPath;
-                }
-            }
-            else
-            {
-                // not URL
-                //// check folder path
-                //if (!IsFullPath(checkPath))
-                //{
-                //    beforeVariable = Path.Combine(Path.GetDirectoryName(engine.FileName), beforeVariable);
-                //}
-                //// check extension
-                //if (!HasExtension(checkPath) && (setting.supportExtension == PropertyFilePathSetting.ExtensionBehavior.RequiredExtension))
-                //{
-                //    var extensions = setting.GetExtensions();
-                //    if (extensions.Count > 0)
-                //    {
-                //        afterVariable = afterVariable + "." + extensions[0];
-                //    }
-                //}
+        //    // URL Check
+        //    var checkPath = $"{beforeVariable}0{afterVariable}";
+        //    if (IsURL(checkPath))
+        //    {
+        //        // path is URL, FileCounter, supportExtension does not work
+        //        if (!setting.allowURL)
+        //        {
+        //            throw new Exception($"Path is URL. Value: '{beforeVariable}{wrappedCounterVariableName}{afterVariable}'");
+        //        }
+        //        else
+        //        {
+        //            return checkPath;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // not URL
+        //        //// check folder path
+        //        //if (!IsFullPath(checkPath))
+        //        //{
+        //        //    beforeVariable = Path.Combine(Path.GetDirectoryName(engine.FileName), beforeVariable);
+        //        //}
+        //        //// check extension
+        //        //if (!HasExtension(checkPath) && (setting.supportExtension == PropertyFilePathSetting.ExtensionBehavior.RequiredExtension))
+        //        //{
+        //        //    var extensions = setting.GetExtensions();
+        //        //    if (extensions.Count > 0)
+        //        //    {
+        //        //        afterVariable = afterVariable + "." + extensions[0];
+        //        //    }
+        //        //}
 
-                //string fmt = "";
-                //switch (counterVariableName)
-                //{
-                //    case "FileCounter.F0":
-                //        fmt = "0";
-                //        break;
-                //    case "FileCounter.F00":
-                //        fmt = "00";
-                //        break;
-                //    case "FileCounter.F000":
-                //        fmt = "000";
-                //        break;
-                //}
+        //        //string fmt = "";
+        //        //switch (counterVariableName)
+        //        //{
+        //        //    case "FileCounter.F0":
+        //        //        fmt = "0";
+        //        //        break;
+        //        //    case "FileCounter.F00":
+        //        //        fmt = "00";
+        //        //        break;
+        //        //    case "FileCounter.F000":
+        //        //        fmt = "000";
+        //        //        break;
+        //        //}
 
-                //int max = engine.engineSettings.MaxFileCounter;
-                //switch(setting.supportFileCounter)
-                //{
-                //    case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
-                //        for (int i = 1; i <= max; i++)
-                //        {
-                //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
-                //            if (!File.Exists(testPath))
-                //            {
-                //                return testPath;
-                //            }
-                //        }
-                //        break;
+        //        //int max = engine.engineSettings.MaxFileCounter;
+        //        //switch(setting.supportFileCounter)
+        //        //{
+        //        //    case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
+        //        //        for (int i = 1; i <= max; i++)
+        //        //        {
+        //        //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
+        //        //            if (!File.Exists(testPath))
+        //        //            {
+        //        //                return testPath;
+        //        //            }
+        //        //        }
+        //        //        break;
 
-                //    case PropertyFilePathSetting.FileCounterBehavior.LastExists:
-                //        for (int i = 1; i <= max; i++)
-                //        {
-                //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
-                //            if (!File.Exists(testPath))
-                //            {
-                //                if (i > 1)
-                //                {
-                //                    return beforeVariable + (i - 1).ToString(fmt) + afterVariable;
-                //                }
-                //                else
-                //                {
-                //                    return testPath;
-                //                }
-                //            }
-                //        }
-                //        break;
-                //}
-                //// not found :-(
-                //return beforeVariable + max.ToString(fmt) + afterVariable;
+        //        //    case PropertyFilePathSetting.FileCounterBehavior.LastExists:
+        //        //        for (int i = 1; i <= max; i++)
+        //        //        {
+        //        //            var testPath = beforeVariable + i.ToString(fmt) + afterVariable;
+        //        //            if (!File.Exists(testPath))
+        //        //            {
+        //        //                if (i > 1)
+        //        //                {
+        //        //                    return beforeVariable + (i - 1).ToString(fmt) + afterVariable;
+        //        //                }
+        //        //                else
+        //        //                {
+        //        //                    return testPath;
+        //        //                }
+        //        //            }
+        //        //        }
+        //        //        break;
+        //        //}
+        //        //// not found :-(
+        //        //return beforeVariable + max.ToString(fmt) + afterVariable;
 
-                int digits = 0;
-                if (counterVariableName == SystemVariables.FileCounter_F0.VariableName)
-                {
-                    digits = 1;
-                }
-                else if (counterVariableName == SystemVariables.FileCounter_F00.VariableName)
-                {
-                    digits = 2;
-                }
-                else if (counterVariableName == SystemVariables.FileCounter_F000.VariableName)
-                {
-                    digits = 3;
-                }
+        //        int digits = 0;
+        //        if (counterVariableName == SystemVariables.FileCounter_F0.VariableName)
+        //        {
+        //            digits = 1;
+        //        }
+        //        else if (counterVariableName == SystemVariables.FileCounter_F00.VariableName)
+        //        {
+        //            digits = 2;
+        //        }
+        //        else if (counterVariableName == SystemVariables.FileCounter_F000.VariableName)
+        //        {
+        //            digits = 3;
+        //        }
 
-                if (digits > 0)
-                {
-                    var folderPath = Path.GetDirectoryName(beforeVariable);
-                    var fileNameBeforeCounter = Path.GetFileName(beforeVariable);
+        //        if (digits > 0)
+        //        {
+        //            var folderPath = Path.GetDirectoryName(beforeVariable);
+        //            var fileNameBeforeCounter = Path.GetFileName(beforeVariable);
 
-                    var fileNameAfterCounter = Path.GetFileNameWithoutExtension(afterVariable);
-                    var fileExtension = Path.GetExtension(afterVariable);
+        //            var fileNameAfterCounter = Path.GetFileNameWithoutExtension(afterVariable);
+        //            var fileExtension = Path.GetExtension(afterVariable);
 
-                    string res;
-                    switch (setting.supportFileCounter)
-                    {
-                        case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
-                            using (var fn = new InnerScriptVariable(engine))
-                            {
-                                var notExists = new GetNonExistentFilePathCommand()
-                                {
-                                    v_TargetFolderPath = folderPath,
-                                    v_BeforeFileCounter = fileNameBeforeCounter,
-                                    v_Digits = digits.ToString(),
-                                    v_AfterFileCounter = fileNameAfterCounter,
-                                    v_Extension = fileExtension,
-                                    v_Result = fn.VariableName,
-                                };
-                                notExists.RunCommand(engine);
-                                res = fn.VariableValue.ToString();
-                            }
-                            break;
-                        case PropertyFilePathSetting.FileCounterBehavior.LastExists:
-                            using (var fn = new InnerScriptVariable(engine))
-                            {
-                                var lastExists = new GetLastExistentNumberedFilePathCommand()
-                                {
-                                    v_TargetFolderPath = folderPath,
-                                    v_BeforeFileCounter = fileNameBeforeCounter,
-                                    v_Digits = digits.ToString(),
-                                    v_AfterFileCounter = fileNameAfterCounter,
-                                    v_Extension = fileExtension,
-                                    v_Result = fn.VariableName,
-                                };
-                                lastExists.RunCommand(engine);
-                                res = fn.VariableValue.ToString();
-                            }
-                            break;
-                        default:
-                            throw new Exception($"Strange FilePathSetting Attribute Value. Value: '{setting.supportFileCounter.ToString()}'");
-                    }
-                    return res;
-                }
-                else
-                {
-                    throw new Exception($"Strange File Counter Variable. Name: '{counterVariableName}'");
-                }
-            }
-        }
+        //            string res;
+        //            switch (setting.supportFileCounter)
+        //            {
+        //                case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
+        //                    using (var fn = new InnerScriptVariable(engine))
+        //                    {
+        //                        var notExists = new GetNonExistentFilePathCommand()
+        //                        {
+        //                            v_TargetFolderPath = folderPath,
+        //                            v_BeforeFileCounter = fileNameBeforeCounter,
+        //                            v_Digits = digits.ToString(),
+        //                            v_AfterFileCounter = fileNameAfterCounter,
+        //                            v_Extension = fileExtension,
+        //                            v_Result = fn.VariableName,
+        //                        };
+        //                        notExists.RunCommand(engine);
+        //                        res = fn.VariableValue.ToString();
+        //                    }
+        //                    break;
+        //                case PropertyFilePathSetting.FileCounterBehavior.LastExists:
+        //                    using (var fn = new InnerScriptVariable(engine))
+        //                    {
+        //                        var lastExists = new GetLastExistentNumberedFilePathCommand()
+        //                        {
+        //                            v_TargetFolderPath = folderPath,
+        //                            v_BeforeFileCounter = fileNameBeforeCounter,
+        //                            v_Digits = digits.ToString(),
+        //                            v_AfterFileCounter = fileNameAfterCounter,
+        //                            v_Extension = fileExtension,
+        //                            v_Result = fn.VariableName,
+        //                        };
+        //                        lastExists.RunCommand(engine);
+        //                        res = fn.VariableValue.ToString();
+        //                    }
+        //                    break;
+        //                default:
+        //                    throw new Exception($"Strange FilePathSetting Attribute Value. Value: '{setting.supportFileCounter.ToString()}'");
+        //            }
+        //            return res;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception($"Strange File Counter Variable. Name: '{counterVariableName}'");
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// expand value or User variable as FilePath not support FileCounter
-        /// </summary>
-        /// <param name="parameterValue"></param>
-        /// <param name="setting"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
-        {
-            var path = parameterValue.ExpandValueOrUserVariable(engine);
+        ///// <summary>
+        ///// expand value or User variable as FilePath not support FileCounter
+        ///// </summary>
+        ///// <param name="parameterValue"></param>
+        ///// <param name="setting"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        //{
+        //    var path = parameterValue.ExpandValueOrUserVariable(engine);
 
-            if (IsURL(path))
-            {
-                // path is URL
-                if (!setting.allowURL)
-                {
-                    throw new Exception("Path is URL. Value: '" + path + "'");
-                }
-                else
-                {
-                    return path;
-                }
-            }
-            else
-            {
-                // path is not URL
-                // when folder path not contains
-                if (!IsFullPath(path))
-                {
-                    path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
-                }
+        //    if (IsURL(path))
+        //    {
+        //        // path is URL
+        //        if (!setting.allowURL)
+        //        {
+        //            throw new Exception("Path is URL. Value: '" + path + "'");
+        //        }
+        //        else
+        //        {
+        //            return path;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // path is not URL
+        //        // when folder path not contains
+        //        if (!IsFullPath(path))
+        //        {
+        //            path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
+        //        }
 
-                if (HasExtension(path))
-                {
-                    // has extension. no more path convert process
-                    return path;
-                }
-                else
-                {
-                    // don't has extension
+        //        if (HasExtension(path))
+        //        {
+        //            // has extension. no more path convert process
+        //            return path;
+        //        }
+        //        else
+        //        {
+        //            // don't has extension
 
-                    var extensions = setting.GetExtensions();
-                    switch (setting.supportExtension)
-                    {
-                        case PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension:
-                            return path;
+        //            var extensions = setting.GetExtensions();
+        //            switch (setting.supportExtension)
+        //            {
+        //                case PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension:
+        //                    return path;
 
-                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtension:
-                            if (extensions.Count > 0)
-                            {
-                                return path + "." + extensions[0];
-                            }
-                            break;
+        //                case PropertyFilePathSetting.ExtensionBehavior.RequiredExtension:
+        //                    if (extensions.Count > 0)
+        //                    {
+        //                        return path + "." + extensions[0];
+        //                    }
+        //                    break;
 
-                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists:
-                            foreach(var ext in extensions)
-                            {
-                                var testPath = path + "." + ext;
-                                if (File.Exists(testPath))
-                                {
-                                    return testPath;
-                                }
-                            }
-                            break;
-                    }
+        //                case PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists:
+        //                    foreach(var ext in extensions)
+        //                    {
+        //                        var testPath = path + "." + ext;
+        //                        if (File.Exists(testPath))
+        //                        {
+        //                            return testPath;
+        //                        }
+        //                    }
+        //                    break;
+        //            }
 
-                    if (extensions.Count > 0)
-                    {
-                        return path + "." + extensions[0];
-                    }
-                    else
-                    {
-                        return path;
-                    }
-                }
-            }
-        }
+        //            if (extensions.Count > 0)
+        //            {
+        //                return path + "." + extensions[0];
+        //            }
+        //            else
+        //            {
+        //                return path;
+        //            }
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// expand value or user variable as FilePath. this method use the specified PropertyFilePathSetting
-        /// </summary>
-        /// <param name="parameterValue"></param>
-        /// <param name="setting"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static string ExpandValueOrUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
-        {
-            string p;
-            if ((setting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
-                (setting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
-            {
-                p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
-            }
-            else
-            {
-                p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
-            }
+        ///// <summary>
+        ///// expand value or user variable as FilePath. this method use the specified PropertyFilePathSetting
+        ///// </summary>
+        ///// <param name="parameterValue"></param>
+        ///// <param name="setting"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static string ExpandValueOrUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        //{
+        //    string p;
+        //    if ((setting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
+        //        (setting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
+        //    {
+        //        p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
+        //    }
+        //    else
+        //    {
+        //        p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+        //    }
 
-            var invs = Path.GetInvalidPathChars();
-            if (p.IndexOfAny(invs) < 0)
-            {
-                return p;
-            }
-            else
-            {
-                throw new Exception("File Path contains Invalid chars. Path: '" + p + "'");
-            }
-        }
+        //    var invs = Path.GetInvalidPathChars();
+        //    if (p.IndexOfAny(invs) < 0)
+        //    {
+        //        return p;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("File Path contains Invalid chars. Path: '" + p + "'");
+        //    }
+        //}
 
         ///// <summary>
         ///// expand value or user variable to FilePath. this method use PropertyFilePathSetting
