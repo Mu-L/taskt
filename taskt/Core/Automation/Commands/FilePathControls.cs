@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Engine;
-using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -161,15 +156,15 @@ namespace taskt.Core.Automation.Commands
         //    return (index >= 0);
         //}
 
-        /// <summary>
-        /// check file path is URL
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool IsURL(string path)
-        {
-            return (path.StartsWith("http:") || path.StartsWith("https:"));
-        }
+        ///// <summary>
+        ///// check file path is URL
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <returns></returns>
+        //public static bool IsURL(string path)
+        //{
+        //    return (path.StartsWith("http:") || path.StartsWith("https:"));
+        //}
 
         #endregion
 
