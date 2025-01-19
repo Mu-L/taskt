@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
             //auto-detect extension
             var vFileType = Path.GetExtension(vSourceFile);
 
-            if (EM_CanHandleFilePathExtentionMethods.IsURL(vSourceFile))
+            if (this.IsURL(vSourceFile))
             {
                 //create temp directory
                 //var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);

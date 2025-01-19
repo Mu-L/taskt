@@ -14,13 +14,25 @@ namespace taskt.Core.Automation.Commands
     public static class EM_CanHandleFilePathExtentionMethods
     {
         /// <summary>
-        /// check file path is full path
+        /// check file path is full path, call EM_CanHandleFileOrFolderPathProperties
         /// </summary>
+        /// <param name="command"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsFullPath(string path)
+        public static bool IsFullPath(this ICanHandleFilePath command, string path)
         {
-            return (!string.IsNullOrEmpty(Path.GetPathRoot(path)));
+            return EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsFullPath(path);
+        }
+
+        /// <summary>
+        /// check file path is URL, call EM_CanHandleFileOrFolderPathProperties
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsURL(this ICanHandleFilePath command, string path)
+        {
+            return EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsURL(path);
         }
 
         /// <summary>
@@ -31,16 +43,6 @@ namespace taskt.Core.Automation.Commands
         public static bool HasExtension(string path)
         {
             return (Path.GetExtension(path).Length > 0);
-        }
-
-        /// <summary>
-        /// check file path is URL
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool IsURL(string path)
-        {
-            return (path.StartsWith("http:") || path.StartsWith("https:"));
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace taskt.Core.Automation.Commands
 
             // URL Check
             var checkPath = $"{beforeVariable}0{afterVariable}";
-            if (IsURL(checkPath))
+            if (EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsURL(checkPath))
             {
                 // path is URL, FileCounter, supportExtension does not work
                 if (!settings.allowURL)
@@ -229,7 +231,7 @@ namespace taskt.Core.Automation.Commands
         {
             var path = parameterValue.ExpandValueOrUserVariable(engine);
 
-            if (IsURL(path))
+            if (EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsURL(path))
             {
                 // path is URL
                 if (!settings.allowURL)
@@ -245,7 +247,7 @@ namespace taskt.Core.Automation.Commands
             {
                 // path is not URL
                 // when folder path not contains
-                if (!IsFullPath(path))
+                if (!EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsFullPath(path))
                 {
                     path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
                 }

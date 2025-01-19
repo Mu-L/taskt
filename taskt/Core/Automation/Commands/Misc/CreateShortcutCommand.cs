@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
             string targetPath = v_TargetPath.ExpandValueOrUserVariable(engine);
             //bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
-            if (!EM_CanHandleFilePathExtentionMethods.IsURL(targetPath))
+            if (!this.IsURL(targetPath))
             {
                 //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
                 //{
