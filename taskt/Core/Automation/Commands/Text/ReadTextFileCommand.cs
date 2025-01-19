@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
             //var filePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
             var filePath = this.WaitForFile(engine);
             string result;
-            if (FilePathControls.IsURL(filePath))
+            if (EM_CanHandleFilePathExtentionMethods.IsURL(filePath))
             {
                 WebClient webClient = new WebClient();
                 webClient.Encoding = System.Text.Encoding.UTF8;
