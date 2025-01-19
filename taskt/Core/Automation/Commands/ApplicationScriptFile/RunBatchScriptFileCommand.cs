@@ -28,6 +28,29 @@ namespace taskt.Core.Automation.Commands
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "bat,vbs,js,wsh")]
         public override string v_TargetFilePath { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Arguments")]
+        [InputSpecification("Arguments", true)]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        [PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(6000)]
+        public string v_Arguments { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Receive the Output")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(7000)]
+        public string v_Result { get; set; }
+
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         //public string v_WaitTimeForFile { get; set; }
@@ -46,13 +69,35 @@ namespace taskt.Core.Automation.Commands
             //string scriptPath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
             var scriptPath = this.WaitForFile(engine);
 
+            string argments = "";
+            if (!string.IsNullOrEmpty(v_Arguments))
+            {
+                argments = this.ExpandValueOrUserVariable(nameof(v_Arguments), "Arguments", engine);
+            }
+
             var scriptProc = new System.Diagnostics.Process();
             scriptProc.StartInfo.FileName = scriptPath;
+
+            if (!string.IsNullOrEmpty(argments))
+            {
+                scriptProc.StartInfo.Arguments = argments;
+            }
+
             scriptProc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            scriptProc.StartInfo.UseShellExecute = false;
+            scriptProc.StartInfo.RedirectStandardInput = false;
+            scriptProc.StartInfo.RedirectStandardOutput = true;
+
             scriptProc.Start();
+            string output = scriptProc.StandardOutput.ReadToEnd();
             scriptProc.WaitForExit();
 
             scriptProc.Close();
+
+            if (!string.IsNullOrEmpty(v_Result))
+            {
+                output.StoreInUserVariable(engine, v_Result);
+            }
         }
     }
 }
