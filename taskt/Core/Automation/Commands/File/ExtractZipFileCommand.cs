@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExtractZipFileCommand : ScriptCommand, ICanHandleList
+    public sealed class ExtractZipFileCommand : ScriptCommand, ICanHandleList, ICanHandleFilePath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
             //auto-detect extension
             var vFileType = Path.GetExtension(vSourceFile);
 
-            if (FilePathControls.IsURL(vSourceFile))
+            if (EM_CanHandleFilePathExtentionMethods.IsURL(vSourceFile))
             {
                 //create temp directory
                 //var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);

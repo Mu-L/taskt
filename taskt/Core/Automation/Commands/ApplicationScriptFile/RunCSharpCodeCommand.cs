@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        public string v_Args { get; set; }
+        public string v_Arguments { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Result")]
-        public string v_applyToVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public RunCSharpCodeCommand()
         {
@@ -81,10 +81,10 @@ namespace taskt.Core.Automation.Commands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
-                var arguments = v_Args.ExpandValueOrUserVariable(engine);
+                var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
                 scriptProc.StartInfo.Arguments = arguments;
 
-                if (!string.IsNullOrEmpty(v_applyToVariableName))
+                if (!string.IsNullOrEmpty(v_Result))
                 {
                     //redirect output
                     scriptProc.StartInfo.RedirectStandardOutput = true;
@@ -95,10 +95,10 @@ namespace taskt.Core.Automation.Commands
 
                 scriptProc.WaitForExit();
 
-                if (!string.IsNullOrEmpty(v_applyToVariableName))
+                if (!string.IsNullOrEmpty(v_Result))
                 {
                     var output = scriptProc.StandardOutput.ReadToEnd();
-                    output.StoreInUserVariable(engine, v_applyToVariableName);
+                    output.StoreInUserVariable(engine, v_Result);
                 }
 
                 scriptProc.Close();

@@ -3,7 +3,7 @@
     /// <summary>
     /// for handle FilePath properties
     /// </summary>
-    public interface ICanHandleFilePath : ILExpandableProperties
+    public interface ICanHandleFilePath : ICanHandleFileOrFolderPathProperties
     {
         // nothing
     }

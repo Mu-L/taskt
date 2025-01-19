@@ -98,8 +98,8 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.5.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.71.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.71\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.72.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.72\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
       <HintPath>..\packages\ImapX.2.0.0.18\lib\net452\ImapX.dll</HintPath>
@@ -110,11 +110,11 @@
     <Reference Include="MailKit, Version=4.9.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.4.9.0\lib\net48\MailKit.dll</HintPath>
     </Reference>
-    <Reference Include="Markdig, Version=0.39.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Markdig.0.39.1\lib\net462\Markdig.dll</HintPath>
+    <Reference Include="Markdig, Version=0.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.40.0\lib\net462\Markdig.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -162,8 +162,8 @@
     <Reference Include="Serilog.Sinks.File, Version=6.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.6.0.0\lib\net471\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="SharpCompress, Version=0.38.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCompress.0.38.0\lib\net462\SharpCompress.dll</HintPath>
+    <Reference Include="SharpCompress, Version=0.39.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpCompress.0.39.0\lib\net48\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="SharpSimpleNLG, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpSimpleNLG.1.4.0\lib\net472\SharpSimpleNLG.dll</HintPath>
@@ -182,11 +182,11 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.9.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.9.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-    <Reference Include="System.Formats.Asn1, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Asn1.9.0.0\lib\net462\System.Formats.Asn1.dll</HintPath>
+    <Reference Include="System.Formats.Asn1, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Formats.Asn1.9.0.1\lib\net462\System.Formats.Asn1.dll</HintPath>
     </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
@@ -194,8 +194,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Pipelines, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Pipelines.9.0.0\lib\net462\System.IO.Pipelines.dll</HintPath>
+    <Reference Include="System.IO.Pipelines, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.9.0.1\lib\net462\System.IO.Pipelines.dll</HintPath>
     </Reference>
     <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
@@ -265,22 +265,22 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.9.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
+    <Reference Include="System.Text.Encoding.CodePages, Version=9.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.9.0.1\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.9.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.9.0.1\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.9.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.9.0.1\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Threading.Channels, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.9.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    <Reference Include="System.Threading.Channels, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.9.0.1\lib\net462\System.Threading.Channels.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.6.0\lib\net462\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -352,6 +352,8 @@
     <Compile Include="Core\ApplicationSettings\SefeLocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\ServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\AScriptFileCommands.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\ARunScriptFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunJavaScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\AColorCreateCommands.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormARGBNumberCommand.cs" />
@@ -371,19 +373,25 @@
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeByExcelSerialCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeByTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\IDateTimeResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileCopyMoveFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathBeforeAfterResultCommands.cs" />
-    <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathResultCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathPathResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\EM_CanHandleFileNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFilePathExtentionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\File\EM_FilePathExistsPathPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\File\EM_FileExistsFilePathBeforeAfterPathResultPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\File\EM_FileExistsFilePathPathResultPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\File\EM_FileExistsFilePathPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_FilePathPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileNumberedFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\GetLastExistentNumberdFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetNonExistentFilePathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\ICanHandleFileName.cs" />
     <Compile Include="Core\Automation\Commands\File\ICanHandleFilePath.cs" />
-    <Compile Include="Core\Automation\Commands\File\IFilePathBeforeAfterPathResultProperties.cs" />
-    <Compile Include="Core\Automation\Commands\File\IFilePathExistsPathProperties.cs" />
-    <Compile Include="Core\Automation\Commands\File\IFilePathPathResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFileExistsFilePathBeforeAfterPathResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFileExistsFilePathProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\IFileExistsFilePathPathResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\File\IFilePathProperties.cs" />
     <Compile Include="Core\Automation\Commands\Folder\GetSpecialFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\RemoveListItemCommand.cs" />
@@ -670,10 +678,12 @@
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowPositionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowSizePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\_General\EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_CommandIDPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_ExpandablePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_TextComparePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\EM_HaveDataTablePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ICanHandleFileOrFolderPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ICommandIDProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ILCompareProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\IDelimitersOfStructuredCommands.cs" />

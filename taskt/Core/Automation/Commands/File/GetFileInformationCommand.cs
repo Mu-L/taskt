@@ -5,7 +5,6 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation")]
     [Attributes.ClassAttributes.CommandSettings("Get File Information")]
@@ -15,12 +14,12 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class GetFileInformationCommand : ScriptCommand
+    public sealed class GetFileInformationCommand : AFileExistsFilePathPathResultCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
-        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
-        public string v_TargetFilePath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        //[PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
+        //public string v_TargetFilePath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -36,19 +35,21 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Last Access Time")]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(6000)]
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitTimeForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //public string v_WaitTimeForFile { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        public string v_ResultPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //public string v_ResultPath { get; set; }
 
         public GetFileInformationCommand()
         {
@@ -91,14 +92,55 @@ namespace taskt.Core.Automation.Commands
 
             //ret.StoreInUserVariable(engine, v_UserVariableName);
 
-            FilePathControls.FileAction(this, engine,
-                new Action<string>(path =>
-                {
-                    var fileInfo = new System.IO.FileInfo(path);
+            //FilePathControls.FileAction(this, engine,
+            //    new Action<string>(path =>
+            //    {
+            //        var fileInfo = new System.IO.FileInfo(path);
 
-                    var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
+            //        var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
+            //        string ret = "";
+            //        switch (infoType)
+            //        {
+            //            case "file size":
+            //                ret = fileInfo.Length.ToString();
+            //                break;
+            //            case "file size (kb)":
+            //                ret = (fileInfo.Length / 1024.0).ToString();
+            //                break;
+            //            case "file size (mb)":
+            //                ret = (fileInfo.Length / 1048576.0).ToString();
+            //                break;
+            //            case "file size (gb)":
+            //                ret = (fileInfo.Length / 1073741824.0).ToString();
+            //                break;
+            //            case "readonly file":
+            //                ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
+            //                break;
+            //            case "hidden file":
+            //                ret = ((fileInfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden) ? "TRUE" : "FALSE";
+            //                break;
+            //            case "creation time":
+            //                ret = fileInfo.CreationTime.ToString();
+            //                break;
+            //            case "last write time":
+            //                ret = fileInfo.LastWriteTime.ToString();
+            //                break;
+            //            case "last access time":
+            //                ret = fileInfo.LastAccessTime.ToString();
+            //                break;
+            //        }
+
+            //        ret.StoreInUserVariable(engine, v_Result);
+            //    })
+            //);
+
+            this.FileAction(engine, 
+                new Func<string, string>(path =>
+                {
+                    var fileInfo = new FileInfo(path);
+
                     string ret = "";
-                    switch (infoType)
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine))
                     {
                         case "file size":
                             ret = fileInfo.Length.ToString();
@@ -130,6 +172,8 @@ namespace taskt.Core.Automation.Commands
                     }
 
                     ret.StoreInUserVariable(engine, v_Result);
+
+                    return path;
                 })
             );
         }

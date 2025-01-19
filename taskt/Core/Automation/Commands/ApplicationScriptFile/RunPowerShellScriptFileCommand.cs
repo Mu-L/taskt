@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
@@ -17,52 +16,53 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RunPowerShellScriptFileCommand : ScriptCommand
+    public sealed class RunPowerShellScriptFileCommand : ARunScriptFileCommands
     {
         [XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
-        [PropertyDescription("Path to the Powershell Script File")]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
+        [PropertyDescription("Powershell Script File Path")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.ps1**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vScriptPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
         [Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed. If you do not want to stop while the script executes, consider using **Start Process** instead.\nIf file does not contain extensin, supplement ps1 or bat extension.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "ps1")]
-        public string v_ScriptPath { get; set; }
+        public override string v_TargetFilePath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Arguments")]
-        [InputSpecification("Arguments", true)]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
-        [PropertyIsOptional(true)]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Arguments")]
+        //[InputSpecification("Arguments", true)]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
+        //[PropertyIsOptional(true)]
         [PropertyFirstValue("-NoProfile -ExecutionPolicy unrestricted")]
-        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
-        public string v_PowerShellArgs { get; set; }
+        //[PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(6000)]
+        public override string v_Arguments { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Convert Variables before Execution")]
-        [PropertyUISelectionOption("Yes")]
-        [PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "No")]
         [PropertyFirstValue("No")]
+        [PropertyParameterOrder(7000)]
         public string v_ReplaceScriptVariables { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Receive the Output")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
-        public string v_applyToVariableName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Receive the Output")]
+        //[PropertyIsOptional(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(8000)]
+        //public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //public string v_WaitTimeForFile { get; set; }
 
         public RunPowerShellScriptFileCommand()
         {
@@ -78,7 +78,8 @@ namespace taskt.Core.Automation.Commands
         {
             //define script path
             //string scriptPath = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "ps1", "bat" }, true);
-            var scriptPath = FilePathControls.WaitForFile(this, nameof(v_ScriptPath), nameof(v_WaitForFile), engine);
+            //var scriptPath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var scriptPath = this.WaitForFile(engine);
 
             //get script text
             var psCommand = File.ReadAllText(scriptPath);
@@ -98,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             var startInfo = new ProcessStartInfo()
             {
                 FileName = "powershell.exe",
-                Arguments = $"{v_PowerShellArgs} -EncodedCommand {psCommandBase64}",
+                Arguments = $"{v_Arguments} -EncodedCommand {psCommandBase64}",
                 UseShellExecute = false,
                 RedirectStandardOutput = true                  
             };
@@ -108,12 +109,12 @@ namespace taskt.Core.Automation.Commands
             proc.WaitForExit();
 
             //store output into variable
-            StreamReader reader = proc.StandardOutput;
+            var reader = proc.StandardOutput;
             
-            if (!String.IsNullOrEmpty(v_applyToVariableName))
+            if (!string.IsNullOrEmpty(v_Result))
             {
                 string output = reader.ReadToEnd();
-                output.StoreRawDataInUserVariable(engine, v_applyToVariableName);
+                output.StoreRawDataInUserVariable(engine, v_Result);
             }
         }
     }

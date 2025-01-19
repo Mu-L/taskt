@@ -14,19 +14,19 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class LoadScriptFileCommand : ScriptCommand
+    public sealed class LoadScriptFileCommand : AScriptFileCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
-        [PropertyDescription("Path to the Script File. After, Use 'Run Script File' with the Same Path to Execute.")]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
+        [PropertyDescription("Script File Path. After, Use 'Run Script File' with the Same Path to Execute.")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.xml**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xml")]
-        public string v_taskPath { get; set; }
+        public override string v_TargetFilePath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitForFile { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        //public string v_WaitTimeForFile { get; set; }
 
         public LoadScriptFileCommand()
         {
@@ -39,11 +39,13 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
-            var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
-            
-            Script.Script deserializedScript = Script.Script.DeserializeFile(startFile, engine.engineSettings);
+            //var scriptFile = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
 
-            engine.PreloadedTasks.Add(startFile, deserializedScript);
+            var scriptFile = this.WaitForFile(engine);
+
+            var deserializedScript = Script.Script.DeserializeFile(scriptFile, engine.engineSettings);
+
+            engine.PreloadedTasks.Add(scriptFile, deserializedScript);
         }
     }
 }

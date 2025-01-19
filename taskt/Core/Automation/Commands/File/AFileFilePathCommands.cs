@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// file path commands
     /// </summary>
-    public abstract class AFileFilePathCommands : IFilePathProperties
+    public abstract class AFileFilePathCommands : ScriptCommand, IFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]

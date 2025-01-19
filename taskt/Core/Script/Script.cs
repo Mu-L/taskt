@@ -54,7 +54,7 @@ namespace taskt.Core.Script
         /// </summary>
         public ScriptAction AddNewParentCommand(ScriptCommand scriptCommand)
         {
-            ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
+            var newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
             Commands.Add(newExecutionCommand);
             return newExecutionCommand;
         }
@@ -75,7 +75,7 @@ namespace taskt.Core.Script
 
             int lineNumber = 1;
 
-            List<ScriptAction> subCommands = new List<ScriptAction>();
+            var subCommands = new List<ScriptAction>();
 
             foreach (ListViewItem commandItem in scriptCommands)
             {
@@ -177,7 +177,7 @@ namespace taskt.Core.Script
             var bkFile = Path.Combine(IO.Folders.GetBeforeConvertedFolderPath(), fileName);
             File.Copy(scriptFilePath, bkFile);
 
-            XDocument xmlScript = XDocument.Load(scriptFilePath);
+            var xmlScript = XDocument.Load(scriptFilePath);
 
             // pre-convert
             convertOldScript(xmlScript, engineSettings);
@@ -437,6 +437,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_16(doc);
             convertTo3_5_2_17(doc);
             convertTo3_5_2_18(doc);
+            convertTo3_5_2_19(doc);
             return doc;
         }
 
@@ -3798,9 +3799,12 @@ namespace taskt.Core.Script
                 }
             });
             // CopyFolderCommand, MoveFolderCommand v_ResultPath -> v_BeforeFolderPathResult
-            ChangeAttributeName(doc, isCopyMoveFolderCommands, "v_ResultPath", "v_BeforeFolderPathResult");
             // CopyFolderCommand, MoveFolderCommand v_AfterFilePathResult -> v_AfterFolderPathResult
-            ChangeAttributeName(doc, isCopyMoveFolderCommands, "v_AfterFilePathResult", "v_AfterFolderPathResult");
+            ChangeMultiAttributeNames(doc, isCopyMoveFolderCommands, new List<(string, string)>
+            {
+                ("v_ResultPath", "v_BeforeFolderPathResult"),
+                ("v_AfterFilePathResult", "v_AfterFolderPathResult"),
+            });
 
             // CreateFolderCommand v_CreatedFolderPath -> v_ResultPath
             ChangeAttributeName(doc, "CreateFolderCommand", "v_CreatedFolderPath", "v_ResultPath");
@@ -3877,6 +3881,107 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_DestinationDirectory", "v_DestinationFolderPath"
+            );
+        }
+
+        private static void convertTo3_5_2_19(XDocument doc)
+        {
+            // RenameFileCommand v_ExtentionOption -> v_ExtensionOption, v_NewExtention -> v_NewExtension, v_NewName -> v_NewFileName
+            ChangeMultiAttributeNames(doc, "RenameFileCommand", new List<(string, string)>
+            {
+                ("v_ExtentionOption", "v_ExtensionOption"),
+                ("v_NewExtention", "v_NewExtension"),
+                ("v_NewName", "v_NewFileName"),
+            });
+
+            // many commands v_FilePath -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "MailKitLoadEMailCommand": // EMail
+                        case "ExcelOpenWorkbookCommand":    // Excel
+                        case "ExecuteOCRCommand":       // Image
+                        case "ExecuteTesseractOCRCommand":
+                        case "ReadJSONFileCommand":     // JSON
+                        case "ReadTextFileCommand":     // Text
+                        case "WordOpenDocumentCommand": // Word
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_FilePath", "v_TargetFilePath"),
+                    ("v_WaitForFile", "v_WaitTimeForFile"),
+                }
+            );
+
+            // LoadScriptFile/RunScriptFile/UnloadScriptFile v_tasktFile -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "LoadScriptFileCommand":
+                        case "RunScriptFileCommand":
+                        case "UnloadScriptFileCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>
+                {
+                    ("v_taskPath", "v_TargetFilePath"),
+                    ("v_WaitForFile", "v_WaitTimeForFile"),
+                }
+            );
+
+            // RunPowerShell/BatchScrpitFile v_ScriptPath -> v_TargetFilePath, v_WaitForFile -> v_WaitTimeForFile
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "RunBatchScriptFileCommand":
+                        case "RunPowerShellScriptFileCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>
+                {
+                    ("v_ScriptPath", "v_TargetFilePath"),
+                    ("v_WaitForFile", "v_WaitTimeForFile"),
+                }
+            );
+
+            // RunJavaScriptFileCommand v_FilePath -> v_TargetFilePath
+            ChangeAttributeName(doc, "RunJavaScriptFileCommand", "v_FilePath", "v_TargetFilePath");
+
+            // RunCSharpCode v_Args -> v_Arguments, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "RunCSharpCodeCommand",
+                new List<(string, string)>
+                {
+                    ("v_Args", "v_Arguments"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
+
+            // RunJavaScriptFileCommand v_Args -> v_Arguments
+            ChangeAttributeName(doc, "RunJavaScriptFileCommand", "v_Args", "v_Arguments");
+
+            // RunPowerShellScriptFileCommand v_PowerShellArgs -> v_Arguments, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "RunPowerShellScriptFileCommand",
+                new List<(string, string)>
+                {
+                    ("v_PowerShellArgs", "v_Arguments"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
             );
         }
 

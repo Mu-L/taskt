@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class WordOpenDocumentCommand : ScriptCommand
+    public sealed class WordOpenDocumentCommand : ScriptCommand, IFileExistsFilePathProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
@@ -23,11 +23,11 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "docx,docm,doc,odt,rtf")]
-        public string v_FilePath { get; set; }
+        public string v_TargetFilePath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        public string v_WaitForFile { get; set; }
+        public string v_WaitTimeForFile { get; set; }
 
         public WordOpenDocumentCommand()
         {
@@ -42,9 +42,10 @@ namespace taskt.Core.Automation.Commands
             var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
-            var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
+            //var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
+            var wordFilePath = this.WaitForFile(engine);
 
-            wordInstance.Documents.Open(vFilePath);
+            wordInstance.Documents.Open(wordFilePath);
         }
     }
 }
