@@ -3962,6 +3962,27 @@ namespace taskt.Core.Script
 
             // RunJavaScriptFileCommand v_FilePath -> v_TargetFilePath
             ChangeAttributeName(doc, "RunJavaScriptFileCommand", "v_FilePath", "v_TargetFilePath");
+
+            // RunCSharpCode v_Args -> v_Arguments, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "RunCSharpCodeCommand",
+                new List<(string, string)>
+                {
+                    ("v_Args", "v_Arguments"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
+
+            // RunJavaScriptFileCommand v_Args -> v_Arguments
+            ChangeAttributeName(doc, "RunJavaScriptFileCommand", "v_Args", "v_Arguments");
+
+            // RunPowerShellScriptFileCommand v_PowerShellArgs -> v_Arguments, v_applyToVariableName -> v_Result
+            ChangeMultiAttributeNames(doc, "RunPowerShellScriptFileCommand",
+                new List<(string, string)>
+                {
+                    ("v_PowerShellArgs", "v_Arguments"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
         }
 
         /// <summary>

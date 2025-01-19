@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(6000)]
-        public string v_PowerShellArgs { get; set; }
+        public string v_Arguments { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(8000)]
-        public string v_applyToVariableName { get; set; }
+        public string v_Result { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             var startInfo = new ProcessStartInfo()
             {
                 FileName = "powershell.exe",
-                Arguments = $"{v_PowerShellArgs} -EncodedCommand {psCommandBase64}",
+                Arguments = $"{v_Arguments} -EncodedCommand {psCommandBase64}",
                 UseShellExecute = false,
                 RedirectStandardOutput = true                  
             };
@@ -111,10 +111,10 @@ namespace taskt.Core.Automation.Commands
             //store output into variable
             var reader = proc.StandardOutput;
             
-            if (!string.IsNullOrEmpty(v_applyToVariableName))
+            if (!string.IsNullOrEmpty(v_Result))
             {
                 string output = reader.ReadToEnd();
-                output.StoreRawDataInUserVariable(engine, v_applyToVariableName);
+                output.StoreRawDataInUserVariable(engine, v_Result);
             }
         }
     }

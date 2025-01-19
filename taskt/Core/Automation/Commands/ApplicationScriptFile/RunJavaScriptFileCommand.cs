@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(6000)]
-        public string v_Args { get; set; }
+        public string v_Arguments { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
                     v_InstanceName = instanceVar,
                     v_CodeType = "File",
                     v_ScriptCode = filePath,
-                    v_Args = this.v_Args,
+                    v_Args = this.v_Arguments,
                     v_userVariableName = this.v_Result,
                 };
                 executeJS.RunCommand(engine);
