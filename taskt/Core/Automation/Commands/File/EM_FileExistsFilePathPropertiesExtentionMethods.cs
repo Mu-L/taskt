@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
 
             var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
             {
-                if (command.IsURL(path))
+                if (EM_CanHandleFilePathExtentionMethods.IsURL(path))
                 {
                     // if path is URL, don't check existance
                     return (true, path);

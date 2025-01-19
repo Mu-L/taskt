@@ -16,10 +16,9 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// check file path is full path, call EM_CanHandleFileOrFolderPathProperties
         /// </summary>
-        /// <param name="command"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsFullPath(this ICanHandleFilePath command, string path)
+        public static bool IsFullPath(string path)
         {
             return EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsFullPath(path);
         }
@@ -27,10 +26,9 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// check file path is URL, call EM_CanHandleFileOrFolderPathProperties
         /// </summary>
-        /// <param name="command"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsURL(this ICanHandleFilePath command, string path)
+        public static bool IsURL(string path)
         {
             return EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsURL(path);
         }

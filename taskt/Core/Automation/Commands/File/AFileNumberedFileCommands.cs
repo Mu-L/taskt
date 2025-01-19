@@ -6,7 +6,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    public abstract class AFileNumberedFileCommands : ScriptCommand, ICanHandleFileName, ICanHandleFilePath
+    public abstract class AFileNumberedFileCommands : ScriptCommand, ICanHandleFileName
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
             {
                 v_TargetFolderPath = Path.GetDirectoryName(engine.FileName);
             }
-            if (!this.IsFullPath(v_TargetFolderPath))
+            if (!EM_CanHandleFilePathExtentionMethods.IsFullPath(v_TargetFolderPath))
             {
                 v_TargetFolderPath = Path.Combine(Path.GetDirectoryName(engine.FileName), v_TargetFolderPath);
             }

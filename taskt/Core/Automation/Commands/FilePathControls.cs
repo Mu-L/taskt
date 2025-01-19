@@ -98,16 +98,16 @@ namespace taskt.Core.Automation.Commands
 
         #region check methods
 
-        /// <summary>
-        /// check file path is full path
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool IsFullPath(string path)
-        {
-            //return (path != Path.GetFileName(path));
-            return !string.IsNullOrEmpty(Path.GetPathRoot(path));
-        }
+        ///// <summary>
+        ///// check file path is full path
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <returns></returns>
+        //public static bool IsFullPath(string path)
+        //{
+        //    //return (path != Path.GetFileName(path));
+        //    return !string.IsNullOrEmpty(Path.GetPathRoot(path));
+        //}
 
         ///// <summary>
         ///// check file path has extension
