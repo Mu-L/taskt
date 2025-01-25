@@ -190,7 +190,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static string ConvertToFullPath(string path, Engine.AutomationEngineInstance engine)
         {
-            if (EM_CanHandleFileOrFolderPathPropertiesExtensionMethods.IsFullPath(path))
+            if (EM_CanHandleFileOrFolderPathExtensionMethods.IsFullPath(path))
             {
                 return path;
             }

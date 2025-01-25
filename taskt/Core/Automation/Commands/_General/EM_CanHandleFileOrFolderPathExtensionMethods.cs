@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_CanHandleFileOrFolderPathPropertiesExtensionMethods
+    public static class EM_CanHandleFileOrFolderPathExtensionMethods
     {
         /// <summary>
         /// check file/folder path is full-path
