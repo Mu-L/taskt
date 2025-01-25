@@ -436,6 +436,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_17(doc);
             convertTo3_5_2_18(doc);
             convertTo3_5_2_19(doc);
+            convertTo3_5_2_20(doc);
             return doc;
         }
 
@@ -3979,6 +3980,18 @@ namespace taskt.Core.Script
                 {
                     ("v_PowerShellArgs", "v_Arguments"),
                     ("v_applyToVariableName", "v_Result"),
+                }
+            );
+        }
+
+        private static void convertTo3_5_2_20(XDocument doc)
+        {
+            // StartApplicationCommand v_ProgramName -> v_ApplicationPath, v_ProgramArgs -> v_Arguments
+            ChangeMultiAttributeNames(doc, "StartApplicationCommand",
+                new List<(string, string)>
+                {
+                    ("v_ProgramName", "v_ApplicationPath"),
+                    ("v_ProgramArgs", "v_Arguments"),
                 }
             );
         }
