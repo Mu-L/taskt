@@ -23,5 +23,16 @@ namespace taskt.Core.Automation.Commands
         {
             return (path.StartsWith("http:") || path.StartsWith("https:"));
         }
+
+        /// <summary>
+        /// check string is valid path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsValidPathString(string path)
+        {
+            var invs = Path.GetInvalidPathChars();
+            return (path.IndexOfAny(invs) < 0);
+        }
     }
 }
