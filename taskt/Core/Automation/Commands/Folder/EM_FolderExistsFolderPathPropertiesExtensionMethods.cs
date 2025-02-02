@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
 
                 var afterPath = actionFunc(beforePath);
 
-                postActionFunc(beforePath, afterPath);
+                postActionFunc?.Invoke(beforePath, afterPath);
             }
             catch (Exception ex)
             {
