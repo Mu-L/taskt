@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
             command.FolderAction(engine, actionFunc,
                 new Action<string, string>((before, after) =>
                 {
-                    command.StoreResultFolderPathInUserVariable(before, engine);
+                    command.StoreResultFolderPathInUserVariable(after, engine);
                 }),
                 errorFunc
             );
