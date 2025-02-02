@@ -12,7 +12,8 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDisplayText(true, "Folder")]
+        [PropertyDescription("Destination Folder")]
+        [PropertyDisplayText(true, "Destination Folder")]
         [PropertyParameterOrder(6000)]
         public virtual string v_DestinationFolderPath { get; set; }
 
