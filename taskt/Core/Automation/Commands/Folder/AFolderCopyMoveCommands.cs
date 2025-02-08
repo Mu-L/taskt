@@ -6,6 +6,9 @@ using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// for copy/move folder commands
+    /// </summary>
     public abstract class AFolderCopyMoveFolderCommands : AFolderExistsFolderBeforeAfterResultCommands
     {
         //[XmlAttribute]
