@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ShowFileDialogCommand : ScriptCommand
+    public sealed class ShowFileDialogCommand : ScriptCommand, ICanHandleFolderPath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -99,6 +99,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
+                //directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
                 directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
             }
 

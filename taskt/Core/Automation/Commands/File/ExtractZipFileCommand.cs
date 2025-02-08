@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExtractZipFileCommand : ScriptCommand, ICanHandleList, ICanHandleFilePath
+    public sealed class ExtractZipFileCommand : ScriptCommand, ICanHandleList, ICanHandleFilePath, ICanHandleFolderPath
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -121,7 +121,8 @@ namespace taskt.Core.Automation.Commands
 
             //get file path to destination files
             //var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
-            var vExtractionFolder = v_PathDestination.ExpandValueOrUserVariableAsFolderPath(engine);
+            //var vExtractionFolder = v_PathDestination.ExpandValueOrUserVariableAsFolderPath(engine);
+            var vExtractionFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_PathDestination), engine);
 
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))

@@ -65,7 +65,8 @@ namespace taskt.Core.Automation.Commands
             return new Func<string, string>(path =>
             {
                 // TODO : wait for folder
-                var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+                //var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+                var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
 
                 if (!Directory.Exists(destinationFolder))
                 {
