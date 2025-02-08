@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 using System.IO;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Engine;
 using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
@@ -33,10 +32,24 @@ namespace taskt.Core.Automation.Commands
         public virtual string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("When Description Folder Path is Same as Target Folder Path")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyShowSampleUsageInDescription(false)]
+        [PropertyDetailSampleUsage("**Error**", "Rise an Error")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do Nothing and move to Next Process")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyValidationRule("When Path Is Same", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5300)]
+        public virtual string v_WhenDestinationIsSame { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder when it already Exists")]
         [PropertyIsOptional(true, "No")]
-        [PropertyParameterOrder(5300)]
+        [PropertyParameterOrder(5400)]
         public virtual string v_DeleteExisting { get; set; }
 
         //[XmlAttribute]
@@ -104,6 +117,18 @@ namespace taskt.Core.Automation.Commands
 
                 // create final path
                 var newFolderPath = Path.Combine(destinationFolder, sourceFolderInfo.Name);
+
+                if (EM_CanHandleFileOrFolderPathExtensionMethods.IsSamePath(path, newFolderPath))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenDestinationIsSame), engine))
+                    {
+                        case "error":
+                            throw new Exception($"Target Folder Path and Destination Path are Same. Path: '{path}'");
+
+                        case "ignore":
+                            return path;
+                    }
+                }
 
                 // delete if it already exists
                 if (Directory.Exists(newFolderPath))
