@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CopyFolderCommand : ScriptCommand
+    public sealed class CopyFolderCommand : AFolderCopyMoveFolderCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -25,47 +25,54 @@ namespace taskt.Core.Automation.Commands
         //[PropertyDisplayText(true, "Folder Action")]
         //public string v_OperationType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Target Folder")]
-        [PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Target Folder")]
-        public string v_TargetFolderPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        //[PropertyDescription("Target Folder")]
+        //[PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Target Folder")]
+        //public string v_TargetFolderPath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Destination Folder for Copy")]
-        [PropertyValidationRule("Destination Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Destination Folder")]
-        public string v_DestinationFolderPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        //[PropertyDescription("Destination Folder for Copy")]
+        //[PropertyValidationRule("Destination Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Destination Folder")]
+        //public string v_DestinationFolderPath { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Create Folder when the Destination Folder does not Exists")]
+        //[PropertyIsOptional(true, "No")]
+        //public string v_CreateDirectory { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Delete Folder when it already Exists")]
+        //[PropertyIsOptional(true, "No")]
+        //public string v_DeleteExisting { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Create Folder when the Destination Folder does not Exists")]
-        [PropertyIsOptional(true, "No")]
-        public string v_CreateDirectory { get; set; }
+        [PropertyDescription("Copy SubFolders")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyParameterOrder(5310)]
+        public string v_CopySubFolder { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Delete Folder when it already Exists")]
-        [PropertyIsOptional(true, "No")]
-        public string v_DeleteExisting { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
+        //[PropertyDescription("Wait Time for the Target Folder to Exist (sec)")]
+        //[PropertyDisplayText(false, "")]
+        //public string v_WaitTimeForFolder { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
-        [PropertyDescription("Wait Time for the Target Folder to Exist (sec)")]
-        [PropertyDisplayText(false, "")]
-        public string v_WaitTimeForFolder { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
+        //[PropertyDescription("Variable Name to Store Folder Path Before Copy")]
+        //public string v_BeforeFolderPathResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
-        [PropertyDescription("Variable Name to Store Folder Path Before Copy")]
-        public string v_BeforeFolderPathResult { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyDescription("Variable Name to Store Folder Path After Copy")]
-        public string v_AfterFolderPathResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //[PropertyDescription("Variable Name to Store Folder Path After Copy")]
+        //public string v_AfterFolderPathResult { get; set; }
 
         public CopyFolderCommand()
         {
@@ -112,41 +119,61 @@ namespace taskt.Core.Automation.Commands
             //    finalPath.StoreInUserVariable(engine, v_AfterFilePathResult);
             //}
 
-            FolderPathControls.FolderAction(this, engine,
-                new Action<string>(path =>
+            //FolderPathControls.FolderAction(this, engine,
+            //    new Action<string>(path =>
+            //    {
+            //        var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+
+            //        if (!Directory.Exists(destinationFolder))
+            //        {
+            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
+            //            {
+            //                Directory.CreateDirectory(destinationFolder);
+            //            }
+            //        }
+
+            //        //get source folder name and info
+            //        DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
+
+            //        //create final path
+            //        var finalPath = Path.Combine(destinationFolder, sourceFolderInfo.Name);
+
+            //        //delete if it already exists per user
+            //        if (Directory.Exists(finalPath))
+            //        {
+            //            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
+            //            {
+            //                Directory.Delete(finalPath, true);
+            //            }
+            //        }
+
+            //        DirectoryCopy(path, finalPath, true);
+
+            //        if (!string.IsNullOrEmpty(v_AfterFolderPathResult))
+            //        {
+            //            finalPath.StoreInUserVariable(engine, v_AfterFolderPathResult);
+            //        }
+            //    })
+            //);
+
+            Action<string, string> coreAction;
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CopySubFolder), engine))
+            {
+                coreAction = new Action<string, string>((a, b) =>
                 {
-                    var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+                    DirectoryCopy(a, b, true);
+                });
+            }
+            else
+            {
+                coreAction = new Action<string, string>((a, b) =>
+                {
+                    DirectoryCopy(a, b, false);
+                });
+            }
 
-                    if (!Directory.Exists(destinationFolder))
-                    {
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
-                        {
-                            Directory.CreateDirectory(destinationFolder);
-                        }
-                    }
-
-                    //get source folder name and info
-                    DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
-
-                    //create final path
-                    var finalPath = Path.Combine(destinationFolder, sourceFolderInfo.Name);
-
-                    //delete if it already exists per user
-                    if (Directory.Exists(finalPath))
-                    {
-                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
-                        {
-                            Directory.Delete(finalPath, true);
-                        }
-                    }
-
-                    DirectoryCopy(path, finalPath, true);
-
-                    if (!string.IsNullOrEmpty(v_AfterFolderPathResult))
-                    {
-                        finalPath.StoreInUserVariable(engine, v_AfterFolderPathResult);
-                    }
-                })
+            this.FolderAction(engine,
+                this.CreateActionFunc(coreAction, engine)
             );
         }
 
@@ -154,12 +181,9 @@ namespace taskt.Core.Automation.Commands
         {
             // If the destination directory doesn't exist, create it.
 
-            //Directory.GetParent(destDirName);
             if (!Directory.GetParent(destDirName).Exists)
             {
-                throw new DirectoryNotFoundException(
-                    "Destination directory does not exist or could not be found: "
-                    + Directory.GetParent(destDirName));
+                throw new DirectoryNotFoundException($"Destination directory does not exist or could not be found: '{Directory.GetParent(destDirName)}'");
             }
 
             if (!Directory.Exists(destDirName))
