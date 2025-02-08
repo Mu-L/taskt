@@ -437,6 +437,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_18(doc);
             convertTo3_5_2_19(doc);
             convertTo3_5_2_20(doc);
+            convertTo3_5_2_21(doc);
             return doc;
         }
 
@@ -3995,6 +3996,13 @@ namespace taskt.Core.Script
                 }
             );
         }
+
+        private static void convertTo3_5_2_21(XDocument doc)
+        {
+            // RenameFolderCommand v_NewName -> v_NewFolderName
+            ChangeAttributeName(doc, "RenameFolderCommand", "v_NewName", "v_NewFolderName");
+        }
+
 
         /// <summary>
         /// get old, new current window keyword

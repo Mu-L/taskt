@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vNewFolder}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "New Folder")]
         [PropertyValidationRule("New Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New Folder")]
-        public string v_NewName { get; set; }
+        public string v_NewFolderName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -101,12 +101,12 @@ namespace taskt.Core.Automation.Commands
                 {
                     var currentFolderName = Path.GetFileName(path);
 
-                    var newFolderName = v_NewName.ExpandValueOrUserVariableAsFolderName(engine);
+                    var newFolderName = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
 
-                    //get source folder name and info
+                    // get source folder name and info
                     DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
 
-                    //create destination
+                    // create destination
                     var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
 
                     var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
 
-                    //rename folder
+                    // rename folder
                     Directory.Move(path, destinationPath);
 
                     if (!string.IsNullOrEmpty(v_AfterFolderPathResult))
