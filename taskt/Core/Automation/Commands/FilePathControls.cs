@@ -520,6 +520,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string FormatFileFolderPath(string path, string format)
         {
+            // todo: separate when path is folder or file
             switch (format.ToLower())
             {
                 case "file":
