@@ -15,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExtractionFolderPathCommand : ScriptCommand
+    public sealed class ExtractionFolderPathCommand : AFolderFolderPathCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        public string v_TargetFolderPath { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        //public string v_TargetFolderPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -29,10 +29,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
+        [PropertyParameterOrder(6000)]
         public string v_Format { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyParameterOrder(7000)]
         public string v_Result { get; set; }
 
         public ExtractionFolderPathCommand()
@@ -45,11 +47,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            string folderPath = v_TargetFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+            //string folderPath = v_TargetFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
+            var folderPath = this.ExpandValueOrUserVariableAsFolderPath(engine);
 
-            string format = v_Format.ExpandValueOrUserVariable(engine);
+            var format = v_Format.ExpandValueOrUserVariable(engine);
 
-            string result = FilePathControls.FormatFileFolderPath(folderPath, format);
+            var result = FilePathControls.FormatFileFolderPath(folderPath, format);
             result.StoreInUserVariable(engine, v_Result);
         }
 
