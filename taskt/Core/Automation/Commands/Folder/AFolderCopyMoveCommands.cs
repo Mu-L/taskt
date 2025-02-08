@@ -2,6 +2,8 @@
 using System.Xml.Serialization;
 using System.IO;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -64,15 +66,36 @@ namespace taskt.Core.Automation.Commands
         {
             return new Func<string, string>(path =>
             {
-                // TODO : wait for folder
                 //var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
-                var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
+                //var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
+                //if (!Directory.Exists(destinationFolder))
+                //{
+                //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
+                //    {
+                //        Directory.CreateDirectory(destinationFolder);
+                //    }
+                //}
 
-                if (!Directory.Exists(destinationFolder))
+                var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
+                using (var checkExists = new InnerScriptVariable(engine))
                 {
-                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
+                    var checkFolder = new CheckFolderExistsCommand()
                     {
-                        Directory.CreateDirectory(destinationFolder);
+                        v_TargetFolderPath = this.v_DestinationFolderPath,
+                        v_WaitTimeForFolder = this.v_WaitTimeForFolder,
+                        v_Result = checkExists.VariableName,
+                    };
+                    checkFolder.RunCommand(engine);
+                    if (!bool.Parse(checkExists.VariableValue.ToString()))
+                    {
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
+                        {
+                            Directory.CreateDirectory(destinationFolder);
+                        }
+                        else
+                        {
+                            throw new Exception($"Destination Folder does not Exists. Folder Path: '{v_DestinationFolderPath}', Expand Folder Path: '{destinationFolder}'");
+                        }
                     }
                 }
 
