@@ -85,7 +85,8 @@ namespace taskt.Core.Automation.Commands
                     // get folder list
                     var directoriesList = Directory.GetDirectories(sourceFolder).ToList();
 
-                    var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
+                    //var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
+                    var searchFolder = this.ExpandValueOrUserVariable(nameof(v_SearchFolderName), "Folder Name", engine);
 
                     var compareFunc = this.GetCompareFunction(engine);
 
