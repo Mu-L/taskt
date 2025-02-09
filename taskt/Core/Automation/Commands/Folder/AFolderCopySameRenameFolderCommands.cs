@@ -5,7 +5,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-    public abstract class FolderCopySameRenameFolderCommands : AFolderExistsFolderBeforeAfterResultCommands, ICanHandleFolderName
+    public abstract class AFolderCopySameRenameFolderCommands : AFolderExistsFolderBeforeAfterResultCommands, ICanHandleFolderName
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
@@ -50,44 +50,6 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "")]
         //public string v_AfterFolderPathResult { get; set; }
-
-        public override void RunCommand(Engine.AutomationEngineInstance engine)
-        {
-            this.FolderAction(engine,
-                new Func<string, string>(path =>
-                {
-                    //var currentFolderName = Path.GetFileName(path);
-
-                    //var newFolderName = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
-                    var newFolderName = this.ExpandValueOrUserVariableAsFolderName(nameof(v_NewFolderName), engine);
-
-                    // get source folder name and info
-                    DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
-
-                    // create destination
-                    var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
-
-                    //var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
-                    //if (sourceFolderInfo.Name == newFolderName)
-                    if (EM_CanHandleFileOrFolderPathExtensionMethods.IsSamePath(path, destinationPath))
-                    {
-                        switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFolderNameSame), engine))
-                        {
-                            case "ignore":
-                                return path;
-
-                            case "error":
-                                throw new Exception($"Folder Name before and after the changes is same. Name '{newFolderName}'");
-                        }
-                    }
-
-                    // rename folder
-                    Directory.Move(path, destinationPath);
-
-                    return destinationPath;
-                })
-            );
-        }
 
         /// <summary>
         /// create action func
