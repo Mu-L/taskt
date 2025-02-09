@@ -100,7 +100,6 @@ namespace taskt.Core.Automation.Commands
                 var destinationFilePath = Path.Combine(destinationFolder, sourceFileInfo.Name);
 
                 // check folder is same
-                //if (path.Equals(destinationFilePath, StringComparison.OrdinalIgnoreCase))
                 if (EM_CanHandleFileOrFolderPathExtensionMethods.IsSamePath(path, destinationFilePath))
                 {
                     switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenDestinationIsSame), engine))
