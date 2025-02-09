@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -14,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CopyFolderCommand : AFolderCopyMoveFolderCommands
+    public sealed class CopyFolderCommand : AFolderCopyMoveFolderCommands, IFolderCopyFolderProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -156,61 +155,67 @@ namespace taskt.Core.Automation.Commands
             //    })
             //);
 
-            Action<string, string> coreAction;
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CopySubFolder), engine))
-            {
-                coreAction = new Action<string, string>((a, b) =>
-                {
-                    DirectoryCopy(a, b, true);
-                });
-            }
-            else
-            {
-                coreAction = new Action<string, string>((a, b) =>
-                {
-                    DirectoryCopy(a, b, false);
-                });
-            }
+            //Action<string, string> coreAction;
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CopySubFolder), engine))
+            //{
+            //    coreAction = new Action<string, string>((a, b) =>
+            //    {
+            //        DirectoryCopy(a, b, true);
+            //    });
+            //}
+            //else
+            //{
+            //    coreAction = new Action<string, string>((a, b) =>
+            //    {
+            //        DirectoryCopy(a, b, false);
+            //    });
+            //}
+
+            //this.FolderAction(engine,
+            //    this.CreateActionFunc(coreAction, engine)
+            //);
 
             this.FolderAction(engine,
-                this.CreateActionFunc(coreAction, engine)
+                this.CreateActionFunc(
+                    this.CreateFolderCopyAction(engine), engine
+                )
             );
         }
 
-        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
-        {
-            // If the destination directory doesn't exist, create it.
+        //private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        //{
+        //    // If the destination directory doesn't exist, create it.
 
-            if (!Directory.GetParent(destDirName).Exists)
-            {
-                throw new DirectoryNotFoundException($"Destination directory does not exist or could not be found: '{Directory.GetParent(destDirName)}'");
-            }
+        //    if (!Directory.GetParent(destDirName).Exists)
+        //    {
+        //        throw new DirectoryNotFoundException($"Destination directory does not exist or could not be found: '{Directory.GetParent(destDirName)}'");
+        //    }
 
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
+        //    if (!Directory.Exists(destDirName))
+        //    {
+        //        Directory.CreateDirectory(destDirName);
+        //    }
 
-            // Get the subdirectories for the specified directory.
-            DirectoryInfo sDirInfo = new DirectoryInfo(sourceDirName);
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = sDirInfo.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
-            }
+        //    // Get the subdirectories for the specified directory.
+        //    DirectoryInfo sDirInfo = new DirectoryInfo(sourceDirName);
+        //    // Get the files in the directory and copy them to the new location.
+        //    FileInfo[] files = sDirInfo.GetFiles();
+        //    foreach (FileInfo file in files)
+        //    {
+        //        string temppath = Path.Combine(destDirName, file.Name);
+        //        file.CopyTo(temppath, false);
+        //    }
 
-            // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
-            {
-                DirectoryInfo[] subDirs = sDirInfo.GetDirectories();
-                foreach (DirectoryInfo subdir in subDirs)
-                {
-                    string temppath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
-                }
-            }
-        }
+        //    // If copying subdirectories, copy them and their contents to new location.
+        //    if (copySubDirs)
+        //    {
+        //        DirectoryInfo[] subDirs = sDirInfo.GetDirectories();
+        //        foreach (DirectoryInfo subdir in subDirs)
+        //        {
+        //            string temppath = Path.Combine(destDirName, subdir.Name);
+        //            DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+        //        }
+        //    }
+        //}
     }
 }
