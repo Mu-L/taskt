@@ -25,7 +25,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("New Folder Name")]
         [InputSpecification("New Folder Name", true)]
-        //[SampleUsage("**newFolderName** or **{{{vNewFolderName}}}**")]
         [PropertyDetailSampleUsage("**myFolder2**", PropertyDetailSampleUsage.ValueType.Value, "New Folder")]
         [PropertyDetailSampleUsage("**{{{vNewFolder}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "New Folder")]
         [PropertyValidationRule("New Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -138,7 +137,7 @@ namespace taskt.Core.Automation.Commands
             this.FolderAction(engine,
                 new Func<string, string>(path =>
                 {
-                    var currentFolderName = Path.GetFileName(path);
+                    //var currentFolderName = Path.GetFileName(path);
 
                     //var newFolderName = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
                     var newFolderName = this.ExpandValueOrUserVariableAsFolderName(nameof(v_NewFolderName), engine);
@@ -150,7 +149,7 @@ namespace taskt.Core.Automation.Commands
                     var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
 
                     //var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
-                    if (currentFolderName == newFolderName)
+                    if (sourceFolderInfo.Name == newFolderName)
                     {
                         switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine))
                         {
