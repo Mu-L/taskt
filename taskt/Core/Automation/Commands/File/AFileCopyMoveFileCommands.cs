@@ -34,8 +34,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Rise An Error")]
         [PropertyUISelectionOption("Ignore")]
         [PropertyShowSampleUsageInDescription(false)]
-        [PropertyDetailSampleUsage("**Rise An Error", "Rise an Error")]
-        [PropertyDetailSampleUsage("**Ignore", "Do Nothing and move to Next Process")]
+        [PropertyDetailSampleUsage("**Rise An Error**", "Rise an Error")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do Nothing and move to Next Process")]
         [PropertyIsOptional(true, "Rise An Error")]
         [PropertyValidationRule("When Path Is Same", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
@@ -83,8 +83,8 @@ namespace taskt.Core.Automation.Commands
                 //    }
                 //}
 
-                // TODO: fix to call extension methods
-                var destinationFolder = EM_CanHandleFolderPathExtensionMethods.ExpandValueOrUserVariableAsFolderPath(this, nameof(v_DestinationFolderPath), engine);
+                //var destinationFolder = EM_CanHandleFolderPathExtensionMethods.ExpandValueOrUserVariableAsFolderPath(this, nameof(v_DestinationFolderPath), engine);
+                var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
                 using (var folderResult = new InnerScriptVariable(engine))
                 {
                     var checkFolder = new CheckFolderExistsCommand()

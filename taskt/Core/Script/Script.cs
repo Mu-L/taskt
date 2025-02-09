@@ -437,6 +437,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_18(doc);
             convertTo3_5_2_19(doc);
             convertTo3_5_2_20(doc);
+            convertTo3_5_2_21(doc);
             return doc;
         }
 
@@ -3994,6 +3995,21 @@ namespace taskt.Core.Script
                     ("v_ProgramArgs", "v_Arguments"),
                 }
             );
+        }
+
+        private static void convertTo3_5_2_21(XDocument doc)
+        {
+            // RenameFolderCommand v_NewName -> v_NewFolderName, v_IfFolderNameSame -> v_WhenFolderNameSame
+            ChangeMultiAttributeNames(doc, "RenameFolderCommand",
+                new List<(string, string)>()
+                {
+                    ("v_NewName", "v_NewFolderName"),
+                    ("v_IfFolderNameSame", "v_WhenFolderNameSame"),
+                }
+            );
+
+            // RenameFileCommand v_IfFileNameSame -> v_WhenFileNameSame
+            ChangeAttributeName(doc, "RenameFileCommand", "v_IfFileNameSame", "v_WhenFileNameSame");
         }
 
         /// <summary>

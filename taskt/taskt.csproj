@@ -96,7 +96,7 @@
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
-      <HintPath>..\packages\BouncyCastle.Cryptography.2.5.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.5.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.72.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.72\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -378,6 +378,7 @@
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathPathResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\AFileCopySameRenameFileCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFileNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFilePathExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_FileExistsFilePathBeforeAfterPathResultPropertiesExtensionMethods.cs" />
@@ -393,21 +394,30 @@
     <Compile Include="Core\Automation\Commands\File\IFileExistsFilePathProperties.cs" />
     <Compile Include="Core\Automation\Commands\File\IFileExistsFilePathPathResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\File\IFilePathProperties.cs" />
+    <Compile Include="Core\Automation\Commands\File\CopyFileToSameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFileFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderBeforeAfterResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathPathResultCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\AFolderCopyMoveCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\CreateFolderByPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\EM_CanHandleFolderNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_CanHandleFolderPathExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\EM_FolderCopyFolderPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_FolderExistsFolderPathBeforeAfterPathResultPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_FolderExistsFolderPathPathResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_FolderExistsFolderPathPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_FolderPathPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\GetSpecialFolderPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\ICanHandleFolderName.cs" />
     <Compile Include="Core\Automation\Commands\Folder\ICanHandleFolderPath.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\IFolderCopyFolderProperties.cs" />
     <Compile Include="Core\Automation\Commands\Folder\IFolderExistsFolderPathBeforeAfterPathResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\Folder\IFolderExistsFolderPathPathResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\Folder\IFolderExistsFolderPathProperties.cs" />
     <Compile Include="Core\Automation\Commands\Folder\IFolderPathProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\AFolderCopySameRenameFolderCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\CopyFolderInSamePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\RemoveListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\TextCompareSelectMethodControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ADataTableBothRowCommands.cs" />
