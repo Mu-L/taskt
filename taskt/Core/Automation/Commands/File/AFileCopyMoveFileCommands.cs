@@ -69,21 +69,6 @@ namespace taskt.Core.Automation.Commands
         {
             return new Func<string, string>(path =>
             {
-                //var destinationFolder = v_DestinationFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
-
-                //if (!Directory.Exists(destinationFolder))
-                //{
-                //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
-                //    {
-                //        Directory.CreateDirectory(destinationFolder);
-                //    }
-                //    else
-                //    {
-                //        throw new Exception("destination folder does not exists: " + destinationFolder);
-                //    }
-                //}
-
-                //var destinationFolder = EM_CanHandleFolderPathExtensionMethods.ExpandValueOrUserVariableAsFolderPath(this, nameof(v_DestinationFolderPath), engine);
                 var destinationFolder = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_DestinationFolderPath), engine);
                 using (var folderResult = new InnerScriptVariable(engine))
                 {
