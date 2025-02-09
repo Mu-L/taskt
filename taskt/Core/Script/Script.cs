@@ -4001,8 +4001,10 @@ namespace taskt.Core.Script
         {
             // RenameFolderCommand v_NewName -> v_NewFolderName
             ChangeAttributeName(doc, "RenameFolderCommand", "v_NewName", "v_NewFolderName");
-        }
 
+            // RenameFileCommand v_IfFileNameSame -> v_WhenFileNameSame
+            ChangeAttributeName(doc, "RenameFileCommand", "v_IfFileNameSame", "v_WhenFileNameSame");
+        }
 
         /// <summary>
         /// get old, new current window keyword

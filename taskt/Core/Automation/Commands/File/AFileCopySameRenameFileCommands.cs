@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyAddtionalParameterInfo("Use Before Rename Path", "Forces before Rename File Path extensions to be combined")]
         [PropertySecondaryLabel(true)]
         [PropertyIsOptional(true, "Auto")]
+        [PropertyDisplayText(false, "")]
         [PropertySelectionChangeEvent(nameof(cmbExtensionOption_SelectionChange))]
         [PropertyParameterOrder(7000)]
         public virtual string v_ExtensionOption { get; set; }
@@ -61,8 +62,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Ignore**", "Nothing to do")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(9000)]
-        public virtual string v_IfFileNameSame { get; set; }
+        public virtual string v_WhenFileNameSame { get; set; }
 
         //[XmlAttribute]
         //public string v_WaitTimeForFile { get; set; }
@@ -126,7 +128,7 @@ namespace taskt.Core.Automation.Commands
                 // create destination
                 var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
 
-                var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFileNameSame), engine);
+                var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFileNameSame), engine);
                 if (EM_CanHandleFileOrFolderPathExtensionMethods.IsSamePath(path, destinationPath))
                 {
                     switch (whenSame)

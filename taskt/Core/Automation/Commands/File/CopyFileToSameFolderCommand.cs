@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         //[PropertyIsOptional(true, "Ignore")]
         //[PropertyParameterOrder(9000)]
-        //public string v_IfFileNameSame { get; set; }
+        //public string v_WhenFileNameSame { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
