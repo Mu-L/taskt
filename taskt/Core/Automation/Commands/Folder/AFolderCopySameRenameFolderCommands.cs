@@ -5,16 +5,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-    [Serializable]
-    [Attributes.ClassAttributes.Group("Folder Operation")]
-    [Attributes.ClassAttributes.CommandSettings("Rename Folder")]
-    [Attributes.ClassAttributes.Description("This command renames a folder at a specified destination")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to rename an existing folder.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
-    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_files))]
-    [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RenameFolderCommand : AFolderExistsFolderBeforeAfterResultCommands, ICanHandleFolderName
+    public abstract class FolderCopySameRenameFolderCommands : AFolderExistsFolderBeforeAfterResultCommands, ICanHandleFolderName
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
@@ -60,80 +51,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyDisplayText(false, "")]
         //public string v_AfterFolderPathResult { get; set; }
 
-        public RenameFolderCommand()
-        {
-            //this.CommandName = "RenameFolderCommand";
-            //this.SelectionName = "Rename Folder";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
-        }
-
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            ////apply variable logic
-            //var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
-            //var currentFolderName = Path.GetFileName(sourceFolder);
-
-            //var newFolderName = v_NewName.ConvertToUserVariableAsFolderName(engine);
-
-            ////get source folder name and info
-            //DirectoryInfo sourceFolderInfo = new DirectoryInfo(sourceFolder);
-
-            ////create destination
-            //var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
-
-            //var whenSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), engine);
-            //if (currentFolderName == newFolderName)
-            //{
-            //    switch (whenSame)
-            //    {
-            //        case "ignore":
-            //            return; 
-
-            //        case "error":
-            //            throw new Exception("Folder Name before and after the changes is same. Name '" + newFolderName + "'");
-            //    }
-            //}
-
-            ////rename folder
-            //Directory.Move(sourceFolder, destinationPath);
-
-            //FolderPathControls.FolderAction(this, engine,
-            //    new Action<string>(path =>
-            //    {
-            //        var currentFolderName = Path.GetFileName(path);
-
-            //        var newFolderName = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
-
-            //        // get source folder name and info
-            //        DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);
-
-            //        // create destination
-            //        var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
-
-            //        var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
-            //        if (currentFolderName == newFolderName)
-            //        {
-            //            switch (whenSame)
-            //            {
-            //                case "ignore":
-            //                    return;
-
-            //                case "error":
-            //                    throw new Exception("Folder Name before and after the changes is same. Name '" + newFolderName + "'");
-            //            }
-            //        }
-
-            //        // rename folder
-            //        Directory.Move(path, destinationPath);
-
-            //        if (!string.IsNullOrEmpty(v_AfterFolderPathResult))
-            //        {
-            //            destinationPath.StoreInUserVariable(engine, v_AfterFolderPathResult);
-            //        }
-            //    })
-            //);
-
             this.FolderAction(engine,
                 new Func<string, string>(path =>
                 {
@@ -168,6 +87,45 @@ namespace taskt.Core.Automation.Commands
                     return destinationPath;
                 })
             );
+        }
+
+        /// <summary>
+        /// create action func
+        /// </summary>
+        /// <param name="processFunc"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        protected Func<string, string> CreateActionFunc(Action<string, string> processFunc, Engine.AutomationEngineInstance engine)
+        {
+            return new Func<string, string>(path =>
+            {
+                var newFolderName = this.ExpandValueOrUserVariableAsFolderName(nameof(v_NewFolderName), engine);
+
+                // get source folder name and info
+                var sourceFolderInfo = new DirectoryInfo(path);
+
+                // create destination
+                var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
+
+                // check path is same
+                if (EM_CanHandleFileOrFolderPathExtensionMethods.IsSamePath(path, destinationPath))
+                {
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFolderNameSame), engine))
+                    {
+                        case "ignore":
+                            return path;
+
+                        case "error":
+                            throw new Exception($"Folder Name before and after the changes is same. Name '{newFolderName}'");
+                    }
+                }
+
+                // action
+                processFunc(path, destinationPath);
+
+                return destinationPath;
+            });
         }
     }
 }

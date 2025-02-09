@@ -1,4 +1,4 @@
-﻿namespace taskt.Core.Automation.Commands.Folder
+﻿namespace taskt.Core.Automation.Commands
 {
     public static class EM_CanHandleFolderNameExtensionMethods
     {
