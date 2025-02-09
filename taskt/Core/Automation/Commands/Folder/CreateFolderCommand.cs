@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Commands.Folder;
 
 namespace taskt.Core.Automation.Commands
 {
