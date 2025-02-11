@@ -4014,7 +4014,7 @@ namespace taskt.Core.Script
         }
         private static void convertTo3_5_2_22(XDocument doc)
         {
-            // CopyFile, MoveFile v_DeleteExisting -> v_WhenDestinationExists, and change values
+            // CopyFile, MoveFile, CopyFolder, MoveFolder v_DeleteExisting -> v_WhenDestinationExists, and change values
             var copyMove = GetCommands(doc,
                 new Func<XElement, bool>(elem =>
                 {
@@ -4022,6 +4022,8 @@ namespace taskt.Core.Script
                     {
                         case "CopyFileCommand":
                         case "MoveFileCommand":
+                        case "CopyFolderCommand":
+                        case "MoveFolderCommand":
                             return true;
                         default:
                             return false;
