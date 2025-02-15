@@ -205,7 +205,7 @@ namespace taskt.Core.Automation.Commands
 
         private void linkWindowNameSelector_Click(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            List<string> windowNames = new List<string>
+            var windowNames = new List<string>
             {
                 VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, editor.appSettings),
             };
