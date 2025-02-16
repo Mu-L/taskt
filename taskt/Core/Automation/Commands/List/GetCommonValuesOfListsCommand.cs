@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("List1 Only", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "List1 Only")]
-        public string v_List1Only { get; set; }
+        public string v_ListAOnly { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("List2 Only", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "List2 Only")]
-        public string v_List2Only { get; set; }
+        public string v_ListBOnly { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
@@ -205,13 +205,13 @@ namespace taskt.Core.Automation.Commands
             {
                 commonValues.StoreInUserVariable(engine, v_CommonValues);
             }
-            if (!string.IsNullOrEmpty(v_List1Only))
+            if (!string.IsNullOrEmpty(v_ListAOnly))
             {
-                onlyA.StoreInUserVariable(engine, v_List1Only);
+                onlyA.StoreInUserVariable(engine, v_ListAOnly);
             }
-            if (!string.IsNullOrEmpty(v_List2Only))
+            if (!string.IsNullOrEmpty(v_ListBOnly))
             {
-                onlyB.StoreInUserVariable(engine, v_List2Only);
+                onlyB.StoreInUserVariable(engine, v_ListBOnly);
             }
             if (!string.IsNullOrEmpty(v_NotCommonValues))
             {
