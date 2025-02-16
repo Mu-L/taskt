@@ -21,18 +21,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetValue { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Compare Method")]
-        [PropertyUISelectionOption("Is Equal To")]
-        [PropertyUISelectionOption("Is Not Equal To")]
-        [PropertyUISelectionOption("Is Greater Than")]
-        [PropertyUISelectionOption("Is Greater Than Or Equal To")]
-        [PropertyUISelectionOption("Is Less Than")]
-        [PropertyUISelectionOption("Is Less Than Or Equal To")]
-        [PropertyUISelectionOption("Is Between")]
-        [PropertyUISelectionOption("Is Not Between")]
-        [PropertyValidationRule("Compare Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Method")]
+        [PropertyVirtualProperty(nameof(CheckNumberCommand), nameof(NumberControls.v_CompareMethod))]
         [PropertySelectionChangeEvent(nameof(cmbCompareMethod_SelectionChangeCommitted))]
         public string v_CompareMethod { get; set; }
 

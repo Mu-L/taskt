@@ -20,20 +20,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetValue { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Check Method")]
-        [PropertyUISelectionOption("Is Number")]
-        [PropertyUISelectionOption("Is Not Number")]
-        [PropertyUISelectionOption("Is Odd Number")]
-        [PropertyUISelectionOption("Is Even Number")]
-        [PropertyUISelectionOption("Is Zero")]
-        [PropertyUISelectionOption("Is Not Zero")]
-        [PropertyUISelectionOption("Is Positive Value")]
-        [PropertyUISelectionOption("Is Negative Value")]
-        [PropertyUISelectionOption("Is Integer")]
-        [PropertyUISelectionOption("Is Not Integer")]
-        [PropertyValidationRule("Check Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Method")]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_CheckMethod))]
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
