@@ -212,14 +212,20 @@ namespace taskt.Core.Automation.Commands
         private void cmbSliceMethod_SelectionChangeCommitted(object sender, EventArgs e)
         {
             var cmb = (ComboBox)sender;
-            bool visible = false;
+            bool visible1 = true;
+            bool visible2 = false;
             switch (cmb.SelectedItem.ToString().ToLower())
             {
                 case "range":
-                    visible = true;
+                    visible2 = true;
+                    break;
+                case "odd numbered items":
+                case "even numbered items":
+                    visible1 = false;
                     break;
             }
-            FormUIControls.SetVisibleParameterControlGroup(this.ControlsList, nameof(v_Index2), visible);
+            FormUIControls.SetVisibleParameterControlGroup(this.ControlsList, nameof(v_Index1), visible1);
+            FormUIControls.SetVisibleParameterControlGroup(this.ControlsList, nameof(v_Index2), visible2);
         }
     }
 }
