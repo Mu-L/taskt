@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Script;
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Slice Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyFirstValue("Range")]
         [PropertyDisplayText(true, "Method")]
+        [PropertySelectionChangeEvent(nameof(cmbSliceMethod_SelectionChangeCommitted))]
         [PropertyParameterOrder(6000)]
         public string v_SliceMethod { get; set; }
 
@@ -205,6 +207,19 @@ namespace taskt.Core.Automation.Commands
             }
 
             this.StoreListInUserVariable(res, engine);
+        }
+
+        private void cmbSliceMethod_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            var cmb = (ComboBox)sender;
+            bool visible = false;
+            switch (cmb.SelectedItem.ToString().ToLower())
+            {
+                case "range":
+                    visible = true;
+                    break;
+            }
+            FormUIControls.SetVisibleParameterControlGroup(this.ControlsList, nameof(v_Index2), visible);
         }
     }
 }
