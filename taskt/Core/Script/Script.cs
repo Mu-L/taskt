@@ -440,6 +440,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_21(doc);
             convertTo3_5_2_22(doc);
             convertTo3_5_2_23(doc);
+            convertTo3_5_2_24(doc);
             return doc;
         }
 
@@ -4197,6 +4198,18 @@ namespace taskt.Core.Script
                     ("v_applyToVariableName", "v_Result"),
                 }
             );
+        }
+
+        private static void convertTo3_5_2_24(XDocument doc)
+        {
+            // TextGetIndexOfCommand -> GetTextIndexOfCommand
+            ChangeCommandName(doc, "TextGetIndexOfCommand", "GetTextIndexOfCommand", "Get Text Index Of");
+
+            // TextGetLastIndexOfCommand -> GetTextLastIndexOfCommand
+            ChangeCommandName(doc, "TextGetLastIndexOfCommand", "GetTextLastIndexOfCommand", "Get Text Last Index Of");
+
+            // TextGetNthIndexOfCommand -> GetTextNthIndexOfCommand
+            ChangeCommandName(doc, "TextGetNthIndexOfCommand", "GetTextNthIndexOfCommand", "Get Text Nth Index Of");
         }
 
 

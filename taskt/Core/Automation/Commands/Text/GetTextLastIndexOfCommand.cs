@@ -7,14 +7,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text")]
     [Attributes.ClassAttributes.SubGruop("Check/Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Index Of")]
-    [Attributes.ClassAttributes.Description("This command allows you to the First Position of the Specified Text")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to the First Position of the Specified Text")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text Last Index Of")]
+    [Attributes.ClassAttributes.Description("This command allows you to the Last Position of the Specified Text")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to the Last Position of the Specified Text")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class TextGetIndexOfCommand : ScriptCommand
+    public class GetTextLastIndexOfCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -42,16 +42,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Search Start Position")]
         [InputSpecification("Search Start Position")]
-        [PropertyIsOptional(true, "0")]
+        [PropertyIsOptional(true, "-1")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyFirstValue("0")]
+        [PropertyFirstValue("-1")]
         [PropertyDetailSampleUsage("**0**", "Specify First Charactor Position")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Charactor Position")]
         [PropertyDetailSampleUsage("**{{{vPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Search Start Position")]
         [PropertyDisplayText(false, "Search Start Position")]
         public string v_SearchStartPosition { get; set; }
 
-        public TextGetIndexOfCommand()
+        public GetTextLastIndexOfCommand()
         {
         }
 
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             if (string.IsNullOrEmpty(v_SearchStartPosition))
             {
-                v_SearchStartPosition = "0";
+                v_SearchStartPosition = "-1";
             }
             var searchStartPosition = this.ExpandValueOrUserVariableAsInteger(nameof(v_SearchStartPosition), engine);
             if (searchStartPosition < 0)
@@ -87,13 +87,13 @@ namespace taskt.Core.Automation.Commands
             }
 
             int idx;
-            if (searchStartPosition == 0)
+            if (searchStartPosition == targetText.Length - 1)
             {
-                idx = targetText.IndexOf(searchText);
+                idx = targetText.LastIndexOf(searchText);
             }
             else
-            {   // (searchStartPosition > 0 && searchStartPosition < targetText.Length)
-                idx = targetText.IndexOf(searchText, searchStartPosition);
+            {   // (searchStartPosition > 0 && searchStartPosition < taregetText.Length);
+                idx = targetText.LastIndexOf(searchText, searchStartPosition);
             }
             idx.StoreInUserVariable(engine, v_Result);
         }

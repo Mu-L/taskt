@@ -646,9 +646,9 @@
     <Compile Include="Core\Automation\Commands\ProcessControls.cs" />
     <Compile Include="Core\Automation\Commands\Script\IHaveSequenceAdditionalCommands.cs" />
     <Compile Include="Core\Automation\Commands\Text\CountWordInTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Text\TextGetIndexOfCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Text\TextGetLastIndexOfCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Text\TextGetNthIndexOfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetTextIndexOfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetTextLastIndexOfCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetTextNthIndexOfCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementSizeCommand.cs" />

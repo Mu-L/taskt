@@ -7,14 +7,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text")]
     [Attributes.ClassAttributes.SubGruop("Check/Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Nth Index Of")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text Nth Index Of")]
     [Attributes.ClassAttributes.Description("This command allows you to the nth position of the Specified Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to the nth Position of the Specified Text")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class TextGetNthIndexOfCommand : ScriptCommand
+    public class GetTextNthIndexOfCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_GreedlyMatch { get; set; }
 
-        public TextGetNthIndexOfCommand()
+        public GetTextNthIndexOfCommand()
         {
         }
 
