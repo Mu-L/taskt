@@ -379,6 +379,7 @@
     <Compile Include="Core\Automation\Commands\File\AFileFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileExistsFilePathCommands.cs" />
     <Compile Include="Core\Automation\Commands\File\AFileCopySameRenameFileCommands.cs" />
+    <Compile Include="Core\Automation\Commands\File\GetRandomFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFileNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_CanHandleFilePathExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\File\EM_FileExistsFilePathBeforeAfterPathResultPropertiesExtensionMethods.cs" />
@@ -400,6 +401,7 @@
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderExistsFolderPathPathResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\Folder\AFolderCopyMoveCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\GetRandomFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\CreateFolderByPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_CanHandleFolderNameExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Folder\EM_CanHandleFolderPathExtensionMethods.cs" />
