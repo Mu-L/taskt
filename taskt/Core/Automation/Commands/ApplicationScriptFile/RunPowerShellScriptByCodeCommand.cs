@@ -24,38 +24,14 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(5000)]
         public override string v_ScriptCode { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        //[PropertyDescription("Arguments")]
-        //[InputSpecification("Arguments", true)]
-        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        //[PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        //[PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
-        //[PropertyIsOptional(true)]
-        //[PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
-        //[PropertyDisplayText(false, "")]
-        //[PropertyParameterOrder(6000)]
+        [XmlAttribute]
         [Remarks("Arguments are sent to the Script")]
         public override string v_Arguments { get; set; }
 
         //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        //[PropertyDescription("Variable Name to Receive the Output")]
-        //[PropertyIsOptional(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        //[PropertyDisplayText(false, "")]
-        //[PropertyParameterOrder(7000)]
         //public string v_Result { get; set; }
 
         //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        //[PropertyDescription("Delete Script File After Execute")]
-        //[PropertyIsOptional(true, "Yes")]
-        //[PropertyFirstValue("Yes")]
-        //[PropertyValidationRule("Delete Script File", PropertyValidationRule.ValidationRuleFlags.None)]
-        //[PropertyDisplayText(false, "")]
-        //[PropertyParameterOrder(9000)]
         //public string v_DeleteScriptFile { get; set; }
 
         public RunPowerShellScriptByCodeCommand()
