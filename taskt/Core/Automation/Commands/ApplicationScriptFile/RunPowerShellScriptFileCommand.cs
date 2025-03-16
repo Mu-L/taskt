@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
 
             // url: https://stackoverflow.com/questions/2285288/calling-a-ruby-script-in-c-sharp/12848337#12848337
             var reader = proc.StandardOutput;
-            string output = reader.ReadToEnd();
+            var output = reader.ReadToEnd();
 
             proc.WaitForExit();
             proc.Close();
