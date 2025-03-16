@@ -1,8 +1,9 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -19,6 +20,7 @@ namespace taskt.Core.Automation.Commands
     public sealed class RunCSharpCodeCommand : ScriptCommand
     {
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("C# Code")]
         [InputSpecification("C# Code", true)]
         [SampleUsage("")]
@@ -50,6 +52,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Result")]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Expand Variables In CSharp Script")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Expand Variables")]
+        public string v_ReplaceScriptVariables { get; set; }
+
         public RunCSharpCodeCommand()
         {
             //this.CommandName = "RunCustomCodeCommand";
@@ -60,24 +70,41 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var customCode = v_Code.ExpandValueOrUserVariable(engine);
-
-            //create compiler service
-            //var compilerSvc = new CompilerServices();
-
-            //compile custom code
-            var result = CSharpCodeCompilerControls.CompileInput(customCode);
-
-            //check for errors
-            if (result.Errors.HasErrors)
+            string csharpCode;
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine))
             {
-                //throw exception
-                var errors = string.Join(", ", result.Errors);
-                throw new Exception("Errors Occured: " + errors);
+                csharpCode = v_Code.ExpandValueOrUserVariable(engine);
             }
             else
             {
-                //run code, taskt will wait for the app to exit before resuming
+                csharpCode = v_Code;
+            }
+
+            // Roslyn compiler
+            var roslyn = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
+
+            // compile custom code
+            var result = CSharpCodeCompilerControls.CompileInput(csharpCode);
+
+            //var paramters = new CompilerParameters()
+            //{
+            //    GenerateExecutable = true,
+            //    OutputAssembly = "tasktOnTheFly.exe",
+            //    //CompilerOptions = "-langversion:9.0",
+            //};
+
+            //var result = roslyn.CompileAssemblyFromSource(paramters, csharpCode);
+
+            // check for errors
+            if (result.Errors.HasErrors)
+            {
+                // throw exception
+                var errors = string.Join(", ", result.Errors);
+                throw new Exception($"Compile Error. Errors Occured: {errors}");
+            }
+            else
+            {
+                // run code, taskt will wait for the app to exit before resuming
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
@@ -86,7 +113,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(v_Result))
                 {
-                    //redirect output
+                    // redirect output
                     scriptProc.StartInfo.RedirectStandardOutput = true;
                     scriptProc.StartInfo.UseShellExecute = false;
                 }
