@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Application/Script")]
     [Attributes.ClassAttributes.SubGruop("Windows Script File")]
-    [Attributes.ClassAttributes.CommandSettings("Run Batch Script By Code")]
-    [Attributes.ClassAttributes.Description("This command allows you to run a batch script by code.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a batch script by code.")]
+    [Attributes.ClassAttributes.CommandSettings("Run JavaScript By Code")]
+    [Attributes.ClassAttributes.Description("This command allows you to run a JavaScript by code.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a JavaScript by code.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RunBatchScriptByCodeCommand : ARunScriptByCodeCommands
+    public sealed class RunJavaScriptByCodeCommand : ARunScriptByCodeCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
-        //[PropertyDescription("Batch Script Code")]
-        //[PropertyDetailSampleUsage("**dir**", PropertyDetailSampleUsage.ValueType.Value, "Batch Script")]
-        //[PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Batch Script")]
+        //[PropertyDescription("JavaScript Code")]
+        //[PropertyDetailSampleUsage("**let a = 1;**", PropertyDetailSampleUsage.ValueType.Value, "JavaScript")]
+        //[PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JavaScript")]
         //[PropertyParameterOrder(5000)]
         //public string v_ScriptCode { get; set; }
 
@@ -47,19 +45,6 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(7000)]
         //public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Script File Type")]
-        [PropertyUISelectionOption("Batch")]
-        [PropertyUISelectionOption("VBScript")]
-        [PropertyUISelectionOption("JScript")]
-        [PropertyUISelectionOption("Windows Script Host")]
-        [PropertyIsOptional(true, "Batch")]
-        [PropertyValidationRule("Script File Type", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(8000)]
-        public string v_ScriptType { get; set; }
-
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         //[PropertyDescription("Delete Script File After Execute")]
@@ -70,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(9000)]
         //public string v_DeleteScriptFile { get; set; }
 
-        public RunBatchScriptByCodeCommand()
+        public RunJavaScriptByCodeCommand()
         {
         }
 
@@ -88,22 +73,7 @@ namespace taskt.Core.Automation.Commands
 
             //    using (var tempFile = new InnerScriptVariable(engine))
             //    {
-            //        string scriptExtension = "";
-            //        switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScriptType), engine))
-            //        {
-            //            case "batch":
-            //                scriptExtension = "bat";
-            //                break;
-            //            case "vbscript":
-            //                scriptExtension = "vbs";
-            //                break;
-            //            case "jscript":
-            //                scriptExtension = "js";
-            //                break;
-            //            case "windows script host":
-            //                scriptExtension = "wsf";
-            //                break;
-            //        }
+            //        string scriptExtension = "js";
 
             //        var getTempFile = new GetRandomFilePathCommand()
             //        {
@@ -124,7 +94,7 @@ namespace taskt.Core.Automation.Commands
             //};
             //writeScript.RunCommand(engine);
 
-            //var runScript = new RunBatchScriptFileCommand()
+            //var runScript = new RunJavaScriptFileCommand()
             //{
             //    v_TargetFilePath = scriptFilePath,
             //    v_Arguments = this.v_Arguments,
@@ -142,27 +112,8 @@ namespace taskt.Core.Automation.Commands
             //}
 
             this.RunScriptAction(
-                new Func<string>(() =>
-                {
-                    string ret = "";
-                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScriptType), engine))
-                    {
-                        case "batch":
-                            ret = "bat";
-                            break;
-                        case "vbscript":
-                            ret = "vbs";
-                            break;
-                        case "jscript":
-                            ret = "js";
-                            break;
-                        case "windows script host":
-                            ret = "wsf";
-                            break;
-                    }
-                    return ret;
-                }), 
-                new RunBatchScriptFileCommand()
+                new Func<string>(() => { return "js"; }), 
+                new RunJavaScriptFileCommand()
                 {
                     v_Arguments = this.v_Arguments,
                     v_Result = this.v_Result,
