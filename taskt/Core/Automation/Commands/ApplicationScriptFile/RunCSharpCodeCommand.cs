@@ -60,6 +60,54 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "Expand Variables")]
         public string v_ReplaceScriptVariables { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Compiled Executable File Name")]
+        [PropertyIsOptional(true, "tasktOnTheFly")]
+        [PropertyFirstValue("tasktOnTheFly")]
+        [PropertyValidationRule("File Name", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "File Name")]
+        public string v_ExecutableFileName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("C# Language Version")]
+        [PropertyUISelectionOption("default")]
+        [PropertyUISelectionOption("latest")]
+        [PropertyUISelectionOption("preview")]
+        [PropertyUISelectionOption("14.0")]
+        [PropertyUISelectionOption("13.0")]
+        [PropertyUISelectionOption("12.0")]
+        [PropertyUISelectionOption("11.0")]
+        [PropertyUISelectionOption("10.0")]
+        [PropertyUISelectionOption("9.0")]
+        [PropertyUISelectionOption("8.0")]
+        [PropertyUISelectionOption("7.3")]
+        [PropertyUISelectionOption("7.2")]
+        [PropertyUISelectionOption("7.1")]
+        [PropertyUISelectionOption("7")]
+        [PropertyUISelectionOption("6")]
+        [PropertyUISelectionOption("5")]
+        [PropertyUISelectionOption("4")]
+        [PropertyUISelectionOption("3")]
+        [PropertyUISelectionOption("2")]
+        [PropertyUISelectionOption("1")]
+        [PropertyIsOptional(true, "default")]
+        [PropertyFirstValue("default")]
+        [PropertyValidationRule("C# Language Version", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "C# Language Version")]
+        [Remarks("More Information: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445")]
+        public string v_CSharpLanguageVersion { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        //[PropertyDescription("Delete Executable File After Execute")]
+        //[PropertyIsOptional(true, "Yes")]
+        //[PropertyFirstValue("Yes")]
+        //[PropertyValidationRule("Delete Executable File", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
+        //public string v_DeleteExecutableFile { get; set; }
+
         public RunCSharpCodeCommand()
         {
             //this.CommandName = "RunCustomCodeCommand";
@@ -80,11 +128,11 @@ namespace taskt.Core.Automation.Commands
                 csharpCode = v_Code;
             }
 
-            // Roslyn compiler
-            var roslyn = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
+            var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
+            var langVer = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CSharpLanguageVersion), engine);
 
             // compile custom code
-            var result = CSharpCodeCompilerControls.CompileInput(csharpCode);
+            var result = CSharpCodeCompilerControls.CompileInput(csharpCode, langVer, fileName);
 
             // check for errors
             if (result.Errors.HasErrors)
@@ -103,7 +151,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 // run code, taskt will wait for the app to exit before resuming
-                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+                var scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
                 var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
@@ -127,6 +175,15 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 scriptProc.Close();
+
+                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
+                //{
+                //    var deleteFile = new DeleteFileCommand()
+                //    {
+                //        v_TargetFilePath = result.PathToAssembly,
+                //    };
+                //    deleteFile.RunCommand(engine);
+                //}
             }
         }
 
