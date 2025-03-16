@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Batch")]
         [PropertyValidationRule("Script File Type", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(8000)]
+        [PropertyParameterOrder(9000)]
         public string v_ScriptType { get; set; }
 
         //[XmlAttribute]

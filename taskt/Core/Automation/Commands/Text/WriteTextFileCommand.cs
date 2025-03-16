@@ -42,6 +42,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "No")]
         public string v_ReplaceToLineBreak { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Expand taskt Variables In Text")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Expand Variables")]
+        public string v_ReplaceScriptVariables { get; set; }
+
         public WriteTextFileCommand()
         {
             //this.CommandName = "WriteTextFileCommand";
@@ -64,15 +72,24 @@ namespace taskt.Core.Automation.Commands
             //}
             var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
-            //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
-            var outputText = v_TextToWrite.ExpandValueOrUserVariable(engine);
-            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceToLineBreak), engine) == "yes")
+            // text to write
+            string outputText;
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine)) 
+            {
+                outputText = v_TextToWrite.ExpandValueOrUserVariable(engine);
+            }
+            else
+            {
+                outputText = v_TextToWrite;
+            }
+
+            // replace [crLF] to new-line
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceToLineBreak), engine))
             {
                 outputText = outputText.Replace("[crLF]", Environment.NewLine);
             }
 
             var isOverwrite = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Overwrite), engine);
-            //append or overwrite as necessary
             if (isOverwrite == "append")
             {
                 System.IO.File.AppendAllText(filePath, outputText);

@@ -24,8 +24,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(6000)]
+        [PropertyParameterOrder(7000)]
         public virtual string v_Arguments { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Expand taskt Variables In Code")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Expand Variables")]
+        [PropertyParameterOrder(7000)]
+        public virtual string v_ReplaceScriptVariables { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
@@ -33,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(7000)]
+        [PropertyParameterOrder(8000)]
         public virtual string v_Result { get; set; }
 
         [XmlAttribute]
@@ -78,11 +87,20 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            var code = this.ExpandValueOrUserVariable(nameof(v_ScriptCode), "Script", engine);
+            string code;
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine))
+            {
+                code = this.ExpandValueOrUserVariable(nameof(v_ScriptCode), "Script", engine);
+            }
+            else
+            {
+                code = this.v_ScriptCode;
+            }
             var writeScript = new WriteTextFileCommand()
             {
                 v_TextToWrite = code,
                 v_FilePath = scriptFilePath,
+                v_ReplaceScriptVariables = this.v_ReplaceScriptVariables,
             };
             writeScript.RunCommand(engine);
 
