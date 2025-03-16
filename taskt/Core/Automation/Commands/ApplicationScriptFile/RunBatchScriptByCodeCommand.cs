@@ -16,13 +16,13 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public sealed class RunBatchScriptByCodeCommand : ARunScriptByCodeCommands
     {
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         //[PropertyDescription("Batch Script Code")]
-        //[PropertyDetailSampleUsage("**dir**", PropertyDetailSampleUsage.ValueType.Value, "Batch Script")]
-        //[PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Batch Script")]
+        [PropertyDetailSampleUsage("**dir**", PropertyDetailSampleUsage.ValueType.Value, "Batch Script")]
+        [PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Batch Script")]
         //[PropertyParameterOrder(5000)]
-        //public string v_ScriptCode { get; set; }
+        public override string v_ScriptCode { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,13 +16,13 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public sealed class RunJavaScriptByCodeCommand : ARunScriptByCodeCommands
     {
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         //[PropertyDescription("JavaScript Code")]
-        //[PropertyDetailSampleUsage("**let a = 1;**", PropertyDetailSampleUsage.ValueType.Value, "JavaScript")]
-        //[PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JavaScript")]
+        [PropertyDetailSampleUsage("**let a = 1;**", PropertyDetailSampleUsage.ValueType.Value, "JavaScript")]
+        [PropertyDetailSampleUsage("**{{{vCode}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JavaScript")]
         //[PropertyParameterOrder(5000)]
-        //public string v_ScriptCode { get; set; }
+        public override string v_ScriptCode { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
