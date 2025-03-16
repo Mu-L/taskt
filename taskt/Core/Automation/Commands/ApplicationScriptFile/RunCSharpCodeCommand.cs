@@ -86,20 +86,18 @@ namespace taskt.Core.Automation.Commands
             // compile custom code
             var result = CSharpCodeCompilerControls.CompileInput(csharpCode);
 
-            //var paramters = new CompilerParameters()
-            //{
-            //    GenerateExecutable = true,
-            //    OutputAssembly = "tasktOnTheFly.exe",
-            //    //CompilerOptions = "-langversion:9.0",
-            //};
-
-            //var result = roslyn.CompileAssemblyFromSource(paramters, csharpCode);
-
             // check for errors
             if (result.Errors.HasErrors)
             {
                 // throw exception
-                var errors = string.Join(", ", result.Errors);
+                //var errors = string.Join(", ", result.Errors);
+                string errors = "";
+                foreach(CompilerError er in result.Errors)
+                {
+                    errors += $"{er.ErrorText}, ";
+                }
+                errors = errors.Trim().Substring(0, errors.Length - 2);
+
                 throw new Exception($"Compile Error. Errors Occured: {errors}");
             }
             else
