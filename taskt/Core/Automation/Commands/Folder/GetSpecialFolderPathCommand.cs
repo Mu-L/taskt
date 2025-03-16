@@ -45,15 +45,19 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
+                string p = "";
                 switch (t.ToLower())
                 {
+                    case "temporary":
+                        p = Path.GetTempPath();
+                        break;
                     case "downloads":
-                        var p = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                        p.StoreInUserVariable(engine, v_Result);
+                        p = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
                         break;
                     default:
                         throw new Exception($"Strange Special Folder Type. Value: '{v_FolderType}', Expand Value: '{t}'");
                 }
+                p.StoreInUserVariable(engine, v_Result);
             }
         }
 
@@ -64,6 +68,7 @@ namespace taskt.Core.Automation.Commands
         private List<string> CreateSpecialFoldersList()
         {
             var lst = Enum.GetNames(typeof(Environment.SpecialFolder)).ToList();
+            lst.Add("Temporary");
             lst.Add("Downloads");
 
             return lst;

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using taskt.Core;
 using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
@@ -137,33 +136,31 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
         private void uiBtnSample_Click(object sender, EventArgs e)
         {
-            rtbCode.Text = @"// A Hello World! program in C#.
-            using System;
+            rtbCode.Text = @"
+// Sample C# code
+using System;
 
-            namespace HelloWorld
+namespace HelloWorld
+{
+    class Hello 
+    {
+        static void Main(string[] args) 
+        {
+            System.Console.WriteLine(""Number of command line parameters = {0}"", args.Length);
+
+            foreach (string s in args)
             {
-            class Hello 
-             {
-               static void Main(string[] args) 
-               {
-                
-
-               System.Console.WriteLine(""Number of command line parameters = {0}"", args.Length);
-
-              foreach (string s in args)
-              {
                 System.Console.WriteLine(""Found Argument: "" + s);
-              }
-
+            }
 
             Console.WriteLine(""Hi! This code was compiled on the fly from taskt!"");
 
-                 //Keep the console window open, remove this if you do not want the exe to block
-                 Console.WriteLine(""Press any key to exit."");
-                 Console.ReadKey();
-               }
-             }
-           }";
+            //Keep the console window open, remove this if you do not want the exe to block
+            Console.WriteLine(""Press any key to exit."");
+            Console.ReadKey();
+        }
+    }
+}";
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,9 +17,10 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RunCSharpCodeCommand : ScriptCommand
+    public sealed class RunCSharpCodeCommand : ScriptCommand, ICanHandleFileName
     {
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("C# Code")]
         [InputSpecification("C# Code", true)]
         [SampleUsage("")]
@@ -50,6 +52,62 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Result")]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Expand taskt Variables In C# Code")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Expand Variables")]
+        public string v_ReplaceScriptVariables { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Compiled Executable File Name")]
+        [PropertyIsOptional(true, "tasktOnTheFly")]
+        [PropertyFirstValue("tasktOnTheFly")]
+        [PropertyValidationRule("File Name", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "File Name")]
+        public string v_ExecutableFileName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("C# Language Version")]
+        [PropertyUISelectionOption("default")]
+        [PropertyUISelectionOption("latest")]
+        [PropertyUISelectionOption("preview")]
+        [PropertyUISelectionOption("14.0")]
+        [PropertyUISelectionOption("13.0")]
+        [PropertyUISelectionOption("12.0")]
+        [PropertyUISelectionOption("11.0")]
+        [PropertyUISelectionOption("10.0")]
+        [PropertyUISelectionOption("9.0")]
+        [PropertyUISelectionOption("8.0")]
+        [PropertyUISelectionOption("7.3")]
+        [PropertyUISelectionOption("7.2")]
+        [PropertyUISelectionOption("7.1")]
+        [PropertyUISelectionOption("7")]
+        [PropertyUISelectionOption("6")]
+        [PropertyUISelectionOption("5")]
+        [PropertyUISelectionOption("4")]
+        [PropertyUISelectionOption("3")]
+        [PropertyUISelectionOption("2")]
+        [PropertyUISelectionOption("1")]
+        [PropertyIsOptional(true, "default")]
+        [PropertyFirstValue("default")]
+        [PropertyValidationRule("C# Language Version", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "C# Language Version")]
+        [Remarks("More Information: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445")]
+        public string v_CSharpLanguageVersion { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Delete Executable File After Execute")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        [PropertyValidationRule("Delete Executable File", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_DeleteExecutableFile { get; set; }
+
         public RunCSharpCodeCommand()
         {
             //this.CommandName = "RunCustomCodeCommand";
@@ -60,25 +118,41 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var customCode = v_Code.ExpandValueOrUserVariable(engine);
-
-            //create compiler service
-            //var compilerSvc = new CompilerServices();
-
-            //compile custom code
-            var result = CSharpCodeCompilerControls.CompileInput(customCode);
-
-            //check for errors
-            if (result.Errors.HasErrors)
+            string csharpCode;
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine))
             {
-                //throw exception
-                var errors = string.Join(", ", result.Errors);
-                throw new Exception("Errors Occured: " + errors);
+                csharpCode = v_Code.ExpandValueOrUserVariable(engine);
             }
             else
             {
-                //run code, taskt will wait for the app to exit before resuming
-                System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
+                csharpCode = v_Code;
+            }
+
+            //var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
+            var fileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_ExecutableFileName), engine);
+            var langVer = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CSharpLanguageVersion), engine);
+
+            // compile custom code
+            var result = CSharpCodeCompilerControls.CompileInput(csharpCode, langVer, fileName);
+
+            // check for errors
+            if (result.Errors.HasErrors)
+            {
+                // throw exception
+                //var errors = string.Join(", ", result.Errors);
+                string errors = "";
+                foreach(CompilerError er in result.Errors)
+                {
+                    errors += $"{er.ErrorText}, ";
+                }
+                errors = errors.Trim().Substring(0, errors.Length - 2);
+
+                throw new Exception($"Compile Error. Errors Occured: {errors}");
+            }
+            else
+            {
+                // run code, taskt will wait for the app to exit before resuming
+                var scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
                 var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
@@ -86,7 +160,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(v_Result))
                 {
-                    //redirect output
+                    // redirect output
                     scriptProc.StartInfo.RedirectStandardOutput = true;
                     scriptProc.StartInfo.UseShellExecute = false;
                 }
@@ -102,6 +176,15 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 scriptProc.Close();
+
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
+                {
+                    var deleteFile = new DeleteFileCommand()
+                    {
+                        v_TargetFilePath = result.PathToAssembly,
+                    };
+                    deleteFile.RunCommand(engine);
+                }
             }
         }
 
