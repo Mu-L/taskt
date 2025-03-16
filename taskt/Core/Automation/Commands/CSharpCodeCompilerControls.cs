@@ -4,27 +4,44 @@ namespace taskt.Core.Automation.Commands
 {
     public static class CSharpCodeCompilerControls
     {
-        private const string compilerName = "tasktOnTheFly.exe";
+        private const string defaultOutFileName = "tasktOnTheFly.exe";
 
-        public static CompilerResults CompileInput(string codeInput)
+        /// <summary>
+        /// read here
+        /// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445
+        /// </summary>
+        private const string defaultLangVersion = "default";
+
+        public static CompilerResults CompileInput(string codeInput, string langVersion = "", string outFileName = "")
         {
-            //define file output
-            //string Output = "tasktOnTheFly.exe";
+            if (string.IsNullOrEmpty(langVersion)) 
+            { 
+                langVersion = defaultLangVersion;
+            }
+            if (string.IsNullOrEmpty(outFileName)) 
+            { 
+                outFileName = defaultOutFileName;
+            }
 
-            //create provider
-            CodeDomProvider codeProvider = CodeDomProvider.CreateProvider("CSharp");
+            if (!outFileName.EndsWith(".exe"))
+            {
+                outFileName += ".exe";
+            }
 
-            //create compile parameters
-            CompilerParameters parameters = new CompilerParameters
+            // create provider
+            //CodeDomProvider codeProvider = CodeDomProvider.CreateProvider("CSharp");
+            var roslyn = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
+
+            // create compile parameters
+            var parameters = new CompilerParameters
             {
                 GenerateExecutable = true,
-                OutputAssembly = compilerName,
+                OutputAssembly = outFileName,
+                CompilerOptions = $"-langversion:{langVersion}",
             };
 
-            //compile
-            //CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, codeInput);
-            //return results;
-            return codeProvider.CompileAssemblyFromSource(parameters, codeInput);
+            // compile
+            return roslyn.CompileAssemblyFromSource(parameters, codeInput);
         }
     }
 }
