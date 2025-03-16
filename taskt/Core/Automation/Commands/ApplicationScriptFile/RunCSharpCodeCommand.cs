@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class RunCSharpCodeCommand : ScriptCommand
+    public sealed class RunCSharpCodeCommand : ScriptCommand, ICanHandleFileName
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
@@ -99,14 +99,14 @@ namespace taskt.Core.Automation.Commands
         [Remarks("More Information: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445")]
         public string v_CSharpLanguageVersion { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        //[PropertyDescription("Delete Executable File After Execute")]
-        //[PropertyIsOptional(true, "Yes")]
-        //[PropertyFirstValue("Yes")]
-        //[PropertyValidationRule("Delete Executable File", PropertyValidationRule.ValidationRuleFlags.None)]
-        //[PropertyDisplayText(false, "")]
-        //public string v_DeleteExecutableFile { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Delete Executable File After Execute")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        [PropertyValidationRule("Delete Executable File", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_DeleteExecutableFile { get; set; }
 
         public RunCSharpCodeCommand()
         {
@@ -128,7 +128,8 @@ namespace taskt.Core.Automation.Commands
                 csharpCode = v_Code;
             }
 
-            var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
+            //var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
+            var fileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_ExecutableFileName), engine);
             var langVer = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CSharpLanguageVersion), engine);
 
             // compile custom code
@@ -176,14 +177,14 @@ namespace taskt.Core.Automation.Commands
 
                 scriptProc.Close();
 
-                //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
-                //{
-                //    var deleteFile = new DeleteFileCommand()
-                //    {
-                //        v_TargetFilePath = result.PathToAssembly,
-                //    };
-                //    deleteFile.RunCommand(engine);
-                //}
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
+                {
+                    var deleteFile = new DeleteFileCommand()
+                    {
+                        v_TargetFilePath = result.PathToAssembly,
+                    };
+                    deleteFile.RunCommand(engine);
+                }
             }
         }
 

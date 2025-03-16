@@ -1,4 +1,5 @@
 ﻿using System.CodeDom.Compiler;
+using System.IO;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -28,6 +29,17 @@ namespace taskt.Core.Automation.Commands
                 outFileName += ".exe";
             }
 
+            string outFilePath;
+            if (string.IsNullOrEmpty(Path.GetDirectoryName(outFileName)))
+            {
+                outFilePath = Path.Combine(IO.Folders.GetTasktTemporaryFolderPath(), outFileName);
+            }
+            else
+            {
+                var fn = Path.GetFileName(outFileName);
+                outFilePath = Path.Combine(IO.Folders.GetTasktTemporaryFolderPath(), fn);
+            }
+
             // create provider
             //CodeDomProvider codeProvider = CodeDomProvider.CreateProvider("CSharp");
             var roslyn = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider();
@@ -36,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             var parameters = new CompilerParameters
             {
                 GenerateExecutable = true,
-                OutputAssembly = outFileName,
+                OutputAssembly = outFilePath,
                 CompilerOptions = $"-langversion:{langVersion}",
             };
 
