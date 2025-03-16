@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
-        [PropertyDescription("Expand taskt Variables In CSharp Code")]
+        [PropertyDescription("Expand taskt Variables In C# Code")]
         [PropertyIsOptional(true, "Yes")]
         [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Expand Variables")]
