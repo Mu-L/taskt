@@ -56,6 +56,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(10000)]
         public virtual string v_DeleteScriptFile { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Folder to Save Temporary Script File")]
+        [PropertyUISelectionOption("taskt Temporary Folder")]
+        [PropertyUISelectionOption("User Temporary Folder")]
+        [PropertyDetailSampleUsage("taskt Temporary Folder", "Generally **Document\\taskt\\Temporary**")]
+        [PropertyDetailSampleUsage("User Temporary Folder", "Generally **C:\\Users\\UserName\\AppData\\Local\\Temp\\taskt**")]
+        [PropertyIsOptional(true, "User Temporary Folder")]
+        [PropertyValidationRule("Temporary", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Temporary Folder")]
+        [PropertyParameterOrder(11000)]
+        public virtual string v_TemporaryScriptFolder { get; set; }
+
         /// <summary>
         /// run script action
         /// </summary>
@@ -63,29 +76,53 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         protected void RunScriptAction(Func<string> extensionAction, ARunScriptFileCommands runScriptCommand, Engine.AutomationEngineInstance engine)
         {
-            string scriptFilePath;
-            using (var tempFolder = new InnerScriptVariable(engine))
+            //using (var tempFolder = new InnerScriptVariable(engine))
+            //{
+            //    var getTempFolder = new GetSpecialFolderPathCommand()
+            //    {
+            //        v_FolderType = "temporary",
+            //        v_Result = tempFolder.VariableName,
+            //    };
+            //    getTempFolder.RunCommand(engine);
+
+            //    using (var tempFile = new InnerScriptVariable(engine))
+            //    {
+            //        string scriptExtension = extensionAction();
+
+            //        var getTempFile = new GetRandomFilePathCommand()
+            //        {
+            //            v_TargetFolderPath = tempFolder.VariableValue.ToString(),
+            //            v_Extension = scriptExtension,
+            //            v_Result = tempFile.VariableName,
+            //        };
+            //        getTempFile.RunCommand(engine);
+            //        scriptFilePath = tempFile.VariableValue.ToString();
+            //    }
+            //}
+
+            string tempFolderPath = "";
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TemporaryScriptFolder), engine))
             {
-                var getTempFolder = new GetSpecialFolderPathCommand()
+                case "taskt temporary folder":
+                    tempFolderPath = IO.Folders.GetTasktTemporaryFolderPath();
+                    break;
+                case "user temporary folder":
+                    tempFolderPath = IO.Folders.GetUserTemporaryFolderPath();
+                    break;
+            }
+            string scriptFilePath;
+            using (var tempFile = new InnerScriptVariable(engine))
+            {
+                string scriptExtension = extensionAction();
+
+                var getTempFile = new GetRandomFilePathCommand()
                 {
-                    v_FolderType = "temporary",
-                    v_Result = tempFolder.VariableName,
+                    v_TargetFolderPath = tempFolderPath,
+                    v_Extension = scriptExtension,
+                    v_Result = tempFile.VariableName,
                 };
-                getTempFolder.RunCommand(engine);
-
-                using (var tempFile = new InnerScriptVariable(engine))
-                {
-                    string scriptExtension = extensionAction();
-
-                    var getTempFile = new GetRandomFilePathCommand()
-                    {
-                        v_TargetFolderPath = tempFolder.VariableValue.ToString(),
-                        v_Extension = scriptExtension,
-                        v_Result = tempFile.VariableName,
-                    };
-                    getTempFile.RunCommand(engine);
-                    scriptFilePath = tempFile.VariableValue.ToString();
-                }
+                getTempFile.RunCommand(engine);
+                scriptFilePath = tempFile.VariableValue.ToString();
             }
 
             string code;
