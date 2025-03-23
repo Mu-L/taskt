@@ -1,8 +1,8 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Script;
 using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
@@ -70,6 +70,14 @@ namespace taskt.Core.Automation.Commands
         public string v_ExecutableFileName { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Executable File Path")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Executable File Path", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "Executable File Path")]
+        public string v_ExecutableFilePath { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("C# Language Version")]
         [PropertyUISelectionOption("default")]
@@ -118,73 +126,129 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            string csharpCode;
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine))
+            //string csharpCode;
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceScriptVariables), engine))
+            //{
+            //    csharpCode = v_Code.ExpandValueOrUserVariable(engine);
+            //}
+            //else
+            //{
+            //    csharpCode = v_Code;
+            //}
+
+            ////var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
+            //var fileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_ExecutableFileName), engine);
+            //var langVer = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CSharpLanguageVersion), engine);
+
+            //// compile custom code
+            //var result = CSharpCodeCompilerControls.CompileCSCode(csharpCode, langVer, fileName);
+
+            //// check for errors
+            //if (result.Errors.HasErrors)
+            //{
+            //    // throw exception
+            //    //var errors = string.Join(", ", result.Errors);
+            //    string errors = "";
+            //    foreach(CompilerError er in result.Errors)
+            //    {
+            //        errors += $"{er.ErrorText}, ";
+            //    }
+            //    errors = errors.Trim().Substring(0, errors.Length - 2);
+
+            //    throw new Exception($"Compile Error. Errors Occured: {errors}");
+            //}
+            //else
+            //{
+            //    // run code, taskt will wait for the app to exit before resuming
+            //    var scriptProc = new System.Diagnostics.Process();
+            //    scriptProc.StartInfo.FileName = result.PathToAssembly;
+
+            //    var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
+            //    scriptProc.StartInfo.Arguments = arguments;
+
+            //    if (!string.IsNullOrEmpty(v_Result))
+            //    {
+            //        // redirect output
+            //        scriptProc.StartInfo.RedirectStandardOutput = true;
+            //        scriptProc.StartInfo.UseShellExecute = false;
+            //    }
+
+            //    scriptProc.Start();
+
+            //    scriptProc.WaitForExit();
+
+            //    if (!string.IsNullOrEmpty(v_Result))
+            //    {
+            //        var output = scriptProc.StandardOutput.ReadToEnd();
+            //        output.StoreInUserVariable(engine, v_Result);
+            //    }
+
+            //    scriptProc.Close();
+
+            //    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
+            //    {
+            //        var deleteFile = new DeleteFileCommand()
+            //        {
+            //            v_TargetFilePath = result.PathToAssembly,
+            //        };
+            //        deleteFile.RunCommand(engine);
+            //    }
+            //}
+
+            string exePath;
+            using (var exePathVar = new InnerScriptVariable(engine))
             {
-                csharpCode = v_Code.ExpandValueOrUserVariable(engine);
+                var compileCS = new CompileCSharpCodeCommand()
+                {
+                    v_Code = this.v_Code,
+                    v_ReplaceScriptVariables = this.v_ReplaceScriptVariables,
+                    v_ExecutableFileName = this.v_ExecutableFileName,
+                    v_CSharpLanguageVersion = this.v_CSharpLanguageVersion,
+                    v_ExecutableFilePath = exePathVar.VariableName,
+                };
+                compileCS.RunCommand(engine);
+
+                exePath = exePathVar.VariableValue.ToString();
             }
-            else
+
+            // run code, taskt will wait for the app to exit before resuming
+            var scriptProc = new System.Diagnostics.Process();
+            scriptProc.StartInfo.FileName = exePath;
+
+            var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
+            scriptProc.StartInfo.Arguments = arguments;
+
+            if (!string.IsNullOrEmpty(v_Result))
             {
-                csharpCode = v_Code;
+                // redirect output
+                scriptProc.StartInfo.RedirectStandardOutput = true;
+                scriptProc.StartInfo.UseShellExecute = false;
             }
 
-            //var fileName = this.ExpandValueOrUserVariable(nameof(v_ExecutableFileName), "File Name", engine);
-            var fileName = this.ExpandValueOrUserVariableAsFileName(nameof(v_ExecutableFileName), engine);
-            var langVer = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CSharpLanguageVersion), engine);
+            scriptProc.Start();
 
-            // compile custom code
-            var result = CSharpCodeCompilerControls.CompileCSCode(csharpCode, langVer, fileName);
+            scriptProc.WaitForExit();
 
-            // check for errors
-            if (result.Errors.HasErrors)
+            if (!string.IsNullOrEmpty(v_Result))
             {
-                // throw exception
-                //var errors = string.Join(", ", result.Errors);
-                string errors = "";
-                foreach(CompilerError er in result.Errors)
-                {
-                    errors += $"{er.ErrorText}, ";
-                }
-                errors = errors.Trim().Substring(0, errors.Length - 2);
-
-                throw new Exception($"Compile Error. Errors Occured: {errors}");
+                var output = scriptProc.StandardOutput.ReadToEnd();
+                output.StoreInUserVariable(engine, v_Result);
             }
-            else
+
+            scriptProc.Close();
+
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
             {
-                // run code, taskt will wait for the app to exit before resuming
-                var scriptProc = new System.Diagnostics.Process();
-                scriptProc.StartInfo.FileName = result.PathToAssembly;
-
-                var arguments = v_Arguments.ExpandValueOrUserVariable(engine);
-                scriptProc.StartInfo.Arguments = arguments;
-
-                if (!string.IsNullOrEmpty(v_Result))
+                var deleteFile = new DeleteFileCommand()
                 {
-                    // redirect output
-                    scriptProc.StartInfo.RedirectStandardOutput = true;
-                    scriptProc.StartInfo.UseShellExecute = false;
-                }
-                
-                scriptProc.Start();
+                    v_TargetFilePath = exePath,
+                };
+                deleteFile.RunCommand(engine);
+            }
 
-                scriptProc.WaitForExit();
-
-                if (!string.IsNullOrEmpty(v_Result))
-                {
-                    var output = scriptProc.StandardOutput.ReadToEnd();
-                    output.StoreInUserVariable(engine, v_Result);
-                }
-
-                scriptProc.Close();
-
-                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExecutableFile), engine))
-                {
-                    var deleteFile = new DeleteFileCommand()
-                    {
-                        v_TargetFilePath = result.PathToAssembly,
-                    };
-                    deleteFile.RunCommand(engine);
-                }
+            if (!string.IsNullOrEmpty(v_ExecutableFilePath))
+            {
+                exePath.StoreInUserVariable(engine, v_ExecutableFilePath);
             }
         }
 
