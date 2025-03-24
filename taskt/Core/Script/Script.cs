@@ -441,6 +441,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_22(doc);
             convertTo3_5_2_23(doc);
             convertTo3_5_2_24(doc);
+            convertTo3_5_2_25(doc);
             return doc;
         }
 
@@ -4212,6 +4213,18 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "TextGetNthIndexOfCommand", "GetTextNthIndexOfCommand", "Get Text Nth Index Of");
         }
 
+        private static void convertTo3_5_2_25(XDocument doc)
+        {
+            // CompareNumberCommand -> CheckNumberCommand
+            ChangeToOtherCommand(doc, "CompareNumberCommand", "CheckNumberCommand", "Check Number",
+                new List<(string, string)>
+                {
+                    ("v_CompareMethod", "v_CheckMethod"),
+                    ("v_CompareValue1", "v_ComparedValue1"),
+                    ("v_CompareValue2", "v_ComparedValue2"),
+                }
+            );
+        }
 
         /// <summary>
         /// get old, new current window keyword
