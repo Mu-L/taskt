@@ -9,6 +9,15 @@ namespace taskt.Core.Automation.Commands
     internal static class FilePathControls
     {
         #region VirtualProperty
+
+        /// <summary>
+        /// for file path and url (recommened use PropertyFilePathSetting attribute)
+        /// </summary>
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyDetailSampleUsage("**http://exmample.com/mytext.txt**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        [PropertyDetailSampleUsage("**{{{vURL}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
+        public static string v_FilePathAndURL { get; }
+
         /// <summary>
         /// for file path (recommended use PropertyFilePathSetting attribute)
         /// </summary>
