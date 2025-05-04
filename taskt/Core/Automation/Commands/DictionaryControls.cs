@@ -146,7 +146,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
         [PropertyDescription("Dictionary Value")]
-        [InputSpecification("Dictionary Value", true)]
+        [InputSpecification("Dictionary Value. Text or Number", true)]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Value")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Value")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Dictionary Value")]
