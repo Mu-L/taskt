@@ -58,6 +58,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Value")]
+        [PropertySelectionValueSensitive(false)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyParameterOrder(5000)]
         public static string v_ComboBox { get; }
