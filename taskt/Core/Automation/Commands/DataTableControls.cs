@@ -90,98 +90,104 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// when column does not exists
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When DataTable Column does not Exists")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenColumnNotExists { get; }
 
         /// <summary>
         /// column type
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Column type")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
-        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
-        [Remarks("")]
         [PropertyUISelectionOption("Column Name")]
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
+        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
         [PropertyDisplayText(true, "Column Type")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]        
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnType { get; }
 
         /// <summary>
         /// column name or index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Name or Index of the Column")]
-        [InputSpecification("", true)]
+        [InputSpecification("Number or Text")]
         [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
         [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column Name or Index")]
-        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Column")]
-        [PropertyParameterOrder(5000)]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnNameIndex { get; }
 
         /// <summary>
         /// row index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Index of the Row")]
-        [InputSpecification("Index of the Row")]
+        [InputSpecification("Number")]
         [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]
         [PropertyDetailSampleUsage("**{{{vRowIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Index")]
-        [Remarks("**-1** means index of the last row.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Row")]
         [PropertyDisplayText(true, "Row")]
-        [PropertyParameterOrder(5000)]
+        [Remarks("**-1** means index of the last row.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_RowIndex { get; }
 
         /// <summary>
         /// for set column values parameter
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When there are Less Rows than *** to set")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
-        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Add Rows")]
-        [PropertyUISelectionOption("Error")]
+        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenLessRows { get; }
 
         /// <summary>
         /// for set column values parameter
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When there are Less Rows than DataTable to be Setted")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenGreaterRows { set; get; }
 
         ///// <summary>
