@@ -1,6 +1,4 @@
-﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
+﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,30 +7,31 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// angle type
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Angle Value Type")]
-        [InputSpecification("Angle Value Type", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Radian")]
         [PropertyUISelectionOption("Degree")]
         [PropertyDisplayText(true, "Angle Value Type")]
         [PropertyIsOptional(true, "Radian")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_AngleType { get; }
 
         /// <summary>
         /// when value is out of range
         /// </summary>
-        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When Value is Out of Range")]
-        [InputSpecification("When Value is Out of Range", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyDisplayText(false, "")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        [PropertyDisplayText(false, "When Value is Out of Range")]
+        //[InputSpecification("", true)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenValueIsOutOfRange { get; }
 
         ///// <summary>
