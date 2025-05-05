@@ -130,10 +130,10 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// when specifed key does not exists
         /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasError))]
         [PropertyDescription("When Key does not Exists")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Error")]
         //[InputSpecification("", true)]
         //[Remarks("")]        
