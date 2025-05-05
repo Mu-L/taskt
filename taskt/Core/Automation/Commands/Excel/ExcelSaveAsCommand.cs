@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SaveFilePath))]
         [PropertyDescription("Excel File Path to Save")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx")]
         [PropertyParameterOrder(6000)]

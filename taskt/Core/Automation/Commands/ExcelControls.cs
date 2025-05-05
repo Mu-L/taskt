@@ -50,6 +50,11 @@ namespace taskt.Core.Automation.Commands
         {
             "'",
         };
+
+        /// <summary>
+        /// excel support file extensions for FilePathSettings
+        /// </summary>
+        public const string EXCEL_SUPPORT_FILE_EXTENSIONS = "xlsx,xls,xlsm,xlsb,xlw,xlr,xml,prn,csv,txt";
         #endregion
 
         #region virtual property
@@ -306,21 +311,30 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenItemNotEnough { get; }
 
         /// <summary>
-        /// excel file path
+        /// excel open file path
         /// </summary>
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
         [PropertyDescription("Workbook (Excel File) Path")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("Excel File Path", true)]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, EXCEL_SUPPORT_FILE_EXTENSIONS)]
         [PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
         [PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
         [Remarks("If file does not contain extension, supplement extensions supported by Excel.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
-        [PropertyParameterOrder(5000)]
-        public static string v_FilePath { get; }
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        //[PropertyParameterOrder(5000)]
+        public static string v_OpenFilePath { get; }
+
+        /// <summary>
+        /// excel save file path
+        /// </summary>
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_OpenFilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, EXCEL_SUPPORT_FILE_EXTENSIONS)]
+        public static string v_SaveFilePath { get; }
 
         /// <summary>
         /// value to set

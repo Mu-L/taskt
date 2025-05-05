@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyTextBoxSetting(1, false)]
         //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "File Path")]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_OpenFilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx,xlsm,xls,xlm,csv,ods")]
         public string v_FilePath { get; set; }
 
