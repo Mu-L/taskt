@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_OpenFilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx,xlsm,xls,xlm,csv,ods")]
         [PropertyParameterOrder(6000)]
         public string v_TargetFilePath { get; set; }

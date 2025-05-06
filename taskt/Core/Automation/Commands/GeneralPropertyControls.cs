@@ -1,4 +1,5 @@
-﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
+﻿
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -58,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Value")]
+        [PropertySelectionValueSensitive(false)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyParameterOrder(5000)]
         public static string v_ComboBox { get; }
@@ -84,19 +86,35 @@ namespace taskt.Core.Automation.Commands
         public static string v_Result { get; }
 
         /// <summary>
-        /// input variable name for specify the variable
+        /// input instance (variable) name for specify the variable
         /// </summary>
-        /// [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Variable Name")]
         [InputSpecification("Variable Name")]
         [PropertyDetailSampleUsage("**vValue**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsVariablesList(true)]
+        [PropertyIsVariablesList(false)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
-        public static string v_InputVariableName { get; }
+        public static string v_InputInstanceName { get; }
+
+        ///// <summary>
+        ///// combobox has Error
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise an Error")]
+        //public static string v_ComboBoxHasError { get; }
+
+        ///// <summary>
+        ///// combobox has Error and Ignore
+        ///// </summary>
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBoxHasError))]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Nothing To Do")]
+        //public static string v_ComboBoxHasErrorIgnore { get; }
 
         #endregion
     }

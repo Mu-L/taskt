@@ -12,22 +12,23 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// wait after key enter
         /// </summary>
-        [PropertyDescription("Wait Time after Keys Enter (ms)")]
-        [InputSpecification("Wait Time", true)]
-        [PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
         [Remarks("When the Wait Time is less than **100** is specified, it will be **100**")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("Wait Time", true)]
+        //[PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        //[PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WaitTimeAfterKeyEnter { get; }
 
         /// <summary>
         /// mouse click
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Mouse Click Type")]
         [PropertyUISelectionOption("Left Click")]
         [PropertyUISelectionOption("Middle Click")]
@@ -40,63 +41,66 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Right Up")]
         [PropertyUISelectionOption("Double Left Click")]
         [PropertyUISelectionOption("None")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
         [Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Mouse Click", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Mouse Click")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[SampleUsage("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_MouseClickType { get; }
 
         /// <summary>
         /// wait after key enter
         /// </summary>
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
         [PropertyDescription("Wait Time after Mouse Click (ms)")]
-        [InputSpecification("Wait Time", true)]
-        [PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [Remarks("When the Wait Time is less than **100** is specified, it will be **100**")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("Wait Time")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        //[PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WaitTimeAfterMouseClick { get; }
 
         /// <summary>
         /// offset x
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Offset X Coordinate")]
-        [InputSpecification("Offset X", true)]
-        [PropertyShowSampleUsageInDescription(true)]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Offset X")]
         [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Offset X")]
         [PropertyDetailSampleUsage("**{{{vXOffset}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Offset X")]
         [Remarks("This will move the mouse X pixels to the right of the location of the target")]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Offset X")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_XOffsetAdjustment { get; }
 
         /// <summary>
         /// offset y
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Offset Y Coordinate")]
-        [InputSpecification("Offset Y")]
-        [PropertyShowSampleUsageInDescription(true)]
+        [InputSpecification("Number")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Offset Y")]
         [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Offset Y")]
         [PropertyDetailSampleUsage("**{{{vYOffset}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Offset Y")]
         [Remarks("This will move the mouse Y pixels down from the top of the location of the target")]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Offset Y")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_YOffsetAdjustment { get; }
         #endregion
 

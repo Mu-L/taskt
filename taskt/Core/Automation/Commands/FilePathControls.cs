@@ -57,14 +57,14 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// file does not exists behavior
         /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When the File does Not Exists")]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyDetailSampleUsage("**Ignore**", "Continue Script File")]
-        [PropertyDetailSampleUsage("**Error**", "Rise A Error")]
         [PropertyIsOptional(true, "Error")]
-        [PropertyDisplayText(false, "")]
+        [PropertyDisplayText(false, "When the File does Not Exists")]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Continue Script File")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise A Error")]
         //[InputSpecification("", true)]
         //[Remarks("")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -75,15 +75,15 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// for wait time
         /// </summary>
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(WaitControls), nameof(WaitControls.v_WaitTime))]
         [PropertyDescription("Wait Time for the File to Exist (sec)")]
-        [InputSpecification("Wait Time", true)]
-        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
-        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [Remarks("Specify how long to Wait before an Error will occur because the File is not Found.")]
         [PropertyIsOptional(true, "10")]
         [PropertyFirstValue("10")]
-        [PropertyDisplayText(true, "Wait", "s")]
+        //[InputSpecification("Number Greater than or Equal 0")]
+        //[PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        //[PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        //[PropertyDisplayText(true, "Wait", "s")]
         //[PropertyShowSampleUsageInDescription(true)]
         //[PropertyTextBoxSetting(1, false)]
         //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]

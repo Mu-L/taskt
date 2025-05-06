@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// black color valur
         /// </summary>
-        public const long EXCEL_BLACK_COLOR= 0;
+        public const long EXCEL_BLACK_COLOR = 0;
         /// <summary>
         /// default format (NumberFormat)
         /// </summary>
@@ -50,98 +50,107 @@ namespace taskt.Core.Automation.Commands
         {
             "'",
         };
+
+        /// <summary>
+        /// excel support file extensions for FilePathSettings
+        /// </summary>
+        public const string EXCEL_SUPPORT_FILE_EXTENSIONS = "xlsx,xls,xlsm,xlsb,xlw,xlr,xml,prn,csv,txt";
         #endregion
 
         #region virtual property
         /// <summary>
         /// excel instance property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("Excel Instance Name")]
         [InputSpecification("Excel Instance Name", true)]
         [PropertyDetailSampleUsage("**RPAExcel**", PropertyDetailSampleUsage.ValueType.Value, "Excel Instance Name")]
         [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Excel Instance Name")]
-        [Remarks("Please specify the Excel Instance Name created by **Create Excel Instance** command in advance.")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Remarks("Please specify the Excel Instance Name created by **Create Excel Instance** command in advance.")]
         [PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_InputInstanceName { get; }
 
         /// <summary>
         /// worksheet name property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Worksheet Name")]
         [InputSpecification("Worksheet Name", true)]
         [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Worksheet Name")]
         [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Worksheet Name")]
         [PropertyDetailSampleUsage("**%kwd_excel_current_worksheet%**", "Specify Current Worksheet Name")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Sheet")]
+        [PropertyValidationRule("Worksheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Worksheet")]
         [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Excel_Worksheet)]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_SheetName { get; }
 
         /// <summary>
         /// cell range location
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Cell Location")]
-        [InputSpecification("Cell Location", true)]
+        [InputSpecification("Cell Location like A1", true)]
         [PropertyDetailSampleUsage("**A1**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**B10**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**{{{vAddress}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Cell Location")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Cell Location", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Cell")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_CellRangeLocation { get; }
 
         /// <summary>
         /// row location property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Row Location")]
-        [InputSpecification("Row Location", true)]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**1**", "Specify the First Row")]
         [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Row Location")]
         [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Location")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Row")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_RowLocation { get; }
 
         /// <summary>
         /// column location property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Column Location")]
-        [InputSpecification("Column Location", true)]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**1**", "Specify the First Column")]
         [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Column Location")]
         [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column Location")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Column")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnLocation { get; }
 
         /// <summary>
         /// cell value type property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Value Type")]
-        [InputSpecification("", true)]
-        [Remarks("")]
         [PropertyDetailSampleUsage("**Cell**", "Specify the Cell Value")]
         [PropertyDetailSampleUsage("**Formula**", "Specify the Cell Formula, like **=SUM(A1:A10)**")]
         [PropertyDetailSampleUsage("**Format**", "Specify the Cell Format")]
@@ -152,175 +161,195 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Format")]
         [PropertyUISelectionOption("Font Color")]
         [PropertyUISelectionOption("Back Color")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Cell")]
         [PropertyDisplayText(true, "Type")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_ValueType { get; }
 
         /// <summary>
         /// cell value type property for check cell commands
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Value Type")]
-        [InputSpecification("", true)]
-        [Remarks("")]
         [PropertyUISelectionOption("Cell")]
         [PropertyUISelectionOption("Formula")]
         [PropertyUISelectionOption("Back Color")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Cell")]
         [PropertySecondaryLabel(true)]
         [PropertyAddtionalParameterInfo("Cell", "Check the Cell has Value or Not")]
         [PropertyAddtionalParameterInfo("Formula", "Check the Cell has Formula or Not")]
         [PropertyAddtionalParameterInfo("Back Color", "Check the Cell Background Color is Not White")]
         [PropertyDisplayText(true, "Type")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_CheckableValueType { get; }
 
         /// <summary>
         /// column type propertys
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Column Type")]
-        [InputSpecification("")]
-        [Remarks("")]
         [PropertyDetailSampleUsage("**Range**", "Use Range, like **A**. It means first column.")]
         [PropertyDetailSampleUsage("**RC**", "Use Row-Column, like **1**. It means first column.")]
         [PropertyIsOptional(true, "Range")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Range")]
         [PropertyUISelectionOption("RC")]
-        [PropertySelectionValueSensitive(false)]
         [PropertyDisplayText(true, "Column Type")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertySelectionValueSensitive(false)]
+        //[InputSpecification("")]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnType { get; }
 
         /// <summary>
         /// column location or index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Column Location or Index")]
-        [InputSpecification("Column Location or Index", true)]
-        [Remarks("")]
+        [InputSpecification("Column Location (Text) or Index (Number)", true)]
         [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
         [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
         [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         [PropertyDisplayText(true, "Column")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnNameOrIndex { get; }
 
         /// <summary>
-        /// start row
+        /// start row index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Start Row Index")]
-        [InputSpecification("Start Row", true)]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**1**", "Specify the First Row Index for Start Row")]
         [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Start Row")]
         [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Start Row")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "1")]
         [PropertyDisplayText(true, "Start Row")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_RowStart { get; }
 
         /// <summary>
         /// end row
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("End Row Index")]
-        [InputSpecification("End Row", true)]
-        [PropertyDetailSampleUsage("**1**", "Specify the First Row Index for Start Row")]
-        [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Start Row")]
-        [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Start Row")]
+        [InputSpecification("Number", true)]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Row Index for End Row")]
+        [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "End Row")]
+        [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "End Row")]
         [Remarks("When End Row Index is Empty, Automatically specifies the Last Row where values are entered consecutively")]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Last Row")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "End Row")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_RowEnd { get; }
 
         /// <summary>
         /// column start property
         /// </summary>
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
         [PropertyDescription("Start Column Location or Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Column Location or Index", true)]
-        [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
-        [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
-        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         [PropertyDisplayText(true, "Start Column")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Column Location or Index", true)]
+        //[PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
+        //[PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
+        //[PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnStart { get; }
 
         /// <summary>
         /// column end property
         /// </summary>
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
         [PropertyDescription("End Column Location or Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Column Location or Index", true)]
-        [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
-        [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
-        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
-        [Remarks("")]
         [PropertyIsOptional(true, "Last Column")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "End Column")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Column Location or Index", true)]
+        //[PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
+        //[PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
+        //[PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnEnd { get; }
 
         /// <summary>
         /// when items not enough
         /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When A Items Not Enough")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Don't Set the Value")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[PropertyDetailSampleUsage("**Ignore**", "Don't Set the Value")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenItemNotEnough { get; }
 
         /// <summary>
-        /// excel file path
+        /// excel open file path
         /// </summary>
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
         [PropertyDescription("Workbook (Excel File) Path")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("Excel File Path", true)]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, EXCEL_SUPPORT_FILE_EXTENSIONS)]
         [PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
         [PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
         [Remarks("If file does not contain extension, supplement extensions supported by Excel.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
-        [PropertyParameterOrder(5000)]
-        public static string v_FilePath { get; }
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        //[PropertyParameterOrder(5000)]
+        public static string v_OpenFilePath { get; }
+
+        /// <summary>
+        /// excel save file path
+        /// </summary>
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_OpenFilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, EXCEL_SUPPORT_FILE_EXTENSIONS)]
+        public static string v_SaveFilePath { get; }
 
         /// <summary>
         /// value to set
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
         [PropertyDescription("Value to Set")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Value to Set", true)]
+        [InputSpecification("Text or Number", true)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Set")]
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Value to Set")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, true)]
-        [PropertyDisplayText(true, "Value")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[Remarks("")]
+        //[PropertyDisplayText(true, "Value")]
+        //[PropertyTextBoxSetting(1, true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ValueToSet { get; }
         #endregion
 

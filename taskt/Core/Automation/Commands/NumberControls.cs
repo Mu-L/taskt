@@ -106,23 +106,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Method")]
         public static string v_CheckMethod { get; }
 
-        /// <summary>
-        /// number compare method
-        /// </summary>
-        [PropertyDescription("Compare Method")]
-        [PropertyUISelectionOption("Is Equal To")]
-        [PropertyUISelectionOption("Is Not Equal To")]
-        [PropertyUISelectionOption("Is Greater Than")]
-        [PropertyUISelectionOption("Is Greater Than Or Equal To")]
-        [PropertyUISelectionOption("Is Less Than")]
-        [PropertyUISelectionOption("Is Less Than Or Equal To")]
-        [PropertyUISelectionOption("Is Between")]
-        [PropertyUISelectionOption("Is Not Between")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Compare Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Method")]
-        public static string v_CompareMethod { get; }
+        ///// <summary>
+        ///// number compare method
+        ///// </summary>
+        //[PropertyDescription("Compare Method")]
+        //[PropertyUISelectionOption("Is Equal To")]
+        //[PropertyUISelectionOption("Is Not Equal To")]
+        //[PropertyUISelectionOption("Is Greater Than")]
+        //[PropertyUISelectionOption("Is Greater Than Or Equal To")]
+        //[PropertyUISelectionOption("Is Less Than")]
+        //[PropertyUISelectionOption("Is Less Than Or Equal To")]
+        //[PropertyUISelectionOption("Is Between")]
+        //[PropertyUISelectionOption("Is Not Between")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Compare Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Method")]
+        //public static string v_CompareMethod { get; }
         #endregion
 
         ///// <summary>

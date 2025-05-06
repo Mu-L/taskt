@@ -1,4 +1,5 @@
 ﻿using System;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -7,6 +8,22 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class WaitControls
     {
+        #region VirtualProperty
+
+        /// <summary>
+        /// Wait Time for something
+        /// </summary>
+        /// [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Wait Time for *** (sec)")]
+        [InputSpecification("Number Greater than or Equal 0")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyDisplayText(true, "Wait", "s")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        public static string v_WaitTime { get; }
+
+        #endregion
+
         /// <summary>
         /// general waiting process, this method get pauseTime from command property
         /// </summary>

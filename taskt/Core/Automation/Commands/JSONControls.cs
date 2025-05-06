@@ -11,97 +11,100 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// input JSON Variable or Value
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("JSON Variable Name or JSON Value")]
-        [InputSpecification("JSON Value or JSON Variable Name", true)]
+        [InputSpecification("JSON Value or JSON Variable Name")]
         [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }**", "Specify the JSON Object Text")]
         [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Specify the JSON Array Text")]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
-        [PropertyParameterOrder(5000)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyParameterOrder(5000)]
         public static string v_InputJSONName { get; }
 
         /// <summary>
         /// input JSON Variable (Variable Only)
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("JSON **Variable Name**", true)]
+        [InputSpecification("JSON **Variable Name**")]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyParameterOrder(5000)]
         public static string v_InputJSONVariableName { get; }
 
         /// <summary>
         /// output JSON Variable
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("JSON **Variable Name**", true)]
+        [InputSpecification("JSON **Variable Name**")]
         [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyParameterOrder(5000)]
         public static string v_OutputJSONName { get; }
 
         /// <summary>
         /// input & output JSON Variable
         /// </summary>
-        [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("JSON **Variable Name**", true)]
-        [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_InputJSONVariableName))]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
-        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "JSON")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyDescription("JSON Variable Name")]
+        //[InputSpecification("JSON **Variable Name**", true)]
+        //[PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "JSON")]
+        //[PropertyParameterOrder(5000)]
         public static string v_BothJSONName { get; }
 
         /// <summary>
         /// JSON path
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("JSON Extractor (JSONPath)")]
-        [InputSpecification("JSONPath", true)]
+        [InputSpecification("JSONPath")]
         [PropertyDetailSampleUsage("**$.id**", "Specify **id** for Root child node")]
         [PropertyDetailSampleUsage("**$..id**", "Specify Anywhere **id**")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON Extractor")]
-        [Remarks("See this URL for details. https://github.com/json-path/JsonPath")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "$")]
+        [Remarks("See this URL for details. https://github.com/json-path/JsonPath")]
         [PropertyCustomUIHelper("JSONPath Helper", nameof(JSONControls) + "+" + nameof(lnkJsonPathHelper_Click))]
         [PropertyValidationRule("JSON Extractor", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Extractor")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_JSONPath { get; }
 
         /// <summary>
         /// Value type to Add JSON
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Value Type to Add")]
-        [InputSpecification("", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Auto")]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Number")]
@@ -117,16 +120,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
         [PropertyIsOptional(true, "Auto")]
         [PropertyDisplayText(true, "Value Type")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ValueType { get; }
 
         /// <summary>
         /// Value type to Add JSON (only Auto, Object, and Array)
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Value Type to Add")]
-        [InputSpecification("", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Auto")]
         [PropertyUISelectionOption("Object")]
         [PropertyUISelectionOption("Array")]
@@ -135,55 +139,61 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
         [PropertyIsOptional(true, "Auto")]
         [PropertyDisplayText(true, "Value Type")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ValueTypeSimple { get; }
 
         /// <summary>
         /// value to add property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("Value to Add")]
-        [InputSpecification("Value", true)]
+        [InputSpecification("JSON Value")]
         [PropertyDetailSampleUsage("**Hello**", "Add Text **Hello**")]
         [PropertyDetailSampleUsage("**1**", "Add Number **Hello**")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", "Add Value of Variable **vValue**")]
         [PropertyDetailSampleUsage("**{ \"id\": 1, \"value\": \"Hello\" }**", "Add JSON Object", false)]
         [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Add JSON Array", false)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ValueToAdd { get; }
 
         /// <summary>
         /// property name property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Property Name")]
-        [InputSpecification("Property Name", true)]
+        [InputSpecification("Property Name Text")]
         [PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
         [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Property Name")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_PropertyName { get; }
 
         /// <summary>
         /// array index property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Array Index")]
-        [InputSpecification("")]
+        [InputSpecification("Number")]
         [PropertyDetailSampleUsage("**0**", "Specify the First Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Last Item")]
         [PropertyDisplayText(true, "Index")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ArrayIndex { get; }
         #endregion
 

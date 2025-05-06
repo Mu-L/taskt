@@ -15,168 +15,179 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// input DataTable property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("DataTable Variable Name")]
         [InputSpecification("DataTable Variable Name", true)]
         [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyParameterOrder(5000)]
         public static string v_InputDataTableName { get; }
 
         /// <summary>
         /// output DataTable property
         /// </summary>
-        [PropertyDescription("DataTable Variable Name")]
-        [InputSpecification("DataTable Variable Name", true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store DataTable")]
+        [InputSpecification("Variable Name", true)]
         [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyParameterOrder(5000)]
         public static string v_OutputDataTableName { get; }
 
         /// <summary>
         /// New output DataTable property
         /// </summary>
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         [PropertyDescription("New DataTable Variable Name")]
-        [InputSpecification("New DataTable Variable Name", true)]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**vNewDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vNewDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New DataTable")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyParameterOrder(5000)]
         public static string v_NewOutputDataTableName { get; }
 
         /// <summary>
         /// input & output DataTable parameter
         /// </summary>
-        [PropertyDescription("DataTable Variable Name")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         [InputSpecification("DataTable Variable Name", true)]
-        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyDescription("DataTable Variable Name")]
+        //[PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        //[PropertyParameterOrder(5000)]
         public static string v_BothDataTableName { get; }
 
         /// <summary>
         /// when column does not exists
         /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When DataTable Column does not Exists")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenColumnNotExists { get; }
 
         /// <summary>
         /// column type
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Column type")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
-        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
-        [Remarks("")]
         [PropertyUISelectionOption("Column Name")]
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
+        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
         [PropertyDisplayText(true, "Column Type")]
-        [PropertyParameterOrder(5000)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]        
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnType { get; }
 
         /// <summary>
         /// column name or index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Name or Index of the Column")]
-        [InputSpecification("", true)]
+        [InputSpecification("Number or Text")]
         [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
         [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column Name or Index")]
-        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Column")]
-        [PropertyParameterOrder(5000)]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ColumnNameIndex { get; }
 
         /// <summary>
         /// row index
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Index of the Row")]
-        [InputSpecification("Index of the Row")]
+        [InputSpecification("Number")]
         [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]
         [PropertyDetailSampleUsage("**{{{vRowIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Index")]
-        [Remarks("**-1** means index of the last row.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Row")]
         [PropertyDisplayText(true, "Row")]
-        [PropertyParameterOrder(5000)]
+        [Remarks("**-1** means index of the last row.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyParameterOrder(5000)]
         public static string v_RowIndex { get; }
 
         /// <summary>
         /// for set column values parameter
         /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When there are Less Rows than *** to set")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
-        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Add Rows")]
-        [PropertyUISelectionOption("Error")]
+        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenLessRows { get; }
 
         /// <summary>
         /// for set column values parameter
         /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyDescription("When there are Less Rows than DataTable to be Setted")]
-        [InputSpecification("", true)]
-        [PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
-        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
+        //[PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenGreaterRows { set; get; }
 
         ///// <summary>

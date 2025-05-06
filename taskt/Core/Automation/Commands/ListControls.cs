@@ -12,170 +12,181 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// input List variable property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("List Variable Name")]
         [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
-        [PropertyParameterOrder(5000)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyParameterOrder(5000)]
         public static string v_InputListName { get; }
 
         /// <summary>
         /// output List variable Property
         /// </summary>
-        [PropertyDescription("List Variable Name")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store List")]
         [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
-        [PropertyParameterOrder(5000)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyIsVariablesList(true)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyParameterOrder(5000)]
         public static string v_OutputListName { get; }
 
         /// <summary>
         /// New output List variable Property
         /// </summary>
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyDescription("New List Variable Name")]
         [InputSpecification("List Variable Name", true)]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**vNewList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vNewList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyParameterOrder(5000)]
         public static string v_NewOutputListName { get; }
 
         /// <summary>
         /// input & output List variable Property
         /// </summary>
-        [PropertyDescription("List Variable Name")]
-        [InputSpecification("List Variable Name", true)]
-        [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyDescription("List Variable Name")]
+        //[InputSpecification("List Variable Name", true)]
+        //[PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        //[PropertyParameterOrder(5000)]
         public static string v_BothListName { get; }
 
         /// <summary>
         /// column type
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("??? Type")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "List")]
         [PropertyUISelectionOption("List")]
         [PropertyUISelectionOption("Comma Separated")]
         [PropertyUISelectionOption("Space Separated")]
         [PropertyUISelectionOption("Tab Separated")]
         [PropertyUISelectionOption("NewLine Separated")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDetailSampleUsage("**List**", "Specify the List Variable Name")]
         [PropertyDetailSampleUsage("**Comman Separated**", "Enter like **A,B,C**")]
         [PropertyDetailSampleUsage("**Space Separated**", "Enter like **A B C**")]
         [PropertyDetailSampleUsage("**Tab Separated**", "Enter like **A\tB\tC**")]
-        [PropertyParameterOrder(5000)]
+        [PropertyIsOptional(true, "List")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[InputSpecification("", true)]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_AType { get; }
 
 
         /// <summary>
         /// for convert parameter
         /// </summary>
-        [PropertyDescription("When the number of items in the List is greater than the number of ???")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyDescription("When the number of items in the List is greater than the number of ???")]
+        //[InputSpecification("", true)]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(5000)]
         public static string v_ANotEnough { get; }
 
         /// <summary>
         /// for convert parameter
         /// </summary>
-        [PropertyDescription("When the number of ??? is greater than the number of items in the List")]
-        [InputSpecification("", true)]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Ignore")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasErrorIgnore))]
         [PropertyUISelectionOption("Insert Empty Value")]
-        [PropertyDisplayText(false, "")]
-        [PropertyParameterOrder(5000)]
+        [PropertyIsOptional(true, "Ignore")]
+        //[PropertyDescription("When the number of ??? is greater than the number of items in the List")]
+        //[InputSpecification("", true)]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyDisplayText(false, "")]
+        //[PropertyParameterOrder(5000)]
         public static string v_ListItemNotEnough { get; }
 
         /// <summary>
         /// when convert number
         /// </summary>
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_ComboBoxHasError))]
         [PropertyDescription("Action When List Value is Not Numeric")]
-        [InputSpecification("", true)]
-        [Remarks("")]
-        [PropertyDetailSampleUsage("Ignore", "Ignore not numeric value")]
-        [PropertyDetailSampleUsage("Error", "Rise the Error")]
         [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDetailSampleUsage("Ignore", "Ignore not numeric value")]
         [PropertyIsOptional(true, "Ignore")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyDetailSampleUsage("Error", "Rise the Error")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[InputSpecification("", true)]
+        //[Remarks("")]
+        //[PropertyParameterOrder(5000)]
         public static string v_WhenValueIsNotNumeric { get; }
 
         /// <summary>
         /// List index property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Index of the List")]
         [InputSpecification("Index of the List", true)]
         [PropertyDetailSampleUsage("**0**", "Specify First List Item")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last List Item")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Position")]
         [PropertyDisplayText(true, "Index")]
-        [PropertyParameterOrder(5000)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_ListIndex { get; }
 
         /// <summary>
         /// search value property
         /// </summary>
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
         [PropertyDescription("Value to Search")]
-        [InputSpecification("Value to Search", true)]
+        [InputSpecification("Text", true)]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value to Search")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(true, "Value to Search")]
-        [PropertyParameterOrder(5000)]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterOrder(5000)]
         public static string v_SearchValue { get; }
         #endregion
 
