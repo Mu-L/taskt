@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         /// text variable name
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Text Variable Name to Store Result")]
+        [PropertyDescription("Variable Name to Store Text")]
         //[InputSpecification("Variable Name", true)]
         //[PropertyDetailSampleUsage("**vText**", PropertyDetailSampleUsage.ValueType.VariableName)]
         //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
