@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("DateTime Variable Name")]
-        [InputSpecification("DateTime Variable")]
+        [InputSpecification("DateTime Variable", true)]
         [PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("DateTime Text")]
-        [InputSpecification("DateTime Text")]
+        [InputSpecification("DateTime Text", true)]
         [PropertyDetailSampleUsage("**2000-01-01**", PropertyDetailSampleUsage.ValueType.Value, "DateTime")]
         [PropertyDetailSampleUsage("**{{{vText}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "DateTime")]
         [PropertyValidationRule("DateTime Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Excel Serial DateTime")]
-        [InputSpecification("Excel Serial DateTime")]
+        [InputSpecification("Excel Serial DateTime", true)]
         [PropertyDetailSampleUsage("**43210**", "Specify **43210** for Excel Serial. It's means 2018-04-20.")]
         [PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Excel Serial")]
         [PropertyValidationRule("Excel Serial", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Unix Time")]
-        [InputSpecification("Unix Time")]
+        [InputSpecification("Unix Time", true)]
         [PropertyDetailSampleUsage("**1577836800**", "Specify **1577836800** for Unix Time. It's means 2020-01-01.")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Unix Time")]
         [PropertyValidationRule("Unix Time", PropertyValidationRule.ValidationRuleFlags.Empty)]

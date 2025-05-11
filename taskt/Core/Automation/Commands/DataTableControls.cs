@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Name or Index of the Column")]
-        [InputSpecification("Number or Text")]
+        [InputSpecification("Number or Text", true)]
         [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
@@ -143,7 +143,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Index of the Row")]
-        [InputSpecification("Number")]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]

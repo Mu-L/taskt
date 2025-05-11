@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("Color Variable Name")]
-        [InputSpecification("Color Variable Name")]
+        [InputSpecification("Color Variable Name", true)]
         [PropertyDetailSampleUsage("**vColor**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vColor}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Color Value")]
-        [InputSpecification("Values range from 0 to 255")]
+        [InputSpecification("Values range from 0 to 255", true)]
         [PropertyDetailSampleUsage("**0**", "Specify value **0**. **0** is min value of range")]
         [PropertyDetailSampleUsage("**255**", "Specify value **255**. **255** is max value of range")]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]

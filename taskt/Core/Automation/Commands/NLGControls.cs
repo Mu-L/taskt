@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("NLG Instance Name")]
-        [InputSpecification("NLG Instance Name")]
+        [InputSpecification("NLG Instance Name", true)]
         [PropertyDetailSampleUsage("**nlgInstance**", PropertyDetailSampleUsage.ValueType.Value, "Instance")]
         [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Instance")]
         [PropertyValidationRule("NLG Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
