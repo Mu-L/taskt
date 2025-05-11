@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("JSON Variable Name or JSON Value")]
-        [InputSpecification("JSON Value or JSON Variable Name")]
+        [InputSpecification("JSON Value or JSON Variable Name", true)]
         [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }**", "Specify the JSON Object Text")]
         [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Specify the JSON Array Text")]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_InputInstanceName))]
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("JSON **Variable Name**")]
+        [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("JSON **Variable Name**")]
+        [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("JSON Extractor (JSONPath)")]
-        [InputSpecification("JSONPath")]
+        [InputSpecification("JSONPath", true)]
         [PropertyDetailSampleUsage("**$.id**", "Specify **id** for Root child node")]
         [PropertyDetailSampleUsage("**$..id**", "Specify Anywhere **id**")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON Extractor")]
@@ -150,7 +150,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("Value to Add")]
-        [InputSpecification("JSON Value")]
+        [InputSpecification("JSON Value", true)]
         [PropertyDetailSampleUsage("**Hello**", "Add Text **Hello**")]
         [PropertyDetailSampleUsage("**1**", "Add Number **Hello**")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", "Add Value of Variable **vValue**")]
@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Property Name")]
-        [InputSpecification("Property Name Text")]
+        [InputSpecification("Property Name Text", true)]
         [PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
         [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
         [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -184,7 +184,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Array Index")]
-        [InputSpecification("Number")]
+        [InputSpecification("Number", true)]
         [PropertyDetailSampleUsage("**0**", "Specify the First Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]

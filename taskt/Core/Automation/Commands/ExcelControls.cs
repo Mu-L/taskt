@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Cell Location")]
-        [InputSpecification("Cell Location like A1", true)]
+        [InputSpecification("Cell Location like **A1**", true)]
         [PropertyDetailSampleUsage("**A1**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**B10**", PropertyDetailSampleUsage.ValueType.Value)]
         [PropertyDetailSampleUsage("**{{{vAddress}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Cell Location")]
