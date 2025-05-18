@@ -26,11 +26,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6000)]
         public string v_Result { get; set; }
 
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
-        //[PropertyFirstValue("0")]
-        //[PropertyIsOptional(true, "0")]
-        //public string v_WaitTimeForFile { get; set; }
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyFirstValue("0")]
+        [PropertyIsOptional(true, "0")]
+        public override string v_WaitTimeForFile { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
