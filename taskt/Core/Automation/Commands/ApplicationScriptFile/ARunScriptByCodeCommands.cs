@@ -85,30 +85,6 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         protected void RunScriptAction(Func<string> extensionAction, ARunScriptFileCommands runScriptCommand, Engine.AutomationEngineInstance engine)
         {
-            //using (var tempFolder = new InnerScriptVariable(engine))
-            //{
-            //    var getTempFolder = new GetSpecialFolderPathCommand()
-            //    {
-            //        v_FolderType = "temporary",
-            //        v_Result = tempFolder.VariableName,
-            //    };
-            //    getTempFolder.RunCommand(engine);
-
-            //    using (var tempFile = new InnerScriptVariable(engine))
-            //    {
-            //        string scriptExtension = extensionAction();
-
-            //        var getTempFile = new GetRandomFilePathCommand()
-            //        {
-            //            v_TargetFolderPath = tempFolder.VariableValue.ToString(),
-            //            v_Extension = scriptExtension,
-            //            v_Result = tempFile.VariableName,
-            //        };
-            //        getTempFile.RunCommand(engine);
-            //        scriptFilePath = tempFile.VariableValue.ToString();
-            //    }
-            //}
-
             string tempFolderPath = "";
             switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TemporaryScriptFolder), engine))
             {
@@ -151,13 +127,6 @@ namespace taskt.Core.Automation.Commands
             };
             writeScript.RunCommand(engine);
 
-            //var runScript = new RunBatchScriptFileCommand()
-            //{
-            //    v_TargetFilePath = scriptFilePath,
-            //    v_Arguments = this.v_Arguments,
-            //    v_Result = this.v_Result,
-            //};
-            //runScript.RunCommand(engine);
             runScriptCommand.v_TargetFilePath = scriptFilePath;
             runScriptCommand.RunCommand(engine);
 
