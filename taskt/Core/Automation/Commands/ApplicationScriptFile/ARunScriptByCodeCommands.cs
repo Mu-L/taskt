@@ -16,16 +16,17 @@ namespace taskt.Core.Automation.Commands
         public virtual string v_ScriptCode { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Arguments")]
-        [InputSpecification("Arguments", true)]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
-        [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
+        [PropertyVirtualProperty(nameof(ApplicationScriptControls), nameof(ApplicationScriptControls.v_Arguments))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Arguments")]
+        //[InputSpecification("Arguments", true)]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
+        //[PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
+        //[PropertyIsOptional(true)]
+        //[PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
         [PropertyParameterOrder(7000)]
         public virtual string v_Arguments { get; set; }
 
@@ -39,11 +40,12 @@ namespace taskt.Core.Automation.Commands
         public virtual string v_ReplaceScriptVariables { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Receive the Output")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(ApplicationScriptControls), nameof(ApplicationScriptControls.v_Result))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyDescription("Variable Name to Receive the Output")]
+        //[PropertyIsOptional(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(true, "Result")]
         [PropertyParameterOrder(8000)]
         public virtual string v_Result { get; set; }
 
@@ -85,30 +87,6 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         protected void RunScriptAction(Func<string> extensionAction, ARunScriptFileCommands runScriptCommand, Engine.AutomationEngineInstance engine)
         {
-            //using (var tempFolder = new InnerScriptVariable(engine))
-            //{
-            //    var getTempFolder = new GetSpecialFolderPathCommand()
-            //    {
-            //        v_FolderType = "temporary",
-            //        v_Result = tempFolder.VariableName,
-            //    };
-            //    getTempFolder.RunCommand(engine);
-
-            //    using (var tempFile = new InnerScriptVariable(engine))
-            //    {
-            //        string scriptExtension = extensionAction();
-
-            //        var getTempFile = new GetRandomFilePathCommand()
-            //        {
-            //            v_TargetFolderPath = tempFolder.VariableValue.ToString(),
-            //            v_Extension = scriptExtension,
-            //            v_Result = tempFile.VariableName,
-            //        };
-            //        getTempFile.RunCommand(engine);
-            //        scriptFilePath = tempFile.VariableValue.ToString();
-            //    }
-            //}
-
             string tempFolderPath = "";
             switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TemporaryScriptFolder), engine))
             {
@@ -151,13 +129,6 @@ namespace taskt.Core.Automation.Commands
             };
             writeScript.RunCommand(engine);
 
-            //var runScript = new RunBatchScriptFileCommand()
-            //{
-            //    v_TargetFilePath = scriptFilePath,
-            //    v_Arguments = this.v_Arguments,
-            //    v_Result = this.v_Result,
-            //};
-            //runScript.RunCommand(engine);
             runScriptCommand.v_TargetFilePath = scriptFilePath;
             runScriptCommand.RunCommand(engine);
 

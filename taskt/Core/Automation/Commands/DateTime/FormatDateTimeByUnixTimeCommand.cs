@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
-    [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.SubGruop("Format")]
     [Attributes.ClassAttributes.CommandSettings("Format DateTime By Unix Time")]
     [Attributes.ClassAttributes.Description("This command allows you to Format DateTime By Unix Time.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime By Unix Time.")]
@@ -34,23 +33,32 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            using (var v = new InnerScriptVariable(engine)) 
-            {
-                var cdu = new CreateDateTimeFromUnixTimeCommand()
-                {
-                    v_DateTime = v.VariableName,
-                    v_UnixTime = this.v_DateTime,
-                };
-                cdu.RunCommand(engine);
+            //using (var v = new InnerScriptVariable(engine)) 
+            //{
+            //    var cdu = new CreateDateTimeFromUnixTimeCommand()
+            //    {
+            //        v_DateTime = v.VariableName,
+            //        v_UnixTime = this.v_DateTime,
+            //    };
+            //    cdu.RunCommand(engine);
 
-                var fdt = new FormatDateTimeCommand()
-                {
-                    v_DateTime = v.VariableName,
-                    v_Format = this.v_Format,
-                    v_Result = this.v_Result,
-                };
-                fdt.RunCommand(engine);
-            }
+            //    var fdt = new FormatDateTimeCommand()
+            //    {
+            //        v_DateTime = v.VariableName,
+            //        v_Format = this.v_Format,
+            //        v_Result = this.v_Result,
+            //    };
+            //    fdt.RunCommand(engine);
+            //}
+
+            var cdu = new CreateDateTimeFromUnixTimeCommand()
+            {
+                v_UnixTime = this.v_DateTime,
+            };
+            this.CommandProcess(
+                cdu,
+                engine
+            );
         }
     }
 }

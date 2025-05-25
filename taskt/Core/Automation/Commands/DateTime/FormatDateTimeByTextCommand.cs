@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
-    [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.SubGruop("Format")]
     [Attributes.ClassAttributes.CommandSettings("Format DateTime By Text")]
     [Attributes.ClassAttributes.Description("This command allows you to Format DateTime By Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime By Text.")]
@@ -57,23 +57,32 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            using (var v = new InnerScriptVariable(engine)) 
-            {
-                var cdt = new CreateDateTimeFromTextCommand()
-                {
-                    v_DateTime = v.VariableName,
-                    v_Text = this.v_DateTime,
-                };
-                cdt.RunCommand(engine);
+            //using (var v = new InnerScriptVariable(engine)) 
+            //{
+            //    var cdt = new CreateDateTimeFromTextCommand()
+            //    {
+            //        v_DateTime = v.VariableName,
+            //        v_Text = this.v_DateTime,
+            //    };
+            //    cdt.RunCommand(engine);
 
-                var fdt = new FormatDateTimeCommand()
-                {
-                    v_DateTime = v.VariableName,
-                    v_Format = this.v_Format,
-                    v_Result = this.v_Result,
-                };
-                fdt.RunCommand(engine);
-            }
+            //    var fdt = new FormatDateTimeCommand()
+            //    {
+            //        v_DateTime = v.VariableName,
+            //        v_Format = this.v_Format,
+            //        v_Result = this.v_Result,
+            //    };
+            //    fdt.RunCommand(engine);
+            //}
+
+            var cdt = new CreateDateTimeFromTextCommand()
+            {
+                v_Text = this.v_DateTime,
+            };
+            this.CommandProcess(
+                cdt,
+                engine
+            );
         }
     }
 }
