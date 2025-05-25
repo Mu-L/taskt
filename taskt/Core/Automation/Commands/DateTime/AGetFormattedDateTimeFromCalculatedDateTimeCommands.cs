@@ -5,9 +5,9 @@ using taskt.Core.Script;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for Get Formatted DateTime By Calculated something DateTime commands
+    /// for Get Formatted DateTime From Calculated Something DateTime commands
     /// </summary>
-    public abstract class AGetFormattedDateTimeByCalculatedDateTimeCommands : ACalculateDateTimeCommands
+    public abstract class AGetFormattedDateTimeFromCalculatedDateTimeCommands : ACalculateDateTimeCommands
     {
         /// <summary>
         /// datetime format

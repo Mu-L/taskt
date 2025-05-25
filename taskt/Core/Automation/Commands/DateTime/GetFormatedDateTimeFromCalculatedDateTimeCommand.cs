@@ -5,16 +5,16 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Get Formatted DateTime By Calculated DateTime")]
-    [Attributes.ClassAttributes.Description("This command allows you to Get Formatted DateTime Text By Calculated DateTime Value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Formatted DateTime Text By Calculated DateTime Value.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Formatted DateTime From Calculated DateTime")]
+    [Attributes.ClassAttributes.Description("This command allows you to Get Formatted DateTime Text From Calculated DateTime Value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Formatted DateTime Text From Calculated DateTime Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class GetFormattedDateTimeByCalculatedDateTimeCommand : AGetFormattedDateTimeByCalculatedDateTimeCommands
+    public sealed class GetFormattedDateTimeFromCalculatedDateTimeCommand : AGetFormattedDateTimeFromCalculatedDateTimeCommands
     {
-        public GetFormattedDateTimeByCalculatedDateTimeCommand()
+        public GetFormattedDateTimeFromCalculatedDateTimeCommand()
         {
         }
 

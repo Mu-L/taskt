@@ -7,20 +7,20 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Get Formatted DateTime By Calculated Text DateTime")]
-    [Attributes.ClassAttributes.Description("This command allows you to Get Formatted DateTime Text By Calculated Text DateTime Value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Formatted DateTime Text By Calculated Text DateTime Value.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Formatted DateTime From Calculated Text DateTime")]
+    [Attributes.ClassAttributes.Description("This command allows you to Get Formatted DateTime Text From Calculated Text DateTime Value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Formatted DateTime Text From Calculated Text DateTime Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class GetFormattedDateTimeByCalculatedTextDateTimeCommand : AGetFormattedDateTimeByCalculatedDateTimeCommands
+    public sealed class GetFormattedDateTimeFromCalculatedTextDateTimeCommand : AGetFormattedDateTimeFromCalculatedDateTimeCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_DateTimeText))]
         public override string v_DateTime { get; set; }
         
-        public GetFormattedDateTimeByCalculatedTextDateTimeCommand()
+        public GetFormattedDateTimeFromCalculatedTextDateTimeCommand()
         {
         }
 
