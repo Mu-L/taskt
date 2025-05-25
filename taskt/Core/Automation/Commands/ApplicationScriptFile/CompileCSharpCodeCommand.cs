@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Yes")]
         [PropertyValidationRule("Expand Variables", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "Expand Variables")]
-        [PropertyParameterOrder(5500)]
+        [PropertyParameterOrder(6000)]
         public string v_ReplaceScriptVariables { get; set; }
 
         //[XmlAttribute]
