@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyFirstValue("tasktOnTheFly")]
         //[PropertyValidationRule("File Name", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(true, "File Name")]
-        [PropertyParameterOrder(6000)]
+        [PropertyParameterOrder(8000)]
         public virtual string v_ExecutableFileName { get; set; }
 
         [XmlAttribute]
@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyIsOptional(true)]
         //[PropertyValidationRule("Executable File Path", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(true, "Executable File Path")]
-        [PropertyParameterOrder(7000)]
+        [PropertyParameterOrder(9000)]
         public virtual string v_ExecutableFilePath { get; set; }
 
         [XmlAttribute]
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("C# Language Version", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "C# Language Version")]
         //[Remarks("More Information: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445")]
-        [PropertyParameterOrder(8000)]
+        [PropertyParameterOrder(10000)]
         public virtual string v_CSharpLanguageVersion { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for run C# file/code commands
     /// </summary>
-    public abstract class ARunCSharpSomethingCommands : ScriptCommand
+    public abstract class ARunCSharpSomethingCommands : ACompileCSharpSomethingCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ApplicationScriptControls), nameof(ApplicationScriptControls.v_Arguments))]
@@ -33,29 +33,29 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(7000)]
         public virtual string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_ExecutableFileName))]
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_ExecutableFileName))]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         //[PropertyDescription("Compiled Executable File Name")]
         //[PropertyIsOptional(true, "tasktOnTheFly")]
         //[PropertyFirstValue("tasktOnTheFly")]
         //[PropertyValidationRule("File Name", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "File Name")]
-        [PropertyParameterOrder(8000)]
-        public virtual string v_ExecutableFileName { get; set; }
+        //[PropertyParameterOrder(8000)]
+        //public virtual string v_ExecutableFileName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_ExecutableFilePath))]
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_ExecutableFilePath))]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         //[PropertyDescription("Variable Name to Store Executable File Path")]
         //[PropertyIsOptional(true)]
         //[PropertyValidationRule("Executable File Path", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(true, "Executable File Path")]
-        [PropertyParameterOrder(9000)]
-        public virtual string v_ExecutableFilePath { get; set; }
+        //[PropertyParameterOrder(9000)]
+        //public virtual string v_ExecutableFilePath { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_CSharpLanguageVersion))]
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_CSharpLanguageVersion))]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         //[PropertyDescription("C# Language Version")]
         //[PropertyUISelectionOption("default")]
@@ -83,8 +83,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("C# Language Version", PropertyValidationRule.ValidationRuleFlags.None)]
         //[PropertyDisplayText(false, "C# Language Version")]
         //[Remarks("More Information: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version?WT.mc_id=AI-MVP-123445")]
-        [PropertyParameterOrder(10000)]
-        public virtual string v_CSharpLanguageVersion { get; set; }
+        //[PropertyParameterOrder(10000)]
+        //public virtual string v_CSharpLanguageVersion { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(CSharpCodeCompilerControls), nameof(CSharpCodeCompilerControls.v_DeleteExecutableFile))]
