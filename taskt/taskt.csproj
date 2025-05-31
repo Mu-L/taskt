@@ -1107,7 +1107,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowUserInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\DatabaseRunQueryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\DateCalculationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\DateCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\EndLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelActivateWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
