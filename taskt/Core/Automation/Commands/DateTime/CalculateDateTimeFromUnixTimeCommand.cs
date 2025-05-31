@@ -7,17 +7,17 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
     [Attributes.ClassAttributes.SubGruop("Calculate")]
-    [Attributes.ClassAttributes.CommandSettings("Calculate DateTime By Text")]
-    [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime By Text. Add Day, Minute, etc.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime By Text. Add Day, Minute, etc.")]
+    [Attributes.ClassAttributes.CommandSettings("Calculate DateTime From Unix Time")]
+    [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime From Unix Time. Add Day, Minute, etc.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime From Unix Time. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CalculateDateTimeByTextCommand : ACalculateDateTimeCommands
+    public sealed class CalculateDateTimeFromUnixTimeCommand : ACalculateDateTimeCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_DateTimeText))]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_UnixTime))]
         public override string v_DateTime { get; set; }
 
         //[XmlAttribute]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         //[XmlAttribute]
         //public override string v_Result { get; set; }
 
-        public CalculateDateTimeByTextCommand()
+        public CalculateDateTimeFromUnixTimeCommand()
         {
         }
 
@@ -37,12 +37,12 @@ namespace taskt.Core.Automation.Commands
         {
             //using (var myDT = new InnerScriptVariable(engine)) 
             //{
-            //    var cdt = new CreateDateTimeFromTextCommand()
+            //    var cdu = new CreateDateTimeFromUnixTimeCommand()
             //    {
-            //        v_Text = this.v_DateTime,
+            //        v_UnixTime = this.v_DateTime,
             //        v_DateTime = myDT.VariableName,
             //    };
-            //    cdt.RunCommand(engine);
+            //    cdu.RunCommand(engine);
 
             //    var calc = new CalculateDateTimeCommand()
             //    {
@@ -53,12 +53,13 @@ namespace taskt.Core.Automation.Commands
             //    };
             //    calc.RunCommand(engine);
             //}
-            var cdt = new CreateDateTimeFromTextCommand()
+
+            var cdu = new CreateDateTimeFromUnixTimeCommand()
             {
-                v_Text = this.v_DateTime,
+                v_UnixTime = this.v_DateTime,
             };
             this.CommandProcess(
-                cdt,
+                cdu,
                 engine
             );
         }

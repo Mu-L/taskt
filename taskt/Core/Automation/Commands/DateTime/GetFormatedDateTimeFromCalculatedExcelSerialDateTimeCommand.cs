@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             this.CommandProcess(
-                new CalculateDateTimeByExcelSerialCommand(),
+                new CalculateDateTimeFromExcelSerialCommand(),
                 engine
             );
         }

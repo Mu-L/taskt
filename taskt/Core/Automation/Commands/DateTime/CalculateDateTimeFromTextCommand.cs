@@ -7,17 +7,17 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime")]
     [Attributes.ClassAttributes.SubGruop("Calculate")]
-    [Attributes.ClassAttributes.CommandSettings("Calculate DateTime By Excel Serial")]
-    [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime By Excel Serial. Add Day, Minute, etc.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime By Excel Serial. Add Day, Minute, etc.")]
+    [Attributes.ClassAttributes.CommandSettings("Calculate DateTime From Text")]
+    [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime From Text. Add Day, Minute, etc.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime From Text. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class CalculateDateTimeByExcelSerialCommand : ACalculateDateTimeCommands
+    public sealed class CalculateDateTimeFromTextCommand : ACalculateDateTimeCommands
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_ExcelSerial))]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_DateTimeText))]
         public override string v_DateTime { get; set; }
 
         //[XmlAttribute]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         //[XmlAttribute]
         //public override string v_Result { get; set; }
 
-        public CalculateDateTimeByExcelSerialCommand()
+        public CalculateDateTimeFromTextCommand()
         {
         }
 
@@ -37,12 +37,12 @@ namespace taskt.Core.Automation.Commands
         {
             //using (var myDT = new InnerScriptVariable(engine)) 
             //{
-            //    var cdc = new CreateDateTimeFromExcelSerialCommand()
+            //    var cdt = new CreateDateTimeFromTextCommand()
             //    {
-            //        v_Serial = this.v_DateTime,
+            //        v_Text = this.v_DateTime,
             //        v_DateTime = myDT.VariableName,
             //    };
-            //    cdc.RunCommand(engine);
+            //    cdt.RunCommand(engine);
 
             //    var calc = new CalculateDateTimeCommand()
             //    {
@@ -53,12 +53,12 @@ namespace taskt.Core.Automation.Commands
             //    };
             //    calc.RunCommand(engine);
             //}
-            var cde = new CreateDateTimeFromExcelSerialCommand()
+            var cdt = new CreateDateTimeFromTextCommand()
             {
-                v_Serial = this.v_DateTime,
+                v_Text = this.v_DateTime,
             };
             this.CommandProcess(
-                cde,
+                cdt,
                 engine
             );
         }

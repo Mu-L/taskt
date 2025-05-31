@@ -442,6 +442,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_23(doc);
             convertTo3_5_2_24(doc);
             convertTo3_5_2_25(doc);
+            convertTo3_5_2_31(doc);
             return doc;
         }
 
@@ -4265,6 +4266,18 @@ namespace taskt.Core.Script
                     }
                 })
             );
+        }
+
+        private static void convertTo3_5_2_31(XDocument doc)
+        {
+            // CalculateDateTimeByExcelSerialCommand -> CalculateDateTimeFromExcelSerialCommand
+            ChangeCommandName(doc, "CalculateDateTimeByExcelSerialCommand", "CalculateDateTimeFromExcelSerialCommand", "Calculate DateTime From Excel Serial");
+
+            // CalculateDateTimeByTextCommand -> CalculateDateTimeFromTextCommand
+            ChangeCommandName(doc, "CalculateDateTimeByTextCommand", "CalculateDateTimeFromTextCommand", "Calculate DateTime From Text");
+
+            // CalculateDateTimeByUnixTimeCommand -> CalculateDateTimeFromUnixTimeCommand
+            ChangeCommandName(doc, "CalculateDateTimeByUnixTimeCommand", "CalculateDateTimeFromUnixTimeCommand", "Calculate DateTime From Unix Time");
         }
 
         /// <summary>
