@@ -1125,7 +1125,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelSaveCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\ExitLoopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\FormatDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_RemovedCommands\FormatDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\GetWordCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\GetTextLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\LogDataCommand.cs" />
