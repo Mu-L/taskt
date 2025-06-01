@@ -106,8 +106,6 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
-
             engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 using (var dialog = (FileDialog)Activator.CreateInstance(tp))
@@ -116,6 +114,7 @@ namespace taskt.Core.Automation.Commands
                     dialog.FilterIndex = index;
                     dialog.InitialDirectory = GetInitialDirectory(engine);
 
+                    var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
                     switch (whenCancel)
                     {
                         case "show dialog again":
