@@ -152,7 +152,7 @@ namespace taskt.Core.Automation.Commands
                     //}
 
                     this.ShowDialogProcess(dialog,
-                        new Func<CommonDialog, string>(d => ((FileDialog)d).FileName),
+                        new Func<string>(() => dialog.FileName),
                         tp.Name, engine);
                 }
             }));

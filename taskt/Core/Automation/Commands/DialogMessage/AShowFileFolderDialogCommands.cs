@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -62,13 +63,27 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// show dialog process. When you click Cancel, the process changes according to v_WhenCancel
         /// </summary>
-        /// <param name="dialog"></param>
+        /// <param name="dlg"></param>
         /// <param name="GetPathFunc"></param>
         /// <param name="dialogTypeName"></param>
         /// <param name="engine"></param>
         /// <exception cref="Exception"></exception>
-        protected void ShowDialogProcess(CommonDialog dialog, Func<CommonDialog, string> GetPathFunc, string dialogTypeName, Engine.AutomationEngineInstance engine)
+        protected void ShowDialogProcess(dynamic dialog, Func<string> GetPathFunc, string dialogTypeName, Engine.AutomationEngineInstance engine)
         {
+            int okValue;
+            if (dialog is CommonDialog)
+            {
+                okValue = (int)DialogResult.OK;
+            }
+            else if (dialog is CommonOpenFileDialog)
+            {
+                okValue = (int)CommonFileDialogResult.Ok;
+            }
+            else
+            {
+                throw new Exception($"Strange dialog object. Type; {dialog.GetType().Name}");
+            }
+
             var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
             switch (whenCancel)
             {
@@ -76,17 +91,17 @@ namespace taskt.Core.Automation.Commands
                     bool isAgain = true;
                     while (isAgain)
                     {
-                        if (dialog.ShowDialog() == DialogResult.OK)
+                        if ((int)dialog.ShowDialog() == okValue)
                         {
-                            GetPathFunc(dialog).StoreInUserVariable(engine, v_Result);
+                            GetPathFunc().StoreInUserVariable(engine, v_Result);
                             isAgain = false;
                         }
                     }
                     break;
                 default:
-                    if (dialog.ShowDialog() == DialogResult.OK)
+                    if ((int)dialog.ShowDialog() == okValue)
                     {
-                        GetPathFunc(dialog).StoreInUserVariable(engine, v_Result);
+                        GetPathFunc().StoreInUserVariable(engine, v_Result);
                     }
                     else
                     {
