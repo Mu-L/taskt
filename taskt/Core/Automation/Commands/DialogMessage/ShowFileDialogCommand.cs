@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_input))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ShowFileDialogCommand : ScriptCommand, ICanHandleFolderPath
+    public sealed class ShowFileDialogCommand : AShowFileFolderDialogCommands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Open")]
         [PropertyFirstValue("Open")]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(5000)]
         public string v_DialogType { get; set; }
 
         [XmlAttribute]
@@ -34,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("All Files (*.*)|*.*")]
         [PropertyDisplayText(true, "Filter")]
         [Remarks("https://learn.microsoft.com/en-us/dotnet/api/microsoft.win32.filedialog.filter?view=windowsdesktop-8.0")]
+        [PropertyParameterOrder(6000)]
         public string v_Filter { get; set; }
 
         [XmlAttribute]
@@ -46,23 +48,24 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "1")]
         [PropertyValidationRule("FilterIndex", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(7000)]
         public string v_FilterIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Value of the InitialDirectory Property")]
-        [InputSpecification("InitialDirectory", true)]
-        [PropertyDetailSampleUsage("**C:\\Users\\myUser\\Documents**", PropertyDetailSampleUsage.ValueType.Value, "InitialDirectory")]
-        [PropertyDetailSampleUsage("**{{{vFolderPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "InitialDirectory")]
-        [PropertyIsOptional(true, "Documents")]
-        [PropertyFirstValue("")]
-        [PropertyValidationRule("InitialDirectory", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "")]
-        public string v_InitialDirectory { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        //[PropertyDescription("Value of the InitialDirectory Property")]
+        //[InputSpecification("InitialDirectory", true)]
+        //[PropertyDetailSampleUsage("**C:\\Users\\myUser\\Documents**", PropertyDetailSampleUsage.ValueType.Value, "InitialDirectory")]
+        //[PropertyDetailSampleUsage("**{{{vFolderPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "InitialDirectory")]
+        //[PropertyIsOptional(true, "Documents")]
+        //[PropertyFirstValue("")]
+        //[PropertyValidationRule("InitialDirectory", PropertyValidationRule.ValidationRuleFlags.None)]
+        //[PropertyDisplayText(false, "")]
+        //public string v_InitialDirectory { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //public string v_Result { get; set; }
 
         public ShowFileDialogCommand()
         {
@@ -82,15 +85,15 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception($"Strange FilterIndex Property: Value: {index}");
             }
 
-            string directory;
-            if (string.IsNullOrEmpty(v_InitialDirectory))
-            {
-                directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            }
-            else
-            {
-                directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
-            }
+            //string directory;
+            //if (string.IsNullOrEmpty(v_InitialDirectory))
+            //{
+            //    directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //}
+            //else
+            //{
+            //    directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
+            //}
 
             Type tp = null;
             switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DialogType), engine))
@@ -103,25 +106,51 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
+            var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+
             engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 using (var dialog = (FileDialog)Activator.CreateInstance(tp))
                 {
                     dialog.Filter = filter;
                     dialog.FilterIndex = index;
-                    dialog.InitialDirectory = directory;
+                    dialog.InitialDirectory = GetInitialDirectory(engine);
 
-                    string result = "";
-                    if (dialog.ShowDialog() == DialogResult.OK)
+                    switch (whenCancel)
                     {
-                        result = dialog.FileName;
+                        case "show dialog again":
+                            bool isAgain = true;
+                            while (isAgain)
+                            {
+                                if (dialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    dialog.FileName.StoreInUserVariable(engine, v_Result);
+                                    isAgain = false;
+                                }
+                            }
+                            break;
+                        default:
+                            if (dialog.ShowDialog() == DialogResult.OK)
+                            {
+                                dialog.FileName.StoreInUserVariable(engine, v_Result);
+                            }
+                            else
+                            {
+                                switch (whenCancel)
+                                {
+                                    case "error":
+                                        throw new Exception($"Error. {tp.Name} is Clicked Cancel button.");
+                                        
+                                    case "set empty":
+                                        "".StoreInUserVariable(engine, v_Result);
+                                        break;
+                                    case "ignore":
+                                        // nothing to do
+                                        break;
+                                }
+                            }
+                            break;
                     }
-                    else
-                    {
-                        result = "";
-                    }
-
-                    result.StoreInUserVariable(engine, v_Result);
                 }
             }));
         }
