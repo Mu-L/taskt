@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
             int value = this.ExpandValueOrUserVariableAsInteger(nameof(v_Value), engine);
 
             string[] method = meth.Split(' ');
-            if (method[0] == "substract")
+            if (method[0] == "subtract")
             {
                 value = -value;
             }

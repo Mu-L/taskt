@@ -442,6 +442,7 @@ namespace taskt.Core.Script
             convertTo3_5_2_23(doc);
             convertTo3_5_2_24(doc);
             convertTo3_5_2_25(doc);
+            convertTo3_5_2_31(doc);
             return doc;
         }
 
@@ -4265,6 +4266,95 @@ namespace taskt.Core.Script
                     }
                 })
             );
+        }
+
+        private static void convertTo3_5_2_31(XDocument doc)
+        {
+            // CalculateDateTimeByExcelSerialCommand -> CalculateDateTimeFromExcelSerialCommand
+            ChangeCommandName(doc, "CalculateDateTimeByExcelSerialCommand", "CalculateDateTimeFromExcelSerialCommand", "Calculate DateTime From Excel Serial");
+
+            // CalculateDateTimeByTextCommand -> CalculateDateTimeFromTextCommand
+            ChangeCommandName(doc, "CalculateDateTimeByTextCommand", "CalculateDateTimeFromTextCommand", "Calculate DateTime From Text");
+
+            // CalculateDateTimeByUnixTimeCommand -> CalculateDateTimeFromUnixTimeCommand
+            ChangeCommandName(doc, "CalculateDateTimeByUnixTimeCommand", "CalculateDateTimeFromUnixTimeCommand", "Calculate DateTime From Unix Time");
+
+            // DateCalculationCommand -> GetFormattedDateTimeFromCalculatedTextDateTimeCommand
+            ChangeToOtherCommand(doc, "DateCalculationCommand", "GetFormattedDateTimeFromCalculatedTextDateTimeCommand", "Get Formatted DateTime From Calculated Text DateTime",
+                new List<(string, string)>()
+                {
+                    ("v_InputValue", "v_DateTime"),
+                    ("v_Increment", "v_Value"),
+                    ("v_ToStringFormat", "v_Format"),
+                    ("v_applyToVariableName", "v_Result"),
+                }
+            );
+
+            // CalculateDateTime commands Substract -> Subtract
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CalculateDateTimeCommand":
+                        case "CalculateDateTimeFromExcelSerialCommand":
+                        case "CalculateDateTimeFromTextCommand":
+                        case "CalculateDateTimeFromUnixTimeCommand":
+                        case "GetFormattedDateTimeFromCalculatedDateTimeCommand":
+                        case "GetFormattedDateTimeFromCalculatedExcelSerialDateTimeCommand":
+                        case "GetFormattedDateTimeFromCalculatedTextDateTimeCommand":
+                        case "GetFormattedDateTimeFromCalculatedUnixDateTimeCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_CalculationMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    var attrValue = attr.Value.ToLower();
+                    switch (attrValue)
+                    {
+                        case "substract years":
+                            attr.SetValue("Subtract Years");
+                            break;
+                        case "substract months":
+                            attr.SetValue("Subtract Months");
+                            break;
+                        case "substract days":
+                            attr.SetValue("Subract Days");
+                            break;
+                        case "substract hours":
+                            attr.SetValue("Subtract Hours");
+                            break;
+                        case "substract minutes":
+                            attr.SetValue("Subtract Minutes");
+                            break;
+                        case "substract seconds":
+                            attr.SetValue("Subtract Seconds");
+                            break;
+                        default:
+                            if (attrValue.StartsWith("substract "))
+                            {
+                                attr.SetValue($"Subtract {attr.Value.Substring(10)}");
+                            }
+                            break;
+                    }
+                })
+            );
+
+            // ShowFileDialogCommand, ShowFolderDialogCommand v_applyToVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "ShowFileDialogCommand":
+                        case "ShowFolderDialogCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_applyToVariableName", "v_Result");
         }
 
         /// <summary>
