@@ -112,44 +112,48 @@ namespace taskt.Core.Automation.Commands
                 {
                     dialog.Filter = filter;
                     dialog.FilterIndex = index;
-                    dialog.InitialDirectory = GetInitialDirectory(engine);
+                    dialog.InitialDirectory = this.GetInitialDirectory(engine);
 
-                    var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
-                    switch (whenCancel)
-                    {
-                        case "show dialog again":
-                            bool isAgain = true;
-                            while (isAgain)
-                            {
-                                if (dialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    dialog.FileName.StoreInUserVariable(engine, v_Result);
-                                    isAgain = false;
-                                }
-                            }
-                            break;
-                        default:
-                            if (dialog.ShowDialog() == DialogResult.OK)
-                            {
-                                dialog.FileName.StoreInUserVariable(engine, v_Result);
-                            }
-                            else
-                            {
-                                switch (whenCancel)
-                                {
-                                    case "error":
-                                        throw new Exception($"Error. {tp.Name} is Clicked Cancel button.");
-                                        
-                                    case "set empty":
-                                        "".StoreInUserVariable(engine, v_Result);
-                                        break;
-                                    case "ignore":
-                                        // nothing to do
-                                        break;
-                                }
-                            }
-                            break;
-                    }
+                    //var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+                    //switch (whenCancel)
+                    //{
+                    //    case "show dialog again":
+                    //        bool isAgain = true;
+                    //        while (isAgain)
+                    //        {
+                    //            if (dialog.ShowDialog() == DialogResult.OK)
+                    //            {
+                    //                dialog.FileName.StoreInUserVariable(engine, v_Result);
+                    //                isAgain = false;
+                    //            }
+                    //        }
+                    //        break;
+                    //    default:
+                    //        if (dialog.ShowDialog() == DialogResult.OK)
+                    //        {
+                    //            dialog.FileName.StoreInUserVariable(engine, v_Result);
+                    //        }
+                    //        else
+                    //        {
+                    //            switch (whenCancel)
+                    //            {
+                    //                case "error":
+                    //                    throw new Exception($"Error. {tp.Name} is Clicked Cancel button.");
+
+                    //                case "set empty":
+                    //                    "".StoreInUserVariable(engine, v_Result);
+                    //                    break;
+                    //                case "ignore":
+                    //                    // nothing to do
+                    //                    break;
+                    //            }
+                    //        }
+                    //        break;
+                    //}
+
+                    this.ShowDialogProcess(dialog,
+                        new Func<CommonDialog, string>(d => ((FileDialog)d).FileName),
+                        tp.Name, engine);
                 }
             }));
         }

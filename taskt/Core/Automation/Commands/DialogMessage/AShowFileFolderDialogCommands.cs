@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -11,14 +12,14 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Value of the InitialDirectory Property")]
-        [InputSpecification("InitialDirectory", true)]
-        [PropertyDetailSampleUsage("**C:\\Users\\myUser\\Documents**", PropertyDetailSampleUsage.ValueType.Value, "InitialDirectory")]
-        [PropertyDetailSampleUsage("**{{{vFolderPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "InitialDirectory")]
+        [PropertyDescription("Initial Folder Path")]
+        [InputSpecification("Initial Folder Path", true)]
+        [PropertyDetailSampleUsage("**C:\\Users\\myUser\\Documents**", PropertyDetailSampleUsage.ValueType.Value, "Initial Folder Path")]
+        [PropertyDetailSampleUsage("**{{{vFolderPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Initial Folder Path")]
         [PropertyIsOptional(true, "Documents")]
         [PropertyFirstValue("")]
-        [PropertyValidationRule("InitialDirectory", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(false, "InitialDiretory")]
+        [PropertyValidationRule("Initial Folder Path", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Initial Folder Path")]
         [PropertyParameterOrder(10000)]
         public string v_InitialDirectory { get; set; }
 
@@ -55,6 +56,54 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 return this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
+            }
+        }
+
+        /// <summary>
+        /// show dialog process. When you click Cancel, the process changes according to v_WhenCancel
+        /// </summary>
+        /// <param name="dialog"></param>
+        /// <param name="GetPathFunc"></param>
+        /// <param name="dialogTypeName"></param>
+        /// <param name="engine"></param>
+        /// <exception cref="Exception"></exception>
+        protected void ShowDialogProcess(CommonDialog dialog, Func<CommonDialog, string> GetPathFunc, string dialogTypeName, Engine.AutomationEngineInstance engine)
+        {
+            var whenCancel = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenCancel), engine);
+            switch (whenCancel)
+            {
+                case "show dialog again":
+                    bool isAgain = true;
+                    while (isAgain)
+                    {
+                        if (dialog.ShowDialog() == DialogResult.OK)
+                        {
+                            GetPathFunc(dialog).StoreInUserVariable(engine, v_Result);
+                            isAgain = false;
+                        }
+                    }
+                    break;
+                default:
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        GetPathFunc(dialog).StoreInUserVariable(engine, v_Result);
+                    }
+                    else
+                    {
+                        switch (whenCancel)
+                        {
+                            case "error":
+                                throw new Exception($"Error. {dialogTypeName} is Clicked Cancel button.");
+
+                            case "set empty":
+                                "".StoreInUserVariable(engine, v_Result);
+                                break;
+                            case "ignore":
+                                // nothing to do
+                                break;
+                        }
+                    }
+                    break;
             }
         }
     }
