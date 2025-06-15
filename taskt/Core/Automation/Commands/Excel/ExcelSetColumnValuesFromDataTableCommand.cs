@@ -75,47 +75,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetColumnValuesFromDataTableCommand()
         {
-            //this.CommandName = "ExcelSetColumnValuesFromDataTableCommand";
-            //this.SelectionName = "Set Column Values From DataTable";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //int dtColumnIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
-
-            //(int excelColumnIndex, int rowStart, int rowEnd, string valueType) =
-            //    ExcelControls.GetRangeIndeiesColumnDirection(
-            //        nameof(v_ColumnIndex), nameof(v_ColumnType),
-            //        nameof(v_RowStart), nameof(v_RowEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this,
-            //        myDT
-            //    );
-
-            //int range = rowEnd - rowStart + 1;
-
-            //string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "Id DataTable Not Enough", engine);
-            //if (ifDataTableNotEnough == "error")
-            //{
-            //    if (range > myDT.Rows.Count)
-            //    {
-            //        throw new Exception("DataTable items not enough");
-            //    }
-            //}
-
-            //int max = range;
-            //if (range > myDT.Rows.Count)
-            //{
-            //    max = myDT.Rows.Count;
-            //}
-
-            //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
-
-            //DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
             var myDT = this.ExpandUserVariableAsDataTable(nameof(v_DataTableVariable), engine);
             
             var dtColumnIndex = v_DataTableColumnIndex.ExpandValueOrUserVariableAsInteger("DataTable Column Index", engine);
@@ -123,18 +86,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception($"Column index '{v_DataTableColumnIndex}' is not exists");
             }
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var excelColumnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDT.Rows.Count));
-
-            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-
-            //int max = rowEndIndex - rowStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    string value = myDT.Rows[i][dtColumnIndex]?.ToString() ?? "";
-            //    setFunc(value, excelSheet, excelColumnIndex, rowStartIndex + i);
-            //}
 
             this.ColumnRangeAction(
                 new Func<int>(() => myDT.Rows.Count),

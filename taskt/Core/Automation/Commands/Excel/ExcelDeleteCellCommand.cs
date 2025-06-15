@@ -49,15 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelDeleteCellCommand()
         {
-            //this.CommandName = "ExcelDeleteCellCommand";
-            //this.SelectionName = "Delete Cell";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             string range = v_CellLocation.ExpandValueOrUserVariable(engine);

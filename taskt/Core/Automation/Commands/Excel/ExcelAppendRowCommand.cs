@@ -64,52 +64,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAppendRowCommand()
         {
-            //this.CommandName = "ExcelAppendRowCommand";
-            //this.SelectionName = "Append Row";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
-
-            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var splittext = v_TextToSet.Split(',');
-
-            ////(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            //int i = 1;            
-            //int lastUsedRow;
-            //try
-            //{
-            //    lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
-            //                     System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-            //                     Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
-            //                     false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-            //}
-            //catch(Exception)
-            //{
-            //    lastUsedRow = 0;
-            //}
-
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            //splittext = targetText.Split(',');
-
-            //foreach (var item in splittext)
-            //{
-            //    string output = item;
-            //    if (item.Contains("[") || item.Contains("]"))
-            //        output = item.Trim('[', ']');
-            //    output = output.Trim('"');
-            //    if (output=="null")
-            //    {
-            //        output = string.Empty;
-            //    }
-            //    excelSheet.Cells[lastUsedRow + 1, i] = output;
-            //    i++;
-            //}
-
             (var sheet, var columnIndex) = this.ExpandValueOrVariableAsExcelCurrentWorksheetAndColumnIndex(engine);
 
             var rowIndex = sheet.FirstBlankRowIndex(columnIndex, 1, this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine));
@@ -133,28 +91,5 @@ namespace taskt.Core.Automation.Commands
                 index++;
             }
         }
-
-        //public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-
-        //    if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row of workboook with Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

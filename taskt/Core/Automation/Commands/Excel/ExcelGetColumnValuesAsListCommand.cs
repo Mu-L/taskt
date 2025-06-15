@@ -53,39 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetColumnValuesAsListCommand()
         {
-            //this.CommandName = "ExcelGetColumnValuesAsListCommand";
-            //this.SelectionName = "Get Column Values As List";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int columnIndex, int rowStart, int rowEnd, string valueType) =
-            //    ExcelControls.GetRangeIndeiesColumnDirection(
-            //        nameof(v_ColumnIndex), nameof(v_ColumnType),
-            //        nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
-            //        engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //var newList = new List<string>();
-
-            //int max = rowEndIndex - rowStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    newList.Add(getFunc(excelSheet, columnIndex, rowStartIndex + i));
-            //}
-
-            //newList.StoreInUserVariable(engine, v_Result);
-
             var newList = new List<string>();
 
             this.ColumnRangeAction(
@@ -95,7 +66,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newList.StoreInUserVariable(engine, v_Result);
             this.StoreListInUserVariable(newList, engine);
         }
     }

@@ -49,15 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelDeleteRowCommand()
         {
-            //this.CommandName = "ExcelDeleteRowCommand";
-            //this.SelectionName = "Delete Row";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             string rowToDelete = v_RowIndex.ExpandValueOrUserVariable(engine);

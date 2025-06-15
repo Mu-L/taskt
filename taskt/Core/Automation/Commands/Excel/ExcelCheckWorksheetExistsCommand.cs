@@ -32,16 +32,9 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckWorksheetExistsCommand()
         {
-            //this.CommandName = "ExcelCheckWorksheetExistsCommand";
-            //this.SelectionName = "Check Worksheet Exists";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var sht) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine, true);
-
-            //(sht != null).StoreInUserVariable(engine, v_applyToVariable);
             try
             {
                 this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);

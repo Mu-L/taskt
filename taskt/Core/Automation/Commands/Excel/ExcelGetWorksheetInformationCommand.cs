@@ -49,15 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetWorksheetInformationCommand()
         {
-            //this.CommandName = "ExcelWorksheetInfoCommand";
-            //this.SelectionName = "Get Worksheet Info";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine);
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
 
             string ret = "";
@@ -76,8 +71,6 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    //var nextSheet = engine.engineSettings.NextWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
-                    //ret = (nextSheet == null) ? "" : nextSheet.Name;
                     try
                     {
                         var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_NextWorkSheet.VariableName, engine), engine);
@@ -89,8 +82,6 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
                 case "previous sheet":
-                    //var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
-                    //ret = (prevSheet == null) ? "" : prevSheet.Name;
                     try
                     {
                         var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_PreviousWorkSheet.VariableName, engine), engine);

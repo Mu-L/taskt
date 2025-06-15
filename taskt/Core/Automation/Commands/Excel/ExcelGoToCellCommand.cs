@@ -25,18 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGoToCellCommand()
         {
-            //this.CommandName = "ExcelGoToCellCommand";
-            //this.SelectionName = "Go To Cell";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
-
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
 
             rg.Select();

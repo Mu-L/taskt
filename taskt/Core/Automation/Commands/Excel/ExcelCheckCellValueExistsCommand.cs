@@ -41,25 +41,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckCellValueExistsCommand()
         {
-            //this.CommandName = "ExcelCheckCellValueExistsCommand";
-            //this.SelectionName = "Check Cell Value Exists";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
-
-            ////var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
-
-            ////var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
-            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
-
-            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
-
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
             var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
             chkFunc(rg).StoreInUserVariable(engine, v_Result);
@@ -67,8 +52,6 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //(var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl(nameof(v_ValueType));
-            //ComboBox cmbValueType = (ComboBox)body;
             (var cmbValueType, var lblValueType, var lbl2ndValueType) = ControlsList.GetAllPropertyControl<ComboBox>(nameof(v_ValueType));
 
             string searchedKey = cmbValueType.SelectedItem.ToString();

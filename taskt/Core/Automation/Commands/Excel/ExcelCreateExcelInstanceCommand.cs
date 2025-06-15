@@ -30,10 +30,6 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCreateExcelInstanceCommand()
         {
-            //this.CommandName = "ExcelOpenApplicationCommand";
-            //this.SelectionName = "Create Excel Application";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)

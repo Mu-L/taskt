@@ -45,25 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetCellCommand()
         {
-            //this.CommandName = "ExcelSetCellCommand";
-            //this.SelectionName = "Set Cell";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
-
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-
-            //string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
-
-            //var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
-            //setFunc(targetText, excelSheet, rg);
-
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
             var setFunc = this.ExpandValueOrVariableAsSetValueAction(engine);
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);

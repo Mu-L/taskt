@@ -53,55 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetColumnValuesAsDataTableCommand()
         {
-            //this.CommandName = "ExcelGetColumnValuesAsDataTableCommand";
-            //this.SelectionName = "Get Column Values As DataTable";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int columnIndex, int rowStart, int rowEnd, string valueType) =
-            //    ExcelControls.GetRangeIndeiesColumnDirection(
-            //        nameof(v_ColumnIndex), nameof(v_ColumnType),
-            //        nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
-            //        engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //DataTable newDT = new DataTable();
-            //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnIndex));
-
-            //int tblRow = 0;
-            //for (int i = rowStart; i <= rowEnd; i++)
-            //{
-            //    newDT.Rows.Add();
-            //    newDT.Rows[tblRow][0] = getFunc(excelSheet, columnIndex, i);
-            //    tblRow++;
-            //}
-
-            //newDT.StoreInUserVariable(engine, v_Result);
-
-            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //var newDT = new DataTable();
-            //newDT.Columns.Add(sheet.ToColumnName(columnIndex));
-
-            //int max = rowEndIndex - rowStartIndex + 1;
-            ////int rowCnt = 0;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    newDT.Rows.Add();
-            //    newDT.Rows[i][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
-            //    //rowCnt++;
-            //}
-            //newDT.StoreInUserVariable(engine, v_Result);
-
             var newDT = new DataTable();
 
             this.ColumnRangeAction(
@@ -116,7 +71,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newDT.StoreInUserVariable(engine, v_Result);
             this.StoreDataTableInUserVariable(newDT, engine);
         }
     }

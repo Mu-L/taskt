@@ -45,32 +45,18 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSaveAsCommand()
         {
-            //this.CommandName = "ExcelSaveAsCommand";
-            //this.SelectionName = "Save Workbook As";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            //string fileName;
-            //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
-            //{
-            //    fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
-            //}
-            //else
-            //{
-            //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
-            //}
             string fileName = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FileName), engine);
 
 			// TODO: support xlsm
             Action saveAsProcess = () =>
             {
-                //overwrite and save
+                // overwrite and save
                 excelInstance.DisplayAlerts = false;
                 excelInstance.ActiveWorkbook.SaveAs(fileName);
                 excelInstance.DisplayAlerts = true;

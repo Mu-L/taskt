@@ -57,31 +57,16 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetLastRowIndexCommand()
         {
-            //this.CommandName = "ExcelGetLastRowCommand";
-            //this.SelectionName = "Get Last Row Index";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            //if (string.IsNullOrEmpty(v_ColumnIndex))
-            //{
-            //    v_ColumnIndex = "A";
-            //}
-            //var columnLetter = v_ColumnIndex.ExpandValueOrUserVariable(engine);
-
-            //var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
             var columnIndex = this.ExpandValueOrVariableAsExcelColumnIndex(engine);
             var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
             var useFastMethod = this.ExpandValueOrUserVariableAsYesNo(nameof(v_UseFastMethodToCell), engine);
             var lastRow = excelSheet.LastRowIndex(columnIndex, 1, valueType, useFastMethod);
-
-            //lastRow.ToString().StoreInUserVariable(engine, v_Result);
 
             if (lastRow == 0)
             {

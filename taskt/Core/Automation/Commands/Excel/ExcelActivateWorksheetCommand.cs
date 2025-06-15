@@ -24,18 +24,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelActivateWorksheetCommand()
         {
-            //this.CommandName = "ExcelActivateSheetCommand";
-            //this.SelectionName = "Activate Sheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var currentSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance);
-
             (_, var targetSheet, var currentSheet) = this.ExpandValueOrVariableAsExcelInstnaceAndWorksheetAndCurrentSheet(engine);
 
             if (currentSheet.Name != targetSheet.Name)

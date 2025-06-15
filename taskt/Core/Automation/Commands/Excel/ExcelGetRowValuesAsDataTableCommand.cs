@@ -52,46 +52,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRowValuesAsDataTableCommand()
         {
-            //this.CommandName = "ExcelGetRowValuesAsDataTableCommand";
-            //this.SelectionName = "Get Row Values As DataTable";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-            //    ExcelControls.GetRangeIndeiesRowDirection(
-            //        nameof(v_RowIndex),
-            //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
-
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //DataTable newDT = new DataTable();
-            //newDT.Rows.Add();
-
-            //int max = columnEndIndex - columnStartIndex + 1;
-            ////int colCnt = 0;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
-            //    var pos = columnStartIndex + i;
-            //    newDT.Columns.Add(excelSheet.ToColumnName(pos));
-            //    newDT.Rows[0][i] = getFunc(excelSheet, pos, rowIndex);
-            //    //colCnt++;
-            //}
-
-            //newDT.StoreInUserVariable(engine, v_Result);
-
             var newDT = new DataTable();
             newDT.Rows.Add();
 
@@ -103,7 +67,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newDT.StoreInUserVariable(engine, v_Result);
             this.StoreDataTableInUserVariable(newDT, engine);
         }
     }

@@ -58,58 +58,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetColumnValuesFromListCommand()
         {
-            //this.CommandName = "ExcelSetColumnValuesFromListCommand";
-            //this.SelectionName = "Set Column Values From List";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int columnIndex, int rowStart, int rowEnd, string valueType) =
-            //   ExcelControls.GetRangeIndeiesColumnDirection(
-            //       nameof(v_ColumnIndex), nameof(v_ColumnType),
-            //       nameof(v_RowStart), nameof(v_RowEnd),
-            //       nameof(v_ValueType), engine, excelSheet, this,
-            //       myList
-            //   );
-
-            //int range = rowEnd - rowStart + 1;
-
-            //string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If List Not Enough", engine);
-            //if (ifListNotEnough == "error")
-            //{
-            //    if (range > myList.Count)
-            //    {
-            //        throw new Exception("List items not enough");
-            //    }
-            //}
-
-            //int max = range;
-            //if (range > myList.Count)
-            //{
-            //    max = myList.Count;
-            //}
-
-            //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            //var myList = v_ListVariable.ExpandUserVariableAsList(engine);
-
-            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myList.Count));
-            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-
-            //int max = rowEndIndex - rowStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    setFunc(myList[i], excelSheet, columnIndex, rowStartIndex + i);
-            //}
-
-            //var myList = v_ListVariable.ExpandUserVariableAsList(engine);
             var myList = this.ExpandUserVariableAsList(nameof(v_ListVariable), engine);
 
             this.ColumnRangeAction(

@@ -37,14 +37,9 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAddWorkbookCommand()
         {
-            //this.CommandName = "ExcelAddWorkbookCommand";
-            //this.SelectionName = "Add Workbook";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), "When Workbook Exists", engine);
