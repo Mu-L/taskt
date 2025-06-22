@@ -162,7 +162,7 @@ namespace taskt.Core.Automation.Engine
                 sw.Start();
 
                 // log starting
-                ReportProgress("Bot Engine Started: " + DateTime.Now.ToString());
+                ReportProgress($"Bot Engine Started: {DateTime.Now.ToString()}");
 
                 // determine if preloaded script exists
                 bool preLoadedTask = false;
@@ -176,7 +176,7 @@ namespace taskt.Core.Automation.Engine
                 if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
-                    WriteLog("Script Path: " + data);
+                    WriteLog($"Script Path: {data}");
                     FileName = data;              
                     automationScript = Script.Script.DeserializeFile(data, engineSettings);
                 }
@@ -284,8 +284,8 @@ namespace taskt.Core.Automation.Engine
                 if (isFirstWait)
                 {
                     CurrentStatus = EngineStatus.Paused;
-                    ReportProgress("Paused at Line " + parentCommand.LineNumber + " - " + parentCommand.GetDisplayValue());
-                    ReportProgress("Paused on Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
+                    ReportProgress($"Paused at Line {parentCommand.LineNumber} - {parentCommand.GetDisplayValue()}");
+                    ReportProgress($"Paused on Line {parentCommand.LineNumber}: {parentCommand.GetDisplayValue()}");
                     ReportProgress("[Please select 'Resume' when ready]");
                     isFirstWait = false;
                 }
@@ -305,12 +305,12 @@ namespace taskt.Core.Automation.Engine
             // bypass comments
             if (parentCommand is CommentCommand || parentCommand.IsCommented)
             {
-                ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ExpandValueOrUserVariable(this));
+                ReportProgress($"Skipping Line {parentCommand.LineNumber}: {parentCommand.GetDisplayValue().ExpandValueOrUserVariable(this)}");
                 return;
             }
 
             // report intended execution
-            ReportProgress("Running Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue());
+            ReportProgress($"Running Line {parentCommand.LineNumber}: {parentCommand.GetDisplayValue()}");
 
             // handle any errors
             try
@@ -354,7 +354,7 @@ namespace taskt.Core.Automation.Engine
                     switch (ErrorHandler.v_ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                           ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
+                           ReportProgress($"Error Occured at Line {parentCommand.LineNumber}: {ex.ToString()}");
                            ReportProgress("Continuing Per Error Handling");
                            break;
 
