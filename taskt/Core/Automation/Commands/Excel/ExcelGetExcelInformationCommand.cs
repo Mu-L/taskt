@@ -45,15 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetExcelInformationCommand()
         {
-            //this.CommandName = "ExcelGetExcelInfoCommand";
-            //this.SelectionName = "Get Excel Info";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             string ret = "";
@@ -66,8 +61,6 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.ActiveWorkbook?.FullName ?? "";
                     break;
                 case "current worksheet":
-                    //var sheet = engine.engineSettings.CurrentWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
-                    //ret = (sheet == null) ? "" : sheet.Name;
                     ret = (excelInstance.Worksheets.Count > 0) ? excelInstance.ActiveSheet.Name : "";
                     break;
                 case "number of worksheets":

@@ -70,75 +70,16 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetRowValuesFromDataTableCommand()
         {
-            //this.CommandName = "ExcelSetRowValuesFromDataTableCommand";
-            //this.SelectionName = "Set Row Values From DataTable";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-
-            //var myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
-
-            //(int excelRowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-            //    ExcelControls.GetRangeIndeiesRowDirection(
-            //        nameof(v_RowIndex), nameof(v_ColumnType),
-            //        nameof(v_ColumnStart), nameof(v_ColumnEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this,
-            //        myDT
-            //    );
-
-            //int dtRowIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableRowIndex), "DataTable Row Index", engine);
-            //if  (dtRowIndex >= myDT.Rows.Count)
-            //{
-            //    throw new Exception("DataTable Row " + v_DataTableRowIndex + " is not exists");
-            //}
-
-            //string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If DataTable Not Enough", engine);
-            //int range = columnEndIndex - columnStartIndex + 1;
-            //if (ifDataTableNotEnough == "error")
-            //{
-            //    if (range > myDT.Columns.Count)
-            //    {
-            //        throw new Exception("DataTable Items not enough");
-            //    }
-            //}
-
-            //int max = range;
-            //if (range > myDT.Columns.Count)
-            //{
-            //    max = myDT.Columns.Count;
-            //}
-
-            ////Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
-
-            //for (int i = 0; i < max; i++)
-            //{
-            //    string setValue = myDT.Rows[dtRowIndex][i]?.ToString() ?? "";
-            //    setFunc(setValue, excelSheet, columnStartIndex + i, excelRowIndex);
-            //}
-
-            //var myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
             var myDT = this.ExpandUserVariableAsDataTable(nameof(v_DataTableVariable), engine);
             var dtRowIndex = v_DataTableRowIndex.ExpandValueOrUserVariableAsInteger("DataTable Row Index", engine);
             if (dtRowIndex >= myDT.Rows.Count)
             {
                 throw new Exception($"DataTable Row '{v_DataTableRowIndex}' is not exists.");
             }
-
-            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var row, var columnStart, var columnEnd) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDT.Columns.Count));
-            //int max = (columnEnd - columnStart) + 1;
-            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-            //for (int i = 0; i < max; i++)
-            //{
-            //    string setValue = myDT.Rows[dtRowIndex][i]?.ToString() ?? "";
-            //    setFunc(setValue, sheet, columnStart + i, row);
-            //}
 
             this.RowRangeAction(
                 new Func<int>(() => myDT.Columns.Count),

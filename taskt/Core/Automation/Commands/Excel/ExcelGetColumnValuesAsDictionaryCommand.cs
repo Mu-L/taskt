@@ -53,52 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetColumnValuesAsDictionaryCommand()
         {
-            //this.CommandName = "ExcelGetColumnValuesAsDictionaryCommand";
-            //this.SelectionName = "Get Column Values As Dictionary";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int columnIndex, int rowStart, int rowEnd, string valueType) = 
-            //    ExcelControls.GetRangeIndeiesColumnDirection(
-            //        nameof(v_ColumnIndex), nameof(v_ColumnType), 
-            //        nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType), 
-            //        engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //Dictionary<string, string> newDic = new Dictionary<string, string>();
-
-            //for (int i = rowStart; i <= rowEnd; i++)
-            //{
-            //    string address = ExcelControls.GetAddress(excelSheet, i, columnIndex);
-            //    newDic.Add(address, getFunc(excelSheet, columnIndex, i));
-            //}
-
-            //newDic.StoreInUserVariable(engine, v_Result);
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
-
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //var newDic = new Dictionary<string, string>();
-
-            //int max = rowEndIndex - rowStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    var pos = rowStartIndex + i;
-            //    string address = excelSheet.ToCellLocation(pos, columnIndex);
-            //    newDic.Add(address, getFunc(excelSheet, columnIndex, pos));
-            //}
-
-            //newDic.StoreInUserVariable(engine, v_Result);
-
             var newDic = new Dictionary<string, string>();
 
             this.ColumnRangeAction(
@@ -109,7 +67,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newDic.StoreInUserVariable(engine, v_Result);
             this.StoreDictionaryInUserVariable(newDic, engine);
         }
     }

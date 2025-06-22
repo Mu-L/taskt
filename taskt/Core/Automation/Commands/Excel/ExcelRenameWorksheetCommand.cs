@@ -41,18 +41,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelRenameWorksheetCommand()
         {
-            //this.CommandName = "ExcelRenameWorksheetCommand";
-            //this.SelectionName = "Rename Worksheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
-            //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
             var newName = this.ExpandValueOrVariableAsExcelWorksheetName(v_NewSheetName, engine);
 
             if (targetSheet.Name != newName)

@@ -60,18 +60,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelOpenWorkbookCommand()
         {
-            //this.CommandName = "ExcelOpenWorkbookCommand";
-            //this.SelectionName = "Open Workbook";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            //var vFilePath = FilePathControls.WaitForFile(this, nameof(v_TargetFilePath), nameof(v_WaitTimeForFile), engine);
             var excelFilePath = this.WaitForFile(engine);
 
             var pass = v_Password.ExpandValueOrUserVariable(engine);

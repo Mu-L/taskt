@@ -31,25 +31,15 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAddWorksheetCommand()
         {
-            //this.CommandName = "ExcelAddWorksheetCommand";
-            //this.SelectionName = "Add Worksheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
-            //var sheetName = v_SheetName.ExpandValueOrUserVariable(engine);
             var sheetName = this.ExpandValueOrVariableAsExcelWorksheetName(v_SheetName, engine);
             ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
-            //if (!string.IsNullOrEmpty(sheetName))
-            //{
-            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
-            //}
         }
     }
 }

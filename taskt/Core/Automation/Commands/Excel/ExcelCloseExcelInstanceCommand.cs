@@ -35,31 +35,25 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCloseExcelInstanceCommand()
         {
-            //this.CommandName = "ExcelCloseApplicationCommand";
-            //this.SelectionName = "Close Excel Application";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            //check if workbook exists and save
+            // check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                //string vSaved = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExcelSaveOnExit), "Save Setting", engine);
                 var isSaved = this.ExpandValueOrUserVariableAsYesNo(nameof(v_ExcelSaveOnExit), engine);
 
                 excelInstance.ActiveWorkbook.Close(isSaved);
             }
 
-            //close excel
+            // close excel
             excelInstance.Quit();
 
-            //remove instance
+            // remove instance
             engine.RemoveAppInstance(vInstance);
         }
     }

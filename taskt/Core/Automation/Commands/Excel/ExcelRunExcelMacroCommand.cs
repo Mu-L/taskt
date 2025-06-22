@@ -46,15 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelRunExcelMacroCommand()
         {
-            //this.CommandName = "ExcelRunMacroCommand";
-            //this.SelectionName = "Run Macro";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var vMacroName = v_MacroName.ExpandValueOrUserVariable(engine);

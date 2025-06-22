@@ -47,15 +47,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetWorksheetsCommand()
         {
-            //this.CommandName = "ExcelGetWorksheetsCommand";
-            //this.SelectionName = "Get Worksheets";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var sheetNames = new List<string>();
@@ -96,7 +91,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            //sheetNames.StoreInUserVariable(engine, v_Result);
             this.StoreListInUserVariable(sheetNames, engine);
         }
     }

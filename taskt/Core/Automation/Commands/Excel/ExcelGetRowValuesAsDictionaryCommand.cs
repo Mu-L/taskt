@@ -53,42 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRowValuesAsDictionaryCommand()
         {
-            //this.CommandName = "ExcelGetRowValuesAsDictionaryCommand";
-            //this.SelectionName = "Get Row Values As Dictionary";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-            //    ExcelControls.GetRangeIndeiesRowDirection(
-            //        nameof(v_RowIndex),
-            //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //var newDic = new Dictionary<string, string>();
-
-            //int max = columnEndIndex - columnStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    //string keyName = ExcelControls.GetAddress(excelSheet, rowIndex, i);
-            //    var pos = columnStartIndex + i;
-            //    var keyName = excelSheet.ToCellLocation(pos);
-            //    newDic.Add(keyName, getFunc(excelSheet, pos, rowIndex));
-            //}
-
-            //newDic.StoreInUserVariable(engine, v_Result);
-
             var newDic = new Dictionary<string, string>();
 
             this.RowRangeAction(
@@ -99,7 +67,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newDic.StoreInUserVariable(engine, v_Result);
             this.StoreDictionaryInUserVariable(newDic, engine);
         }
     }

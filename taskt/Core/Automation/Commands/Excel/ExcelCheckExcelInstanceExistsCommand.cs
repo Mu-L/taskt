@@ -28,17 +28,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckExcelInstanceExistsCommand()
         {
-            //this.CommandName = "CheckExcelInstanceExistsCommand";
-            //this.SelectionName = "Check Excel Instance Exists";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             try
             {
-                //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
                 this.ExpandValueOrVariableAsExcelInstance(engine);
                 true.StoreInUserVariable(engine, v_Result);
             }

@@ -7,14 +7,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
-    [Attributes.ClassAttributes.CommandSettings("Get Cell RC")]
-    [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
+    [Attributes.ClassAttributes.CommandSettings("Go To Cell RC")]
+    [Attributes.ClassAttributes.Description("This command moves to a specific cell.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public sealed class ExcelGetCellRCCommand : AExcelRCLocationActionCommands
+    public sealed class ExcelGoToCellRCCommand : AExcelRCLocationCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -30,17 +30,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(6001)]
         //public string v_CellColumn { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyParameterOrder(8000)]
-        public string v_Result { get; set; }
-
-        ////[XmlAttribute]
-        ////[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        ////[PropertyParameterOrder(6003)]
-        ////public string v_ValueType { get; set; }
-
-        public ExcelGetCellRCCommand()
+        public ExcelGoToCellRCCommand()
         {
         }
 
@@ -48,8 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
             {
-                var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-                getFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+                sheet.CellRange(row, column).Select();
             }), engine);
         }
     }

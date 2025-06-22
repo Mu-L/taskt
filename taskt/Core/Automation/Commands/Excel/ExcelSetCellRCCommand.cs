@@ -59,29 +59,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
-
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-
-            //string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
-
-            //var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
-
-            //setFunc(targetText, excelSheet, rg);
-
-            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
-            //var setFunc = this.ExpandValueOrVariableAsSetRangeAction(engine);
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            //setFunc(rg, targetText);
-
-            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            //setFunc(targetText, sheet, column, row);
-
             this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
             {
                 var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);

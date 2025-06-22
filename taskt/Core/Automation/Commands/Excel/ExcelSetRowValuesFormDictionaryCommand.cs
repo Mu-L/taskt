@@ -59,59 +59,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetRowValuesFromDictionaryCommand()
         {
-            //this.CommandName = "ExcelSetRowValuesFromDictionaryCommand";
-            //this.SelectionName = "Set Row Values From Dictionary";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-            //    ExcelControls.GetRangeIndeiesRowDirection(
-            //        nameof(v_RowIndex), nameof(v_ColumnType),
-            //        nameof(v_ColumnStart), nameof(v_ColumnEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this,
-            //        myDic
-            //    );
-
-            ////string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
-            //string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If Dictionary Not Enough", engine);
-            //int range = columnEndIndex - columnStartIndex + 1;
-            //if (ifListNotEnough == "error")
-            //{
-            //    if (range > myDic.Count)
-            //    {
-            //        throw new Exception("Dictionary Items not enough");
-            //    }
-            //}
-
-            //int max = range;
-            //if (range > myDic.Count)
-            //{
-            //    max = myDic.Count;
-            //}
-
-            //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            //var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
-
-            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDic.Count));
-            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-
-            //string[] keys = new string[myDic.Count];
-            //myDic.Keys.CopyTo(keys, 0);
-
-            //var max = columnEndIndex - columnStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    setFunc(myDic[keys[i]], excelSheet, columnStartIndex + i, rowIndex);
-            //}
-
-            //var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
             var myDic = this.ExpandUserVariableAsDictionary(nameof(v_DictionaryVariable), engine);
             
             string[] keys = new string[myDic.Count];

@@ -22,22 +22,17 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSaveCommand()
         {
-            //this.CommandName = "ExcelSaveCommand";
-            //this.SelectionName = "Save Workbook";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             if (excelInstance.ActiveWorkbook != null)
             {
                 if (System.IO.File.Exists(excelInstance.ActiveWorkbook.FullName))
                 {
-                    //save
+                    // save
                     excelInstance.ActiveWorkbook.Save();
                 }
                 else

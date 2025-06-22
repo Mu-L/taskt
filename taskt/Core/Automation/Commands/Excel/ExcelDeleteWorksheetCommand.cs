@@ -24,20 +24,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelDeleteWorksheetCommand()
         {
-            //this.CommandName = "ExcelDeleteWorksheetCommand";
-            //this.SelectionName = "Delete Worksheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
 
-            //excelInstance.DisplayAlerts = false;
-            //targetSheet.Delete();
-            //excelInstance.DisplayAlerts = true;
             excelInstance.HideDisplayAlertProcess(
                 new Action(() =>
                 {

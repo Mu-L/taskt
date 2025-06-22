@@ -41,15 +41,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCopyWorksheetCommand()
         {
-            //this.CommandName = "ExcelCopyWorksheetCommand";
-            //this.SelectionName = "Copy Worksheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
@@ -66,12 +61,6 @@ namespace taskt.Core.Automation.Commands
                     throw ex;
                 }
             }
-
-            //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
-            //if (!string.IsNullOrEmpty(newName))
-            //{
-            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
-            //}
         }
     }
 }

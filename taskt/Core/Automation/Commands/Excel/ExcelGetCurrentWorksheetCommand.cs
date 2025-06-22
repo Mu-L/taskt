@@ -27,15 +27,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetCurrentWorksheetCommand()
         {
-            //this.CommandName = "ExcelGetCurrentWorksheetCommand";
-            //this.SelectionName = "Get Current Worksheet";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             excelSheet.Name.StoreInUserVariable(engine, v_Result);

@@ -46,35 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckCellValueExistsRCCommand()
         {
-            //this.CommandName = "ExcelCheckCellValueExistsRCCommand";
-            //this.SelectionName = "Check Cell Value Exists RC";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
-
-            ////var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
-
-            ////var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
-
-            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
-
-            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
-
-            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
-            //var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
-            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
-
-            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            //var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
-            //chkFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
-
             this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
             {
                 var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
@@ -84,8 +59,6 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //(var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl(nameof(v_ValueType));
-            //ComboBox cmbValueType = (ComboBox)body;
             (var cmbValueType, var lblValueType, var lbl2ndValueType) = ControlsList.GetAllPropertyControl<ComboBox>(nameof(v_ValueType));
 
             string searchedKey = cmbValueType.SelectedItem.ToString();

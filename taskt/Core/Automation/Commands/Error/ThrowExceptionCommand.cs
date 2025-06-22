@@ -24,8 +24,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Message")]
         public string v_Message { get; set; }
 
-        public string ErrorMessage { get; set; }
-        public string StackTrace { get; set; }
+        //public string ErrorMessage { get; set; }
+        //public string StackTrace { get; set; }
 
         public ThrowExceptionCommand()
         {
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             string message;
-            if (String.IsNullOrEmpty(v_Message))
+            if (string.IsNullOrEmpty(v_Message))
             {
                 message = "A Error has Occured.";
             }

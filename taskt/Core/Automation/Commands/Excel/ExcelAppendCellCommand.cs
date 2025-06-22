@@ -49,29 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAppendCellCommand()
         {
-            //this.CommandName = "ExcelAppendCellCommand";
-            //this.SelectionName = "Append Cell";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
-
-            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            //int test = 0;
-            //test = excelSheet.Columns.Count;
-            //var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
-            //                     System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-            //                     Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
-            //                     false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-            //var targetAddress = "A" + (lastUsedRow + 1);
-            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            //excelSheet.Range[targetAddress].Value = targetText;
-
             (var sheet, var columnIndex) = this.ExpandValueOrVariableAsExcelCurrentWorksheetAndColumnIndex(engine);
 
             var rowIndex = sheet.FirstBlankRowIndex(columnIndex, 1, this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine));
@@ -82,29 +63,5 @@ namespace taskt.Core.Automation.Commands
 
             setFunc(targetText, sheet, columnIndex, rowIndex);
         }
-
-        //public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-
-        //    if (editor.creationMode == UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Append last cell to: " + v_TextToSet + ", Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

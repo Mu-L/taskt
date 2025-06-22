@@ -53,39 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRowValuesAsListCommand()
         {
-            //this.CommandName = "ExcelGetRowValuesAsListCommand";
-            //this.SelectionName = "Get Row Values As List";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-            //    ExcelControls.GetRangeIndeiesRowDirection(
-            //        nameof(v_RowIndex),
-            //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
-            //        nameof(v_ValueType), engine, excelSheet, this
-            //    );
-
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-
-            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
-            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-
-            //List<string> newList = new List<string>();
-
-            //int max = columnEndIndex - columnStartIndex + 1;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    newList.Add(getFunc(excelSheet, columnStartIndex + i, rowIndex));
-            //}
-
-            //newList.StoreInUserVariable(engine, v_Result);
-
             var newList = new List<string>();
 
             this.RowRangeAction(
@@ -95,7 +66,6 @@ namespace taskt.Core.Automation.Commands
                 }), engine
             );
 
-            //newList.StoreInUserVariable(engine, v_Result);
             this.StoreListInUserVariable(newList, engine);
         }
     }

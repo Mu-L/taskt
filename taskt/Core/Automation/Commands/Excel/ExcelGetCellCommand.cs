@@ -37,24 +37,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetCellCommand()
         {
-            //this.CommandName = "ExcelGetCellCommand";
-            //this.SelectionName = "Get Cell";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-
-            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
-
-            //var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine);
-
-            //var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
-
-            //func(rg).StoreInUserVariable(engine, v_Result);
-
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
             var func = this.ExpandValueOrVariableAsGetValueFunction(engine);
             func(rg).StoreInUserVariable(engine, v_Result);
