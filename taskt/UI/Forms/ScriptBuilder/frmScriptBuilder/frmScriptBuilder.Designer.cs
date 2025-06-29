@@ -32,7 +32,7 @@
             taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
-            this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
+            this.headerMenu = new taskt.UI.CustomControls.UIMenuStrip();
             this.fileActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,8 +101,8 @@
             this.commandListTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.commandsListPanelU = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.picCommandClear = new System.Windows.Forms.PictureBox();
-            this.picCommandSearch = new System.Windows.Forms.PictureBox();
+            this.picCommandFilterClear = new System.Windows.Forms.PictureBox();
+            this.picCommandFilter = new System.Windows.Forms.PictureBox();
             this.txtCommandFilter = new System.Windows.Forms.TextBox();
             this.commandListPanelD = new System.Windows.Forms.Panel();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
@@ -132,7 +132,7 @@
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.pnlControlContainer = new System.Windows.Forms.Panel();
             this.grpSearch = new taskt.UI.CustomControls.UIGroupBox();
-            this.pbSearch = new System.Windows.Forms.PictureBox();
+            this.picCommandSearch = new System.Windows.Forms.PictureBox();
             this.lblCurrentlyViewing = new System.Windows.Forms.Label();
             this.lblTotalResults = new System.Windows.Forms.Label();
             this.txtCommandSearch = new System.Windows.Forms.TextBox();
@@ -155,7 +155,7 @@
             this.uiBtnSettings = new taskt.UI.CustomControls.UIPictureButton();
             this.uiBtnAddVariable = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrNotify = new System.Windows.Forms.Timer(this.components);
-            this.lstContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.lstScriptActionsContextStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editThisCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiSendKeystrokesEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpThisCommandToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -203,15 +203,15 @@
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
             this.autoSaveTimer = new System.Windows.Forms.Timer(this.components);
             this.tlpControls.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.headerMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.commandListTablePanel.SuspendLayout();
             this.commandsListPanelU.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandFilterClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandFilter)).BeginInit();
             this.commandListPanelD.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRecentFiles)).BeginInit();
@@ -221,7 +221,7 @@
             this.pnlMain.SuspendLayout();
             this.pnlControlContainer.SuspendLayout();
             this.grpSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).BeginInit();
             this.grpSaveClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).BeginInit();
@@ -240,7 +240,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).BeginInit();
-            this.lstContextStrip.SuspendLayout();
+            this.lstScriptActionsContextStrip.SuspendLayout();
             this.rootTVCommandMenuStrip.SuspendLayout();
             this.cmdTVCommandMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -252,7 +252,7 @@
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 524F));
-            this.tlpControls.Controls.Add(this.menuStrip1, 0, 1);
+            this.tlpControls.Controls.Add(this.headerMenu, 0, 1);
             this.tlpControls.Controls.Add(this.panel1, 0, 3);
             this.tlpControls.Controls.Add(this.splitContainer1, 0, 4);
             this.tlpControls.Controls.Add(this.pnlHeader, 0, 0);
@@ -272,12 +272,13 @@
             this.tlpControls.Size = new System.Drawing.Size(979, 558);
             this.tlpControls.TabIndex = 2;
             // 
-            // menuStrip1
+            // headerMenu
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tlpControls.SetColumnSpan(this.menuStrip1, 3);
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.headerMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.tlpControls.SetColumnSpan(this.headerMenu, 3);
+            this.headerMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headerMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.headerMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileActionsToolStripMenuItem,
             this.editStripMenuItem,
             this.modifyToolStripMenuItem,
@@ -287,12 +288,13 @@
             this.tsSearchButton,
             this.tsSearchResult,
             this.helpStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 41);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.ShowItemToolTips = true;
-            this.menuStrip1.Size = new System.Drawing.Size(979, 30);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.headerMenu.Location = new System.Drawing.Point(0, 41);
+            this.headerMenu.Name = "headerMenu";
+            this.headerMenu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.headerMenu.ShowItemToolTips = true;
+            this.headerMenu.Size = new System.Drawing.Size(979, 30);
+            this.headerMenu.TabIndex = 1;
+            this.headerMenu.Text = "menuStrip1";
             // 
             // fileActionsToolStripMenuItem
             // 
@@ -311,7 +313,7 @@
             this.fileActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
             this.fileActionsToolStripMenuItem.Name = "fileActionsToolStripMenuItem";
-            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(96, 26);
+            this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(100, 26);
             this.fileActionsToolStripMenuItem.Text = "&File Actions";
             // 
             // newToolStripMenuItem
@@ -434,7 +436,7 @@
             this.editStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.editStripMenuItem.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.editStripMenuItem.Name = "editStripMenuItem";
-            this.editStripMenuItem.Size = new System.Drawing.Size(55, 26);
+            this.editStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.editStripMenuItem.Text = "&Edit";
             // 
             // editThisActionStripMenuItem
@@ -625,7 +627,7 @@
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(77, 26);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
             this.modifyToolStripMenuItem.Text = "&Options";
             // 
             // variablesToolStripMenuItem
@@ -737,7 +739,7 @@
             this.scriptActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.scriptActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
             this.scriptActionsToolStripMenuItem.Name = "scriptActionsToolStripMenuItem";
-            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
+            this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(112, 26);
             this.scriptActionsToolStripMenuItem.Text = "&Script Actions";
             // 
             // recordToolStripMenuItem
@@ -775,7 +777,7 @@
             this.saveAndRunToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
             this.saveAndRunToolStripMenuItem.Name = "saveAndRunToolStripMenuItem";
             this.saveAndRunToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(106, 26);
+            this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(110, 26);
             this.saveAndRunToolStripMenuItem.Text = "Save and &Run";
             this.saveAndRunToolStripMenuItem.ToolTipText = "F5";
             this.saveAndRunToolStripMenuItem.Click += new System.EventHandler(this.saveAndRunToolStripMenuItem_Clicked);
@@ -788,18 +790,17 @@
             this.tsSearchBox.ToolTipText = "Search Keyword";
             this.tsSearchBox.Visible = false;
             this.tsSearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tsSearchBox_KeyDown);
-            this.tsSearchBox.TextChanged += new System.EventHandler(this.txtCommandSearch_TextChanged);
             // 
             // tsSearchButton
             // 
             this.tsSearchButton.ForeColor = System.Drawing.Color.White;
             this.tsSearchButton.Image = global::taskt.Properties.Resources.command_search;
             this.tsSearchButton.Name = "tsSearchButton";
-            this.tsSearchButton.Size = new System.Drawing.Size(28, 26);
+            this.tsSearchButton.Size = new System.Drawing.Size(32, 26);
             this.tsSearchButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsSearchButton.ToolTipText = "Search";
             this.tsSearchButton.Visible = false;
-            this.tsSearchButton.Click += new System.EventHandler(this.pbSearch_Click);
+            this.tsSearchButton.Click += new System.EventHandler(this.picCommandSearch_Click);
             // 
             // tsSearchResult
             // 
@@ -824,7 +825,7 @@
             this.helpStripMenuItem.Image = global::taskt.Properties.Resources.various_question;
             this.helpStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 40, 0);
             this.helpStripMenuItem.Name = "helpStripMenuItem";
-            this.helpStripMenuItem.Size = new System.Drawing.Size(60, 26);
+            this.helpStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.helpStripMenuItem.Text = "&Help";
             // 
             // tasktProjectPageStripMenuItem
@@ -940,8 +941,8 @@
             // commandsListPanelU
             // 
             this.commandsListPanelU.Controls.Add(this.label2);
-            this.commandsListPanelU.Controls.Add(this.picCommandClear);
-            this.commandsListPanelU.Controls.Add(this.picCommandSearch);
+            this.commandsListPanelU.Controls.Add(this.picCommandFilterClear);
+            this.commandsListPanelU.Controls.Add(this.picCommandFilter);
             this.commandsListPanelU.Controls.Add(this.txtCommandFilter);
             this.commandsListPanelU.Dock = System.Windows.Forms.DockStyle.Fill;
             this.commandsListPanelU.Location = new System.Drawing.Point(0, 0);
@@ -961,31 +962,31 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "&C:";
             // 
-            // picCommandClear
+            // picCommandFilterClear
             // 
-            this.picCommandClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picCommandClear.Image = global::taskt.Properties.Resources.command_error;
-            this.picCommandClear.Location = new System.Drawing.Point(214, 2);
-            this.picCommandClear.Name = "picCommandClear";
-            this.picCommandClear.Size = new System.Drawing.Size(20, 20);
-            this.picCommandClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCommandClear.TabIndex = 21;
-            this.picCommandClear.TabStop = false;
-            this.myToolTip.SetToolTip(this.picCommandClear, "Clear Commands/Actions Filter");
-            this.picCommandClear.Click += new System.EventHandler(this.picCommandClear_Click);
+            this.picCommandFilterClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picCommandFilterClear.Image = global::taskt.Properties.Resources.command_error;
+            this.picCommandFilterClear.Location = new System.Drawing.Point(214, 2);
+            this.picCommandFilterClear.Name = "picCommandFilterClear";
+            this.picCommandFilterClear.Size = new System.Drawing.Size(20, 20);
+            this.picCommandFilterClear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandFilterClear.TabIndex = 21;
+            this.picCommandFilterClear.TabStop = false;
+            this.myToolTip.SetToolTip(this.picCommandFilterClear, "Clear Commands/Actions Filter");
+            this.picCommandFilterClear.Click += new System.EventHandler(this.picCommandFilterClear_Click);
             // 
-            // picCommandSearch
+            // picCommandFilter
             // 
-            this.picCommandSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
-            this.picCommandSearch.Location = new System.Drawing.Point(184, -1);
-            this.picCommandSearch.Name = "picCommandSearch";
-            this.picCommandSearch.Size = new System.Drawing.Size(24, 24);
-            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCommandSearch.TabIndex = 20;
-            this.picCommandSearch.TabStop = false;
-            this.myToolTip.SetToolTip(this.picCommandSearch, "Filter Commands/Actions");
-            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
+            this.picCommandFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picCommandFilter.Image = global::taskt.Properties.Resources.command_search;
+            this.picCommandFilter.Location = new System.Drawing.Point(184, -1);
+            this.picCommandFilter.Name = "picCommandFilter";
+            this.picCommandFilter.Size = new System.Drawing.Size(24, 24);
+            this.picCommandFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandFilter.TabIndex = 20;
+            this.picCommandFilter.TabStop = false;
+            this.myToolTip.SetToolTip(this.picCommandFilter, "Filter Commands/Actions");
+            this.picCommandFilter.Click += new System.EventHandler(this.picCommandFilter_Click);
             // 
             // txtCommandFilter
             // 
@@ -1360,12 +1361,11 @@
             this.pnlControlContainer.Name = "pnlControlContainer";
             this.pnlControlContainer.Size = new System.Drawing.Size(979, 81);
             this.pnlControlContainer.TabIndex = 7;
-            this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
             // grpSearch
             // 
             this.grpSearch.BackColor = System.Drawing.Color.Transparent;
-            this.grpSearch.Controls.Add(this.pbSearch);
+            this.grpSearch.Controls.Add(this.picCommandSearch);
             this.grpSearch.Controls.Add(this.lblCurrentlyViewing);
             this.grpSearch.Controls.Add(this.lblTotalResults);
             this.grpSearch.Controls.Add(this.txtCommandSearch);
@@ -1380,19 +1380,19 @@
             this.grpSearch.TitleForeColor = System.Drawing.Color.GhostWhite;
             this.grpSearch.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Horizontal;
             // 
-            // pbSearch
+            // picCommandSearch
             // 
-            this.pbSearch.Image = global::taskt.Properties.Resources.command_search;
-            this.pbSearch.Location = new System.Drawing.Point(158, 18);
-            this.pbSearch.Name = "pbSearch";
-            this.pbSearch.Size = new System.Drawing.Size(16, 16);
-            this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbSearch.TabIndex = 17;
-            this.pbSearch.TabStop = false;
-            this.myToolTip.SetToolTip(this.pbSearch, "Search");
-            this.pbSearch.Click += new System.EventHandler(this.pbSearch_Click);
-            this.pbSearch.MouseEnter += new System.EventHandler(this.pbSearch_MouseEnter);
-            this.pbSearch.MouseLeave += new System.EventHandler(this.pbSearch_MouseLeave);
+            this.picCommandSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.picCommandSearch.Location = new System.Drawing.Point(158, 18);
+            this.picCommandSearch.Name = "picCommandSearch";
+            this.picCommandSearch.Size = new System.Drawing.Size(16, 16);
+            this.picCommandSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCommandSearch.TabIndex = 17;
+            this.picCommandSearch.TabStop = false;
+            this.myToolTip.SetToolTip(this.picCommandSearch, "Search");
+            this.picCommandSearch.Click += new System.EventHandler(this.picCommandSearch_Click);
+            this.picCommandSearch.MouseEnter += new System.EventHandler(this.picCommandSearch_MouseEnter);
+            this.picCommandSearch.MouseLeave += new System.EventHandler(this.picCommandSearch_MouseLeave);
             // 
             // lblCurrentlyViewing
             // 
@@ -1413,7 +1413,7 @@
             this.lblTotalResults.ForeColor = System.Drawing.Color.DimGray;
             this.lblTotalResults.Location = new System.Drawing.Point(5, 42);
             this.lblTotalResults.Name = "lblTotalResults";
-            this.lblTotalResults.Size = new System.Drawing.Size(118, 13);
+            this.lblTotalResults.Size = new System.Drawing.Size(117, 13);
             this.lblTotalResults.TabIndex = 2;
             this.lblTotalResults.Text = "X Total Results Found";
             this.lblTotalResults.Visible = false;
@@ -1426,7 +1426,6 @@
             this.txtCommandSearch.Size = new System.Drawing.Size(151, 23);
             this.txtCommandSearch.TabIndex = 0;
             this.myToolTip.SetToolTip(this.txtCommandSearch, "Search Keyword");
-            this.txtCommandSearch.TextChanged += new System.EventHandler(this.txtCommandSearch_TextChanged);
             this.txtCommandSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCommandSearch_KeyDown);
             // 
             // grpSaveClose
@@ -1749,10 +1748,11 @@
             this.tmrNotify.Interval = 500;
             this.tmrNotify.Tick += new System.EventHandler(this.tmrNotify_Tick);
             // 
-            // lstContextStrip
+            // lstScriptActionsContextStrip
             // 
-            this.lstContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lstScriptActionsContextStrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstScriptActionsContextStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.lstScriptActionsContextStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editThisCodeToolStripMenuItem,
             this.multiSendKeystrokesEditToolStripMenuItem,
             this.helpThisCommandToolStripMenuItem1,
@@ -1778,8 +1778,8 @@
             this.viewCodeToolStripMenuItem,
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
-            this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(386, 536);
+            this.lstScriptActionsContextStrip.Name = "lstContextStrip";
+            this.lstScriptActionsContextStrip.Size = new System.Drawing.Size(390, 554);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1787,14 +1787,14 @@
             this.editThisCodeToolStripMenuItem.Name = "editThisCodeToolStripMenuItem";
             this.editThisCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.E)));
-            this.editThisCodeToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.editThisCodeToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.editThisCodeToolStripMenuItem.Text = "Edit &This Action";
             this.editThisCodeToolStripMenuItem.Click += new System.EventHandler(this.editThisCodeToolStripMenuItem_Click);
             // 
             // multiSendKeystrokesEditToolStripMenuItem
             // 
             this.multiSendKeystrokesEditToolStripMenuItem.Name = "multiSendKeystrokesEditToolStripMenuItem";
-            this.multiSendKeystrokesEditToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.multiSendKeystrokesEditToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.multiSendKeystrokesEditToolStripMenuItem.Text = "Multi Enter Keys Edit";
             this.multiSendKeystrokesEditToolStripMenuItem.Click += new System.EventHandler(this.multiSendKeystrokesEditToolStripMenuItem_Click);
             // 
@@ -1803,7 +1803,7 @@
             this.helpThisCommandToolStripMenuItem1.Image = global::taskt.Properties.Resources.web_help;
             this.helpThisCommandToolStripMenuItem1.Name = "helpThisCommandToolStripMenuItem1";
             this.helpThisCommandToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(385, 24);
+            this.helpThisCommandToolStripMenuItem1.Size = new System.Drawing.Size(389, 26);
             this.helpThisCommandToolStripMenuItem1.Text = "Help This Command (&Web)";
             this.helpThisCommandToolStripMenuItem1.Click += new System.EventHandler(this.helpThisCommandToolStripMenuItem1_Click);
             // 
@@ -1811,21 +1811,21 @@
             // 
             this.whereThisCommandToolStripMenuItem.Image = global::taskt.Properties.Resources.command_search;
             this.whereThisCommandToolStripMenuItem.Name = "whereThisCommandToolStripMenuItem";
-            this.whereThisCommandToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.whereThisCommandToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.whereThisCommandToolStripMenuItem.Text = "Where This Command";
             this.whereThisCommandToolStripMenuItem.Click += new System.EventHandler(this.whereThisCommandToolStripMenuItem_Click);
             // 
             // lstContextStripSep1
             // 
             this.lstContextStripSep1.Name = "lstContextStripSep1";
-            this.lstContextStripSep1.Size = new System.Drawing.Size(382, 6);
+            this.lstContextStripSep1.Size = new System.Drawing.Size(386, 6);
             // 
             // enableSelectedCodeToolStripMenuItem
             // 
             this.enableSelectedCodeToolStripMenuItem.Image = global::taskt.Properties.Resources.various_ok_button;
             this.enableSelectedCodeToolStripMenuItem.Name = "enableSelectedCodeToolStripMenuItem";
             this.enableSelectedCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.enableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.enableSelectedCodeToolStripMenuItem.Text = "&Enable Selected Action";
             this.enableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.enableSelectedCodeToolStripMenuItem_Click);
             // 
@@ -1834,7 +1834,7 @@
             this.disableSelectedCodeToolStripMenuItem.Image = global::taskt.Properties.Resources.various_cancel_button;
             this.disableSelectedCodeToolStripMenuItem.Name = "disableSelectedCodeToolStripMenuItem";
             this.disableSelectedCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.disableSelectedCodeToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.disableSelectedCodeToolStripMenuItem.Text = "&Disable Selected Action";
             this.disableSelectedCodeToolStripMenuItem.Click += new System.EventHandler(this.disableSelectedCodeToolStripMenuItem_Click);
             // 
@@ -1843,7 +1843,7 @@
             this.pauseBeforeExecutionToolStripMenuItem.Image = global::taskt.Properties.Resources.command_pause;
             this.pauseBeforeExecutionToolStripMenuItem.Name = "pauseBeforeExecutionToolStripMenuItem";
             this.pauseBeforeExecutionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.pauseBeforeExecutionToolStripMenuItem.Text = "&Pause Before Execution";
             this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
             // 
@@ -1852,20 +1852,20 @@
             this.dontPauseBeforeExecutionToolStripMenuItem1.Name = "dontPauseBeforeExecutionToolStripMenuItem1";
             this.dontPauseBeforeExecutionToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.P)));
-            this.dontPauseBeforeExecutionToolStripMenuItem1.Size = new System.Drawing.Size(385, 24);
+            this.dontPauseBeforeExecutionToolStripMenuItem1.Size = new System.Drawing.Size(389, 26);
             this.dontPauseBeforeExecutionToolStripMenuItem1.Text = "Don\'t Pause Before Execution";
             this.dontPauseBeforeExecutionToolStripMenuItem1.Click += new System.EventHandler(this.dontPauseBeforeExecutionToolStripMenuItem1_Click);
             // 
             // lstContextStripSep2
             // 
             this.lstContextStripSep2.Name = "lstContextStripSep2";
-            this.lstContextStripSep2.Size = new System.Drawing.Size(382, 6);
+            this.lstContextStripSep2.Size = new System.Drawing.Size(386, 6);
             // 
             // selectAllToolStripMenuItem
             // 
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.selectAllToolStripMenuItem.Text = "Select &All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
@@ -1873,7 +1873,7 @@
             // 
             this.cutSelectedActionssToolStripMenuItem.Name = "cutSelectedActionssToolStripMenuItem";
             this.cutSelectedActionssToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.cutSelectedActionssToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.cutSelectedActionssToolStripMenuItem.Text = "Cut Selected Action(s) (&X)";
             this.cutSelectedActionssToolStripMenuItem.Click += new System.EventHandler(this.cutSelectedActionssToolStripMenuItem_Click);
             // 
@@ -1881,7 +1881,7 @@
             // 
             this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
             this.copySelectedToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.copySelectedToolStripMenuItem.Text = "&Copy Selected Action(s)";
             this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
             // 
@@ -1889,7 +1889,7 @@
             // 
             this.pasteSelectedToolStripMenuItem.Name = "pasteSelectedToolStripMenuItem";
             this.pasteSelectedToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.pasteSelectedToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.pasteSelectedToolStripMenuItem.Text = "Paste Selected Action(s) (&V)";
             this.pasteSelectedToolStripMenuItem.Click += new System.EventHandler(this.pasteSelectedToolStripMenuItem_Click);
             // 
@@ -1897,14 +1897,14 @@
             // 
             this.deleteSelectedToolStripMenuItem.Name = "deleteSelectedToolStripMenuItem";
             this.deleteSelectedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteSelectedToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.deleteSelectedToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.deleteSelectedToolStripMenuItem.Text = "Delete Selected Action(s)";
             this.deleteSelectedToolStripMenuItem.Click += new System.EventHandler(this.deleteSelectedToolStripMenuItem_Click);
             // 
             // lstContextStripSep3
             // 
             this.lstContextStripSep3.Name = "lstContextStripSep3";
-            this.lstContextStripSep3.Size = new System.Drawing.Size(382, 6);
+            this.lstContextStripSep3.Size = new System.Drawing.Size(386, 6);
             // 
             // insertCommentToolStripMenuItem
             // 
@@ -1913,7 +1913,7 @@
             this.belowHereToolStripMenuItem});
             this.insertCommentToolStripMenuItem.Image = global::taskt.Properties.Resources.command_comment;
             this.insertCommentToolStripMenuItem.Name = "insertCommentToolStripMenuItem";
-            this.insertCommentToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.insertCommentToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.insertCommentToolStripMenuItem.Text = "Insert Comment";
             // 
             // aboveHereToolStripMenuItem
@@ -1933,7 +1933,7 @@
             // moveToParentToolStripMenuItem
             // 
             this.moveToParentToolStripMenuItem.Name = "moveToParentToolStripMenuItem";
-            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.moveToParentToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.moveToParentToolStripMenuItem.Text = "&Move Out To Parent";
             this.moveToParentToolStripMenuItem.Visible = false;
             this.moveToParentToolStripMenuItem.Click += new System.EventHandler(this.moveToParentToolStripMenuItem_Click);
@@ -1941,7 +1941,7 @@
             // lstContextStripSep4
             // 
             this.lstContextStripSep4.Name = "lstContextStripSep4";
-            this.lstContextStripSep4.Size = new System.Drawing.Size(382, 6);
+            this.lstContextStripSep4.Size = new System.Drawing.Size(386, 6);
             // 
             // searchThisCommnadToolStripMenuItem
             // 
@@ -1949,21 +1949,21 @@
             this.searchThisCommnadToolStripMenuItem.Name = "searchThisCommnadToolStripMenuItem";
             this.searchThisCommnadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.F)));
-            this.searchThisCommnadToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.searchThisCommnadToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.searchThisCommnadToolStripMenuItem.Text = "&Highlight This Command";
             this.searchThisCommnadToolStripMenuItem.Click += new System.EventHandler(this.searchThisCommnadToolStripMenuItem_Click);
             // 
             // clearHighlightToolStripMenuItem
             // 
             this.clearHighlightToolStripMenuItem.Name = "clearHighlightToolStripMenuItem";
-            this.clearHighlightToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.clearHighlightToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.clearHighlightToolStripMenuItem.Text = "Clear Highlight (&L)";
             this.clearHighlightToolStripMenuItem.Click += new System.EventHandler(this.clearHighlightToolStripMenuItem_Click);
             // 
             // lstContextStripSep5
             // 
             this.lstContextStripSep5.Name = "lstContextStripSep5";
-            this.lstContextStripSep5.Size = new System.Drawing.Size(382, 6);
+            this.lstContextStripSep5.Size = new System.Drawing.Size(386, 6);
             // 
             // viewCodeToolStripMenuItem
             // 
@@ -1971,7 +1971,7 @@
             this.ViewXMLCodeToolStripMenuItem,
             this.ViewJSONCodeToolStripMenuItem});
             this.viewCodeToolStripMenuItem.Name = "viewCodeToolStripMenuItem";
-            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.viewCodeToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.viewCodeToolStripMenuItem.Text = "View Code (&I)";
             // 
             // ViewXMLCodeToolStripMenuItem
@@ -1992,7 +1992,7 @@
             // 
             this.showScriptInfoMenuItem.Image = global::taskt.Properties.Resources.various_info;
             this.showScriptInfoMenuItem.Name = "showScriptInfoMenuItem";
-            this.showScriptInfoMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.showScriptInfoMenuItem.Size = new System.Drawing.Size(389, 26);
             this.showScriptInfoMenuItem.Text = "&Show Script Informations";
             this.showScriptInfoMenuItem.Click += new System.EventHandler(this.showScriptInfoMenuItem_Click);
             // 
@@ -2001,7 +2001,7 @@
             this.variableManagerToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
             this.variableManagerToolStripMenuItem.Name = "variableManagerToolStripMenuItem";
             this.variableManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.variableManagerToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
+            this.variableManagerToolStripMenuItem.Size = new System.Drawing.Size(389, 26);
             this.variableManagerToolStripMenuItem.Text = "Variable &Manager";
             this.variableManagerToolStripMenuItem.Click += new System.EventHandler(this.variableManagerToolStripMenuItem_Click);
             // 
@@ -2018,6 +2018,7 @@
             // rootTVCommandMenuStrip
             // 
             this.rootTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.rootTVCommandMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.rootTVCommandMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.expandRootTVCommandMenuStrip,
             this.collapseRootTVCommandMenuStrip,
@@ -2056,6 +2057,7 @@
             // cmdTVCommandMenuStrip
             // 
             this.cmdTVCommandMenuStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cmdTVCommandMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmdTVCommandMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addCmdTVCommandMenuStrip,
             this.helpCmdTVCommandMenuStrip,
@@ -2065,13 +2067,13 @@
             this.cmdTVCommandMenuSep2,
             this.clearCmdTVCommandMenuStrip});
             this.cmdTVCommandMenuStrip.Name = "cmdTVCommandMenuStrip";
-            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(267, 146);
+            this.cmdTVCommandMenuStrip.Size = new System.Drawing.Size(271, 146);
             // 
             // addCmdTVCommandMenuStrip
             // 
             this.addCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.actionbar_edit;
             this.addCmdTVCommandMenuStrip.Name = "addCmdTVCommandMenuStrip";
-            this.addCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.addCmdTVCommandMenuStrip.Size = new System.Drawing.Size(270, 26);
             this.addCmdTVCommandMenuStrip.Text = "Add &This Action";
             this.addCmdTVCommandMenuStrip.Click += new System.EventHandler(this.addCmdTVCommandMenuStrip_Click);
             // 
@@ -2079,7 +2081,7 @@
             // 
             this.helpCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.web_help;
             this.helpCmdTVCommandMenuStrip.Name = "helpCmdTVCommandMenuStrip";
-            this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.helpCmdTVCommandMenuStrip.Size = new System.Drawing.Size(270, 26);
             this.helpCmdTVCommandMenuStrip.Text = "Help This Command (&Web)";
             this.helpCmdTVCommandMenuStrip.Click += new System.EventHandler(this.helpCmdTVCommandMenuStrip_Click);
             // 
@@ -2087,33 +2089,33 @@
             // 
             this.sampleThisCommandTVCommandMenuStrip.Image = global::taskt.Properties.Resources.sample_templete;
             this.sampleThisCommandTVCommandMenuStrip.Name = "sampleThisCommandTVCommandMenuStrip";
-            this.sampleThisCommandTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.sampleThisCommandTVCommandMenuStrip.Size = new System.Drawing.Size(270, 26);
             this.sampleThisCommandTVCommandMenuStrip.Text = "Sample This Command";
             this.sampleThisCommandTVCommandMenuStrip.Click += new System.EventHandler(this.sampleThisCommandTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuSep1
             // 
             this.cmdTVCommandMenuSep1.Name = "cmdTVCommandMenuSep1";
-            this.cmdTVCommandMenuSep1.Size = new System.Drawing.Size(263, 6);
+            this.cmdTVCommandMenuSep1.Size = new System.Drawing.Size(267, 6);
             // 
             // highlightCmdTVCommandMenuStrip
             // 
             this.highlightCmdTVCommandMenuStrip.Image = global::taskt.Properties.Resources.command_search;
             this.highlightCmdTVCommandMenuStrip.Name = "highlightCmdTVCommandMenuStrip";
-            this.highlightCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.highlightCmdTVCommandMenuStrip.Size = new System.Drawing.Size(270, 26);
             this.highlightCmdTVCommandMenuStrip.Text = "&Highlight This Command";
             this.highlightCmdTVCommandMenuStrip.Click += new System.EventHandler(this.highlightCmdTVCommandMenuStrip_Click);
             // 
             // cmdTVCommandMenuSep2
             // 
             this.cmdTVCommandMenuSep2.Name = "cmdTVCommandMenuSep2";
-            this.cmdTVCommandMenuSep2.Size = new System.Drawing.Size(263, 6);
+            this.cmdTVCommandMenuSep2.Size = new System.Drawing.Size(267, 6);
             // 
             // clearCmdTVCommandMenuStrip
             // 
             this.clearCmdTVCommandMenuStrip.Enabled = false;
             this.clearCmdTVCommandMenuStrip.Name = "clearCmdTVCommandMenuStrip";
-            this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(266, 26);
+            this.clearCmdTVCommandMenuStrip.Size = new System.Drawing.Size(270, 26);
             this.clearCmdTVCommandMenuStrip.Text = "Clear Filter (&L)";
             this.clearCmdTVCommandMenuStrip.Click += new System.EventHandler(this.clearCmdTVCommandMenuStrip_Click);
             // 
@@ -2134,7 +2136,7 @@
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.headerMenu;
             this.Name = "frmScriptBuilder";
             this.Text = "taskt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmScriptBuilder_FormClosing);
@@ -2144,8 +2146,8 @@
             this.Resize += new System.EventHandler(this.frmScriptBuilder_Resize);
             this.tlpControls.ResumeLayout(false);
             this.tlpControls.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.headerMenu.ResumeLayout(false);
+            this.headerMenu.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -2153,8 +2155,8 @@
             this.commandListTablePanel.ResumeLayout(false);
             this.commandsListPanelU.ResumeLayout(false);
             this.commandsListPanelU.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCommandClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandFilterClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandFilter)).EndInit();
             this.commandListPanelD.ResumeLayout(false);
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
@@ -2168,7 +2170,7 @@
             this.pnlControlContainer.ResumeLayout(false);
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCommandSearch)).EndInit();
             this.grpSaveClose.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnSequenceImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnKeep)).EndInit();
@@ -2187,7 +2189,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnClearAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAddVariable)).EndInit();
-            this.lstContextStrip.ResumeLayout(false);
+            this.lstScriptActionsContextStrip.ResumeLayout(false);
             this.rootTVCommandMenuStrip.ResumeLayout(false);
             this.cmdTVCommandMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -2200,7 +2202,7 @@
         private System.Windows.Forms.Panel pnlStatus;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Timer tmrNotify;
-        private System.Windows.Forms.ContextMenuStrip lstContextStrip;
+        private System.Windows.Forms.ContextMenuStrip lstScriptActionsContextStrip;
         private System.Windows.Forms.ToolStripMenuItem enableSelectedCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disableSelectedCodeToolStripMenuItem;
         private System.Windows.Forms.Panel pnlControlContainer;
@@ -2242,7 +2244,7 @@
         private System.Windows.Forms.TextBox txtCommandSearch;
         private System.Windows.Forms.Label lblCurrentlyViewing;
         private System.Windows.Forms.Label lblTotalResults;
-        private System.Windows.Forms.PictureBox pbSearch;
+        private System.Windows.Forms.PictureBox picCommandSearch;
         private CustomControls.UIPictureButton uiBtnSaveAs;
         private UI.CustomControls.UIPanel pnlMain;
         private System.Windows.Forms.ToolStripMenuItem cutSelectedActionssToolStripMenuItem;
@@ -2250,7 +2252,7 @@
         private System.Windows.Forms.ToolStripMenuItem moveToParentToolStripMenuItem;
         private CustomControls.UIPictureButton btnSequenceImport;
         private System.Windows.Forms.NotifyIcon notifyTray;
-        private taskt.UI.CustomControls.UIMenuStrip menuStrip1;
+        private taskt.UI.CustomControls.UIMenuStrip headerMenu;
         private System.Windows.Forms.ToolStripMenuItem fileActionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
@@ -2315,8 +2317,8 @@
         private System.Windows.Forms.Panel commandsListPanelU;
         private System.Windows.Forms.Panel commandListPanelD;
         private CustomControls.UITreeView tvCommands;
-        private System.Windows.Forms.PictureBox picCommandClear;
-        private System.Windows.Forms.PictureBox picCommandSearch;
+        private System.Windows.Forms.PictureBox picCommandFilterClear;
+        private System.Windows.Forms.PictureBox picCommandFilter;
         private System.Windows.Forms.TextBox txtCommandFilter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ContextMenuStrip rootTVCommandMenuStrip;
