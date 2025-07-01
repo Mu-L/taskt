@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms.General;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Hello World**", PropertyDetailSampleUsage.ValueType.Value, "Message")]
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Message")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Massage", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyValidationRule("Message", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Message")]
         public string v_Message { get; set; }
 
@@ -61,6 +62,28 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_FontSize { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Dialog Type")]
+        [PropertyUISelectionOption("Nothing")]
+        [PropertyUISelectionOption("Close")]
+        [PropertyUISelectionOption("OkOnly")]
+        [PropertyUISelectionOption("YesNo")]
+        [PropertyUISelectionOption("OkCancel")]
+        [PropertyValidationRule("Dialog Type", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(true, "Dialog Type")]
+        [PropertyIsOptional(true)]
+        public string v_DialogType { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Wait for answer")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        public string v_WaitForAnswer { get; set; }
 
         public ShowMessageCommand()
         {
@@ -102,11 +125,13 @@ namespace taskt.Core.Automation.Commands
             {
                 fontSize = (float)this.ExpandValueOrUserVariableAsDecimal(nameof(v_FontSize), engine);
             }
+            if (string.IsNullOrEmpty(v_DialogType)) v_DialogType = "OkOnly";
+            frmDialog.DialogType dialogType = (frmDialog.DialogType)Enum.Parse(typeof(frmDialog.DialogType), v_DialogType.ExpandValueOrUserVariable(engine));
 
             // TODO: support OK/cancel etc buttons
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.General.frmDialog.DialogType.OkOnly, closeAfter, true, fontName, fontSize);
+                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", dialogType, closeAfter);
             }
             ));
         }
