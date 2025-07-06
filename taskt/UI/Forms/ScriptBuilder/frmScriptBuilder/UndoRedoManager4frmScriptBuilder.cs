@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using taskt.Core;
 using taskt.Core.Script;
 
 namespace taskt.UI.Forms
@@ -11,11 +12,11 @@ namespace taskt.UI.Forms
         /// <summary>
         /// undo stack
         /// </summary>
-        private readonly Stack<Script> undo = new Stack<Script>();
+        private readonly Stack<(Script, InstanceCounter)> undo = new Stack<(Script, InstanceCounter)>();
         /// <summary>
         /// redo stack
         /// </summary>
-        private readonly Stack<Script> redo = new Stack<Script>();
+        private readonly Stack<(Script, InstanceCounter)> redo = new Stack<(Script, InstanceCounter)>();
         
         /// <summary>
         /// can undo?
@@ -32,16 +33,16 @@ namespace taskt.UI.Forms
         /// add snapshot
         /// </summary>
         /// <param name="script"></param>
-        public void AddSnapshot(Script script)
+        public void AddSnapshot(Script script, InstanceCounter counter)
         {
-            undo.Push(script);
+            undo.Push((script, counter));
         }
 
         /// <summary>
         /// undo
         /// </summary>
         /// <returns></returns>
-        public Script Undo()
+        public (Script, InstanceCounter) Undo()
         {
             if (CanUndo)
             {
@@ -51,7 +52,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                return null;
+                return (null, null);
             }
         }
 
@@ -59,7 +60,7 @@ namespace taskt.UI.Forms
         /// redo
         /// </summary>
         /// <returns></returns>
-        public Script Redo()
+        public (Script, InstanceCounter) Redo()
         {
             if (CanRedo)
             {
@@ -69,7 +70,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                return null;
+                return (null, null);
             }
         }
 
