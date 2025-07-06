@@ -417,7 +417,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 scriptInfo.TasktVersion = Application.ProductVersion;
                 scriptInfo.Revision++;
-                var exportedScript = Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, this.ScriptFilePath);
+                //var exportedScript = Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, this.ScriptFilePath);
+                GetSerializedScript(this.ScriptFilePath);
                 // show success dialog
                 Notify("File has been saved successfully!");
                 ChangeSaveState(false);
@@ -426,6 +427,16 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 Notify($"Save Error: {ex}");
             }
+        }
+
+        /// <summary>
+        /// get serialized script and save
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private Script GetSerializedScript(string fileName = "")
+        {
+            return Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, fileName);
         }
 
         private void CheckValidateCommands(List<ScriptCommand> commands)
