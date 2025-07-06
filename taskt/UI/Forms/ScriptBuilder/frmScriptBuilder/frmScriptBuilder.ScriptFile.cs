@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
@@ -322,37 +323,32 @@ namespace taskt.UI.Forms.ScriptBuilder
                 var cmd = (ScriptCommand)item.Tag;
 
                 //if ((item.Tag is BeginLoopForComplexDataTypesCommand) || (item.Tag is BeginContinousLoopCommand) ||(item.Tag is BeginNumberOfTimesLoopCommand) || (item.Tag is BeginLoopCommand) || (item.Tag is BeginMultiLoopCommand))
-                if ((cmd is IHaveErrorAdditionalCommands) || (cmd is IHaveIfAdditionalCommands) || (cmd is IHaveLoopAdditionalCommands))
+                if (cmd is IHaveLoopAdditionalCommands)
                 {
                     beginLoopValidationCount++;
                 }
-                else if (cmd is IEndOfStacturedCommand)
+                else if (cmd is EndLoopCommand)
                 {
                     beginLoopValidationCount--;
                 }
-                //else if (item.Tag is EndLoopCommand)
-                //{
-                //    beginLoopValidationCount--;
-                //}
-                //else if ((item.Tag is BeginIfCommand) || (item.Tag is BeginMultiIfCommand))
-                //else if (cmd is IHaveIfAdditionalCommands)
-                //{
-                //    beginIfValidationCount++;
-                //}
-                //else if (item.Tag is EndIfCommand)
-                //{
-                //    beginIfValidationCount--;
-                //}
-                //else if(item.Tag is TryCommand)
-                //else if (cmd is IHaveErrorAdditionalCommands)
-                //{
-                //    tryCatchValidationCount++;
-                //}
-                //else if (item.Tag is EndTryCommand)
-                //{
-                //    tryCatchValidationCount--;
-                //}
+                else if (cmd is IHaveErrorAdditionalCommands)
+                {
+                    tryCatchValidationCount++;
+                }
+                else if (cmd is EndTryCommand)
+                {
+                    tryCatchValidationCount--;
+                }
+                else if (cmd is IHaveIfAdditionalCommands)
+                {
+                    beginIfValidationCount++;
+                }
+                else if (cmd is EndIfCommand)
+                {
+                    beginIfValidationCount--;
+                }
 
+                // try-catch
                 if (tryCatchValidationCount < 0)
                 {
                     Notify("Please verify the ordering of your try/catch blocks.");
@@ -414,7 +410,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // check file path is only filename
             if (System.IO.Path.GetFileName(this.ScriptFilePath) == this.ScriptFilePath)
             {
-                this.ScriptFilePath = appSettings.ClientSettings.RootFolder + "\\" + this.ScriptFilePath;
+                this.ScriptFilePath =  Path.Combine(appSettings.ClientSettings.RootFolder, this.ScriptFilePath);
             }
 
             // serialize script
