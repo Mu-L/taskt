@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Office.Interop.Word;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
@@ -131,6 +132,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                         editCommand.selectedCommand.IsDontSavedCommand = true;
 
                         editCommand.selectedCommand.AddInstance(instanceList);
+
+                        CreateUndoSnapshot();
                     }
                     else
                     {
@@ -148,13 +151,15 @@ namespace taskt.UI.Forms.ScriptBuilder
                 itm.Selected = true;
             }
             lstScriptActions.EndUpdate();
+
+            Notify($"{lstScriptActions.Items.Count} command(s) selected!");
         }
 
         private void DeleteRows()
         {
             lstScriptActions.BeginUpdate();
 
-            int[] indices = new int[lstScriptActions.SelectedItems.Count];
+            var indices = new int[lstScriptActions.SelectedItems.Count];
             lstScriptActions.SelectedIndices.CopyTo(indices, 0);
 
             // remove instance name
@@ -171,6 +176,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
             lstScriptActions.EndUpdate();
             ChangeSaveState(true);
+
+            Notify($"{indices.Count()} command(s) deleted!");
 
             CreateUndoSnapshot();
 
@@ -209,11 +216,12 @@ namespace taskt.UI.Forms.ScriptBuilder
                 // remove instance name
                 RemoveInstanceName(commands);
 
-                //Notify(rowsSelectedForCopy.Count + " item(s) cut to clipboard!");
-                Notify(commands.Count + " item(s) cut to clipboard!");
+                Notify($"{commands.Count} command(s) cut to clipboard!");
 
                 // release
                 commands.Clear();
+
+                CreateUndoSnapshot();
 
                 // check indent
                 IndentListViewItems();
@@ -240,7 +248,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 // set clipborad xml string
                 Clipboard.SetText(Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
-                Notify(commands.Count + " item(s) copied to clipboard!");
+                Notify($"{commands.Count} commands(s) copied to clipboard!");
 
                 // release
                 commands.Clear();
@@ -261,16 +269,18 @@ namespace taskt.UI.Forms.ScriptBuilder
                 // add instance name
                 AddInstanceName(sc.Commands.Select(t => t.ScriptCommand).ToList());
 
-                Notify(sc.Commands.Count + " item(s) pasted!");
+                Notify($"{sc.Commands.Count} commands(s) pasted!");
                 // release
                 sc = null;
+
+                CreateUndoSnapshot();
 
                 // check indent
                 IndentListViewItems();
             }
             else
             {
-                Notify("Error! can not paste item(s).");
+                Notify("Error! can not paste commands(s).");
             }
         }
 
@@ -341,6 +351,8 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             ChangeSaveState(true);
 
+            CreateUndoSnapshot();
+
             // recolor
             lstScriptActions.Invalidate();
         }
@@ -362,6 +374,8 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             ChangeSaveState(true);
 
+            CreateUndoSnapshot();
+
             lstScriptActions.Invalidate();
         }
 
@@ -381,6 +395,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
 
             ChangeSaveState(true);
+
+            CreateUndoSnapshot();
 
             lstScriptActions.Invalidate();
         }
