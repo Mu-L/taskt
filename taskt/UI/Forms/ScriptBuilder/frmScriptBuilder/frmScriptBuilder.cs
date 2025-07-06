@@ -529,7 +529,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             lstScriptActions.Items.Clear();
             scriptVariables = new List<ScriptVariable>();
             scriptInfo = new ScriptInformation();
-            instanceList = new Core.InstanceCounter(appSettings);
+            instanceList = new Core.InstanceCounter();
 
             ChangeSaveState(false);
         }

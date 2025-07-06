@@ -156,7 +156,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             frmSearch = new Supplemental.frmSearchCommands(this);
 
             // instance count
-            instanceList = new Core.InstanceCounter(appSettings);
+            instanceList = new Core.InstanceCounter();
 
             // miniMap
             miniMapImg = new Bitmap(8, lstScriptActions.Height);

@@ -74,7 +74,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 lstScriptActions.Items.Clear();
                 scriptVariables = new List<ScriptVariable>();
                 scriptInfo = null;
-                instanceList = new Core.InstanceCounter(appSettings);
+                instanceList = new Core.InstanceCounter();
 
                 // get deserialized script
                 Script deserializedScript = Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
