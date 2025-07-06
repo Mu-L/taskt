@@ -322,7 +322,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 var cmd = (ScriptCommand)item.Tag;
 
-                //if ((item.Tag is BeginLoopForComplexDataTypesCommand) || (item.Tag is BeginContinousLoopCommand) ||(item.Tag is BeginNumberOfTimesLoopCommand) || (item.Tag is BeginLoopCommand) || (item.Tag is BeginMultiLoopCommand))
                 if (cmd is IHaveLoopAdditionalCommands)
                 {
                     beginLoopValidationCount++;
