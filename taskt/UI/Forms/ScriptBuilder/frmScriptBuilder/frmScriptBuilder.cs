@@ -42,9 +42,17 @@ namespace taskt.UI.Forms.ScriptBuilder
         private ImageList scriptImages;
 
         public Core.SafeFrmScriptBuilderApplicationSettings appSettings;
+
         private List<List<ListViewItem>> undoList;
-        private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
+
+        /// <summary>
+        /// undo redo manager
+        /// </summary>
+        private UndoRedoManager4frmScriptBuilder undoRedo = new UndoRedoManager4frmScriptBuilder();
+
+        private DateTime lastAntiIdleEvent;
+        
         private int selectedIndex = -1;
         private int DnDIndex = -1;
 

@@ -1294,6 +1294,7 @@
     <Compile Include="UI\Forms\ScriptBuilder\frmScriptBuilder\frmScriptBuilder.HeaderMenuHandlers.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Forms\ScriptBuilder\frmScriptBuilder\UndoRedoManager4frmScriptBuilder.cs" />
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmNewSettings.cs">
       <SubType>Form</SubType>
     </Compile>
