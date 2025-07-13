@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
+using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using taskt.Core.Script;
 
@@ -56,6 +57,18 @@ namespace taskt.UI.Forms.ScriptBuilder
             //appSettings = Core.ApplicationSettings.GetOrCreateApplicationSettings();
             //appSettings = App.Taskt_UNSAFE_Settings;
             appSettings = App.GetFrmScriptBuilderApplicationSettings();
+
+            // notification mananger
+            this.notificationManager = new NotificationManager4frmScriptBuilder(tlpControls.RowStyles[5], pnlStatus, 2);
+            // show/hide status bar
+            if (appSettings.ClientSettings.HideNotifyAutomatically)
+            {
+                notificationManager.HideNotification();
+            }
+            else
+            {
+                notificationManager.ShowNotification();
+            }
 
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
             {
@@ -112,15 +125,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // get latest files for recent files list on load
             GenerateRecentFiles();
 
-            // show/hide status bar
-            if (appSettings.ClientSettings.HideNotifyAutomatically)
-            {
-                HideNotificationRow();
-            }
-            else
-            {
-                ShowNotificationRow();
-            }
+
 
             // instantiate for script variables
             if (!editMode)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.ScriptBuilder
@@ -19,10 +18,15 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             if (appSettings.ClientSettings.HideNotifyAutomatically)
             {
-                if ((notificationExpires < DateTime.Now) && (isDisplaying))
+                if ((notificationManager.ExpireNotifaciton < DateTime.Now) && (notificationManager.IsVisible))
                 {
-                    HideNotification();
+                    notificationManager.HideNotification();
                 }
+
+                //if ((notificationExpires < DateTime.Now) && (isDisplaying))
+                //{
+                //    HideNotification();
+                //}
 
                 if ((appSettings.ClientSettings.AntiIdleWhileOpen) && (DateTime.Now > lastAntiIdleEvent.AddMinutes(1)))
                 {
@@ -42,16 +46,17 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
         }
 
-        private void pnlStatus_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.Clear(pnlStatus.BackColor);
-            e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
-            e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
-        }
+        //private void pnlStatus_Paint(object sender, PaintEventArgs e)
+        //{
+        //    e.Graphics.Clear(pnlStatus.BackColor);
+        //    e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
+        //    e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
+        //}
 
         private void pnlStatus_DoubleClick(object sender, EventArgs e)
         {
-            using (var fm = new General.frmDialog(notificationText, "Status Message", General.frmDialog.DialogType.OkOnly, 0))
+            //using (var fm = new General.frmDialog(notificationText, "Status Message", General.frmDialog.DialogType.OkOnly, 0))
+            using (var fm = new General.frmDialog(notificationManager.NotificationText, "Status Message", General.frmDialog.DialogType.OkOnly, 0))
             {
                 fm.ShowDialog();
             }
@@ -69,6 +74,8 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// <param name="notificationText"></param>
         public void Notify(string notificationText)
         {
+            notificationManager.ShowMessage(notificationText);
+
             // DBG
             //MessageBox.Show(notificationText);
 
@@ -84,57 +91,57 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
             */
 
-            if (!isDisplaying)
-            {
-                ShowNotificationRow();
-            }
+            //if (!isDisplaying)
+            //{
+            //    ShowNotificationRow();
+            //}
 
-            this.notificationText = notificationText;
-            pnlStatus_Paint(pnlStatus, new PaintEventArgs(pnlStatus.CreateGraphics(), pnlStatus.Bounds));   // force draw
+            //this.notificationText = notificationText;
+            //pnlStatus_Paint(pnlStatus, new PaintEventArgs(pnlStatus.CreateGraphics(), pnlStatus.Bounds));   // force draw
         }
 
-        /// <summary>
-        /// show notification controls
-        /// </summary>
-        /// <param name="textToDisplay"></param>
-        private void ShowNotification(string textToDisplay)
-        {
-            notificationText = textToDisplay;
+        ///// <summary>
+        ///// show notification controls
+        ///// </summary>
+        ///// <param name="textToDisplay"></param>
+        //private void ShowNotification(string textToDisplay)
+        //{
+        //    notificationText = textToDisplay;
 
-            pnlStatus.SuspendLayout();
+        //    pnlStatus.SuspendLayout();
 
-            ShowNotificationRow();
-            pnlStatus.ResumeLayout();
+        //    ShowNotificationRow();
+        //    pnlStatus.ResumeLayout();
 
-            isDisplaying = true;
-        }
+        //    isDisplaying = true;
+        //}
 
-        /// <summary>
-        /// hide notification controls
-        /// </summary>
-        private void HideNotification()
-        {
-            pnlStatus.SuspendLayout();
-            HideNotificationRow();
-            pnlStatus.ResumeLayout();
+        ///// <summary>
+        ///// hide notification controls
+        ///// </summary>
+        //private void HideNotification()
+        //{
+        //    pnlStatus.SuspendLayout();
+        //    HideNotificationRow();
+        //    pnlStatus.ResumeLayout();
 
-            isDisplaying = false;
-        }
+        //    isDisplaying = false;
+        //}
 
-        /// <summary>
-        /// hide notification tray row
-        /// </summary>
-        private void HideNotificationRow()
-        {
-            tlpControls.RowStyles[5].Height = 0;
-        }
+        ///// <summary>
+        ///// hide notification tray row
+        ///// </summary>
+        //private void HideNotificationRow()
+        //{
+        //    tlpControls.RowStyles[5].Height = 0;
+        //}
 
-        /// <summary>
-        /// show notificaiton tray row
-        /// </summary>
-        private void ShowNotificationRow()
-        {
-            tlpControls.RowStyles[5].Height = 30;
-        }
+        ///// <summary>
+        ///// show notificaiton tray row
+        ///// </summary>
+        //private void ShowNotificationRow()
+        //{
+        //    tlpControls.RowStyles[5].Height = 30;
+        //}
     }
 }

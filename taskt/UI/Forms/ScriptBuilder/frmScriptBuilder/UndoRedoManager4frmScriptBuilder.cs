@@ -9,7 +9,7 @@ namespace taskt.UI.Forms
     /// <summary>
     /// Undo, Redo manager for frmScriptBuilder
     /// </summary>
-    public class UndoRedoManager4frmScriptBuilder
+    internal class UndoRedoManager4frmScriptBuilder
     {
         /// <summary>
         /// undo stack

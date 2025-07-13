@@ -67,6 +67,11 @@ namespace taskt.UI.Forms.ScriptBuilder
         private bool isDisplaying;
         public string notificationText { get; set; }
 
+        /// <summary>
+        /// notification manager
+        /// </summary>
+        private NotificationManager4frmScriptBuilder notificationManager;
+
         #region CommandEditor form variables
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
