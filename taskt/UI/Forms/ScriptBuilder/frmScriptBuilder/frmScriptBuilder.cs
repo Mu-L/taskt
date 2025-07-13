@@ -65,7 +65,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         //List<string> notificationList = new List<string>();
         //private DateTime notificationExpires;
         //private bool isDisplaying;
-        public string notificationText { get; set; }
+        //public string notificationText { get; set; }
 
         /// <summary>
         /// notification manager
@@ -91,7 +91,12 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private frmScriptBuilder parentBuilder { get; set; }
 
+        /// <summary>
+        /// indent dash line
+        /// </summary>
         private Pen indentDashLine;
+
+        private int lineCharWidth = 14;
 
         // forms
         private Supplemental.frmSearchCommands frmSearch = null;

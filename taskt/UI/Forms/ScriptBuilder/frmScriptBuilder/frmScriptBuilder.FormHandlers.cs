@@ -125,8 +125,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             // get latest files for recent files list on load
             GenerateRecentFiles();
 
-
-
             // instantiate for script variables
             if (!editMode)
             {
@@ -194,6 +192,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 Core.Update.ApplicationUpdate.ShowUpdateResultAsync(appSettings.ClientSettings.SkipBetaVersionUpdate);
             }
+
+            lineCharWidth = DecideScriptActionsLineCharacterWidth();
         }
 
         private void frmScriptBuilder_Shown(object sender, EventArgs e)

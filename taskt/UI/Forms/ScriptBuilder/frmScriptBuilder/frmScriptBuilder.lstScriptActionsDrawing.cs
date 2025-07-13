@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Misc;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
@@ -11,6 +12,9 @@ namespace taskt.UI.Forms.ScriptBuilder
          * this file has lstScriptActions drawing events processes
          */
 
+        /// <summary>
+        /// decide indent width in lstScriptActions
+        /// </summary>
         private void IndentListViewItems()
         {
             int indent = 0;
@@ -23,14 +27,12 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                 var cmd = (ScriptCommand)rowItem.Tag;
 
-                //if ((rowItem.Tag is BeginIfCommand) || (rowItem.Tag is BeginMultiIfCommand) || (rowItem.Tag is BeginLoopForComplexDataTypesCommand) || (rowItem.Tag is BeginContinousLoopCommand) || (rowItem.Tag is BeginNumberOfTimesLoopCommand) || (rowItem.Tag is TryCommand) || (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand))
                 if ((cmd is IHaveErrorAdditionalCommands) || (cmd is IHaveIfAdditionalCommands) || (cmd is IHaveLoopAdditionalCommands))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
                 }
-                //else if ((rowItem.Tag is EndLoopCommand) || (rowItem.Tag is EndIfCommand) || (rowItem.Tag is EndTryCommand))
                 else if (cmd is IEndOfStacturedCommand)
                 {
                     indent -= 2;
@@ -39,7 +41,6 @@ namespace taskt.UI.Forms.ScriptBuilder
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
-                //else if ((rowItem.Tag is ElseCommand) || (rowItem.Tag is CatchExceptionCommand) || (rowItem.Tag is FinallyCommand))
                 else if (cmd is IDelimitersOfStructuredCommands)
                 {
                     indent -= 2;
@@ -61,11 +62,13 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
         }
 
+        /// <summary>
+        /// auto size line number column in lstScriptActions
+        /// </summary>
         private void AutoSizeLineNumberColumn()
         {
             //auto adjust column width based on # of commands
-            int columnWidth = (14 * lstScriptActions.Items.Count.ToString().Length);
-            int difWidth = columnWidth - lstScriptActions.Columns[0].Width;
+            int columnWidth = (this.lineCharWidth * lstScriptActions.Items.Count.ToString().Length);
 
             lstScriptActions.Columns[0].Width = columnWidth;
             lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - columnWidth - lstScriptActions.Columns[1].Width;
@@ -461,6 +464,27 @@ namespace taskt.UI.Forms.ScriptBuilder
                 ret = "normal";
             }
             return "number-" + ret;
+        }
+
+        /// <summary>
+        /// decide character width in lstScriptActions line number
+        /// </summary>
+        /// <returns></returns>
+        private int DecideScriptActionsLineCharacterWidth()
+        {
+            var bitmap = new Bitmap(256, 256);
+            var g = Graphics.FromImage(bitmap);
+            var size = g.MeasureString("0", new Font(lstScriptActions.Font.FontFamily, lstScriptActions.Font.Size));
+
+            var w = size.Width;
+            if ((w - (int)w) > 0.0)
+            {
+                return (int)w + 1;
+            }
+            else
+            {
+                return (int)w;
+            }
         }
     }
 }
