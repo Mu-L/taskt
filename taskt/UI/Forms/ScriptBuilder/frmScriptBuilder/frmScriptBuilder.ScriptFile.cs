@@ -527,6 +527,15 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             if ((overrideInstanceCounter != null) && (overrideInstanceCounter != null))
             {
+                if (isUndo)
+                {
+                    CreateRedoSnapshot();
+                }
+                else
+                {
+                    CreateUndoSnapshot();
+                }
+
                 UndoRedoProcess(overrideScript, overrideInstanceCounter, isUndo);
             }
             else

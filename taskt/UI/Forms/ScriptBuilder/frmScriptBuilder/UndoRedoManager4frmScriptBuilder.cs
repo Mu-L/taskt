@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using taskt.Core.Script;
 
 namespace taskt.UI.Forms
@@ -37,12 +38,22 @@ namespace taskt.UI.Forms
         public UndoRedoManager4frmScriptBuilder() { }
 
         /// <summary>
-        /// add snapshot
+        /// add undo snapshot
         /// </summary>
         /// <param name="script"></param>
-        public void AddSnapshot(Script script, InstanceCounterData counter)
+        public void AddUndoSnapshot(Script script, InstanceCounterData counter)
         {
             undo.Push((script, counter));
+        }
+
+        /// <summary>
+        /// add redo snapshot
+        /// </summary>
+        /// <param name="script"></param>
+        /// <param name="counter"></param>
+        public void AddRedoSnapshot(Script script, InstanceCounterData counter)
+        {
+            redo.Push((script, counter));
         }
 
         /// <summary>
@@ -54,7 +65,6 @@ namespace taskt.UI.Forms
             if (CanUndo)
             {
                 var ret = undo.Pop();
-                redo.Push(ret);
                 return ret;
             }
             else
@@ -72,7 +82,6 @@ namespace taskt.UI.Forms
             if (CanRedo)
             {
                 var ret = redo.Pop();
-                undo.Push(ret);
                 return ret;
             }
             else

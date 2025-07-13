@@ -296,11 +296,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             (var script, var instances) = undoRedo.Undo();
             BeginUndoRedoProcess(script, instances);
 
-            if (undoRedo.CanRedo)
-            {
-                redoSplitMenuItem.Enabled = true;
-            }
-
             /*
             if (undoList.Count > 0)
             {
@@ -452,7 +447,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// </summary>
         private void CreateUndoSnapshot()
         {
-            undoRedo.AddSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
+            undoRedo.AddUndoSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
 
             undoSplitMenuItem.Enabled = true;
 
@@ -472,6 +467,16 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             undoIndex = itemList.Count - 1;
             */
+        }
+
+        /// <summary>
+        /// create redo snapshot
+        /// </summary>
+        private void CreateRedoSnapshot()
+        {
+            undoRedo.AddRedoSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
+
+            redoSplitMenuItem.Enabled = true;
         }
         #endregion
 
