@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
