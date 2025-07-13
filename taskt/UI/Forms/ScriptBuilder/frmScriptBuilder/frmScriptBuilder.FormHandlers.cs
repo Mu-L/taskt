@@ -236,5 +236,19 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             e.Cancel = !BeginFormCloseProcess();
         }
+
+        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (appSettings.ClientSettings.MinimizeToTray)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+
+                if (appSettings.ClientSettings.HideNotifyAutomatically)
+                {
+                    notifyTray.Visible = false;
+                }
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                     PerformAntiIdle();
                 }
 
+                /*
                 // check if notification is required
                 if ((notificationList.Count > 0) && (notificationExpires < DateTime.Now))
                 {
@@ -37,6 +38,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                     notificationExpires = DateTime.Now.AddSeconds(2);
                     ShowNotification(itemToDisplay);
                 }
+                */
             }
         }
 
@@ -45,20 +47,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             e.Graphics.Clear(pnlStatus.BackColor);
             e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
             e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
-        }
-
-        private void notifyTray_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (appSettings.ClientSettings.MinimizeToTray)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-
-                if (appSettings.ClientSettings.HideNotifyAutomatically)
-                {
-                    notifyTray.Visible = false;
-                }
-            }
         }
 
         private void pnlStatus_DoubleClick(object sender, EventArgs e)
@@ -75,7 +63,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
         }
 
-
         /// <summary>
         /// show footer message
         /// </summary>
@@ -85,6 +72,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // DBG
             //MessageBox.Show(notificationText);
 
+            /*
             if (appSettings.ClientSettings.HideNotifyAutomatically)
             {
                 notificationList.Add(notificationText);
@@ -94,6 +82,15 @@ namespace taskt.UI.Forms.ScriptBuilder
                 this.notificationText = notificationText;
                 pnlStatus_Paint(pnlStatus, new PaintEventArgs(pnlStatus.CreateGraphics(), pnlStatus.Bounds));    // force draw
             }
+            */
+
+            if (!isDisplaying)
+            {
+                ShowNotificationRow();
+            }
+
+            this.notificationText = notificationText;
+            pnlStatus_Paint(pnlStatus, new PaintEventArgs(pnlStatus.CreateGraphics(), pnlStatus.Bounds));   // force draw
         }
 
         /// <summary>
@@ -139,7 +136,5 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             tlpControls.RowStyles[5].Height = 30;
         }
-
-
     }
 }
