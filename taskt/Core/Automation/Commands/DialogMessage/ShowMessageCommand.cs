@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("OkCancel")]
         [PropertyValidationRule("Dialog Type", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Dialog Type")]
-        [PropertyIsOptional(true)]
+        [PropertyIsOptional(true, "OkOnly")]
         public string v_DialogType { get; set; }
 
         [XmlAttribute]
@@ -83,6 +83,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "Yes")]
         [PropertyFirstValue("Yes")]
+        [PropertyDisplayText(false, "Wait For Answer")]
         public string v_WaitForAnswer { get; set; }
 
         public ShowMessageCommand()
@@ -125,8 +126,11 @@ namespace taskt.Core.Automation.Commands
             {
                 fontSize = (float)this.ExpandValueOrUserVariableAsDecimal(nameof(v_FontSize), engine);
             }
-            if (string.IsNullOrEmpty(v_DialogType)) v_DialogType = "OkOnly";
-            frmDialog.DialogType dialogType = (frmDialog.DialogType)Enum.Parse(typeof(frmDialog.DialogType), v_DialogType.ExpandValueOrUserVariable(engine));
+            if (string.IsNullOrEmpty(v_DialogType))
+            {
+                v_DialogType = "OkOnly";
+            }
+            frmDialog.DialogType dialogType = (frmDialog.DialogType)Enum.Parse(typeof(frmDialog.DialogType), v_DialogType.ExpandValueOrUserVariable(engine), true);
 
             // TODO: support OK/cancel etc buttons
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
