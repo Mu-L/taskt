@@ -521,7 +521,10 @@ namespace taskt.UI.Forms.ScriptBuilder
         #region New script file
         private void BeginNewScriptProcess()
         {
-            CheckAndSaveScriptIfForget();
+            if (!CheckAndSaveScriptIfForget())
+            {
+                return;
+            }
 
             NewScript();
 
@@ -699,7 +702,10 @@ namespace taskt.UI.Forms.ScriptBuilder
                 return true;
             }
 
-            CheckAndSaveScriptIfForget();
+            if (!CheckAndSaveScriptIfForget())
+            {
+                return false;
+            }
             return true;
         }
 

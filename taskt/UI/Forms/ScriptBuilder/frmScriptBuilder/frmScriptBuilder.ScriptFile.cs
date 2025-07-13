@@ -22,7 +22,10 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// </summary>
         private void BeginOpenScriptProcess()
         {
-            CheckAndSaveScriptIfForget();
+            if (!CheckAndSaveScriptIfForget())
+            {
+                return;
+            }
 
             // show ofd
             using (var openFileDialog = new OpenFileDialog())
@@ -43,14 +46,28 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// <summary>
         /// show check and save dialog
         /// </summary>
-        private void CheckAndSaveScriptIfForget()
+        /// <returns>true is allow to continue next process, false is stop process</returns>
+        private bool CheckAndSaveScriptIfForget()
         {
             if (this.dontSaveFlag)
             {
-                if (MessageBox.Show("This script has not been saved yet.\nDo you save it?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                var ret = MessageBox.Show("This script has not been saved yet.\nDo you save it?", "taskt", MessageBoxButtons.YesNoCancel);
+                switch (ret)
                 {
-                    BeginSaveScriptProcess((ScriptFilePath == ""));
+                    case DialogResult.Yes:
+                        BeginSaveScriptProcess((ScriptFilePath == ""));
+                        return true;
+                    case DialogResult.No:
+                        return true;
+
+                    case DialogResult.Cancel:
+                    default:
+                        return false;
                 }
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -476,7 +493,11 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         public bool OpenScriptFromFilePath(string filePath, bool normalFileOpen = false)
         {
-            CheckAndSaveScriptIfForget();
+            if (!CheckAndSaveScriptIfForget())
+            {
+                return false;
+            }
+
             OpenFile(filePath);
             if (normalFileOpen)
             {
