@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Script;
 
 namespace taskt.UI.Forms.ScriptBuilder
 {
+    using InstanceCounterData = Dictionary<string, Dictionary<string, Dictionary<string, int>>>;
+
     public partial class frmScriptBuilder
     {
         /*
@@ -46,7 +49,6 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 if (MessageBox.Show("This script has not been saved yet.\nDo you save it?", "taskt", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-
                     BeginSaveScriptProcess((ScriptFilePath == ""));
                 }
             }
@@ -77,7 +79,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 instanceList = new Core.InstanceCounter();
 
                 // get deserialized script
-                Script deserializedScript = Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
+                var deserializedScript = Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 // check script created taskt version
                 var myVer = new Version(Application.ProductVersion);
@@ -188,7 +190,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             try
             {
                 // deserialize file      
-                Script deserializedScript = Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
+                var deserializedScript = Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -243,12 +245,17 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
         }
 
+        /// <summary>
+        /// populate (insert) script commands to lstScriptActions last position
+        /// </summary>
+        /// <param name="commandDetails"></param>
+        /// <param name="isOpen"></param>
         public void PopulateExecutionCommands(List<ScriptAction> commandDetails, bool isOpen = true)
         {
             foreach (ScriptAction item in commandDetails)
             {
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand, isOpen));
-                if (item.AdditionalScriptCommands.Count > 0)
+                if ((item.AdditionalScriptCommands?.Count ?? 0) > 0)
                 {
                     PopulateExecutionCommands(item.AdditionalScriptCommands);
                 }
@@ -260,6 +267,12 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
         }
 
+        /// <summary>
+        /// insert script commands to lstScriptActions. this commands can specify insert position
+        /// </summary>
+        /// <param name="commandDetails"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public int InsertExecutionCommands(List<ScriptAction> commandDetails, int position = -1)
         {
             if (position < 0)
@@ -307,6 +320,10 @@ namespace taskt.UI.Forms.ScriptBuilder
             return ConfiguredCommands;
         }
 
+        /// <summary>
+        /// script file save core
+        /// </summary>
+        /// <param name="saveAs"></param>
         private void SaveToFile(bool saveAs)
         {
             if (lstScriptActions.Items.Count == 0)
@@ -497,6 +514,62 @@ namespace taskt.UI.Forms.ScriptBuilder
             var newEngine = new Forms.ScriptEngine.frmScriptEngine(ScriptFilePath, this);
             newEngine.callBackForm = this;
             newEngine.Show();
+        }
+
+
+        /// <summary>
+        /// begin undo/redo process
+        /// </summary>
+        /// <param name="overrideScript"></param>
+        /// <param name="overrideInstanceCounter"></param>
+        /// <param name="isUndo"></param>
+        private void BeginUndoRedoProcess(Script overrideScript, InstanceCounterData overrideInstanceCounter, bool isUndo = true)
+        {
+            if ((overrideInstanceCounter != null) && (overrideInstanceCounter != null))
+            {
+                UndoRedoProcess(overrideScript, overrideInstanceCounter, isUndo);
+            }
+            else
+            {
+                Notify($"Unable to {(isUndo ? "Undo" : "Redo")}");
+            }
+        }
+
+        /// <summary>
+        /// undo/redo process core
+        /// </summary>
+        /// <param name="overrideScript"></param>
+        /// <param name="overrideInstanceCounter"></param>
+        /// <param name="isUndo"></param>
+        private void UndoRedoProcess(Script overrideScript, InstanceCounterData overrideInstanceCounter, bool isUndo = true)
+        {
+            lstScriptActions.BeginUpdate();
+
+            // clear all commands in lstScriptActions
+            lstScriptActions.Items.Clear();
+
+            // populate commands
+            PopulateExecutionCommands(overrideScript.Commands);
+
+            // check indent
+            IndentListViewItems();
+
+            lstScriptActions.EndUpdate();
+
+            // assign variables
+            this.scriptVariables = overrideScript.Variables;
+
+            // script information
+            this.scriptInfo = overrideScript.Info ?? new ScriptInformation();
+
+            // Instance Count
+            this.instanceList = new InstanceCounter(overrideInstanceCounter);
+
+            // format listview
+            ChangeSaveState(true);
+
+            // notify
+            Notify($"{(isUndo ? "Undo" : "Redo")} is completed successfully.");
         }
     }
 }

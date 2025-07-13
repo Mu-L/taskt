@@ -48,7 +48,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
 
             // create undo list
-            undoList = new List<List<ListViewItem>>();
+            //undoList = new List<List<ListViewItem>>();
 
             // get app settings
             //appSettings = new Core.ApplicationSettings();

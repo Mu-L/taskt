@@ -100,8 +100,6 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void MoveCommands(DragEventArgs e)
         {
-            CreateUndoSnapshot();
-
             // Returns the location of the mouse pointer in the ListView control.
             var cp = lstScriptActions.PointToClient(new Point(e.X, e.Y));
 
@@ -111,6 +109,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 return;
             }
+
+            CreateUndoSnapshot();
 
             lstScriptActions.BeginUpdate();
 

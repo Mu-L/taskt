@@ -87,7 +87,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
             else
             {
-                ScriptCommand cloneCommand = currentCommand.Clone();
+                var cloneCommand = currentCommand.Clone();
                 currentCommand.RemoveInstance(instanceList);
 
                 // create new command editor form
@@ -122,6 +122,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                     // show edit command form and save changes on OK result
                     if (editCommand.ShowDialog(this) == DialogResult.OK)
                     {
+                        CreateUndoSnapshot();
+
                         ChangeSaveState(true);
 
                         selectedCommandItem.Tag = editCommand.selectedCommand;
@@ -132,7 +134,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                         editCommand.selectedCommand.AddInstance(instanceList);
 
-                        CreateUndoSnapshot();
+                        //CreateUndoSnapshot();
                     }
                     else
                     {
@@ -156,6 +158,8 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void DeleteRows()
         {
+            CreateUndoSnapshot();
+
             lstScriptActions.BeginUpdate();
 
             var indices = new int[lstScriptActions.SelectedItems.Count];
@@ -178,7 +182,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             Notify($"{indices.Count()} command(s) deleted!");
 
-            CreateUndoSnapshot();
+            //CreateUndoSnapshot();
 
             // check indent
             IndentListViewItems();
@@ -191,6 +195,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             // copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
+                CreateUndoSnapshot();
+
                 ChangeSaveState(true);
 
                 var commands = new List<ScriptCommand>();
@@ -220,7 +226,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 // release
                 commands.Clear();
 
-                CreateUndoSnapshot();
+                //CreateUndoSnapshot();
 
                 // check indent
                 IndentListViewItems();
@@ -256,9 +262,11 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void PasteRows()
         {
-            var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText(), scriptSerializer);
+            var sc = Script.DeserializeXML(Clipboard.GetText(), scriptSerializer);
             if (sc != null)
             {
+                CreateUndoSnapshot();
+
                 ChangeSaveState(true);
 
                 lstScriptActions.BeginUpdate();
@@ -272,7 +280,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 // release
                 sc = null;
 
-                CreateUndoSnapshot();
+                //CreateUndoSnapshot();
 
                 // check indent
                 IndentListViewItems();
@@ -285,6 +293,10 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void UndoChange()
         {
+            (var script, var instances) = undoRedo.Undo();
+            BeginUndoRedoProcess(script, instances);
+
+            /*
             if (undoList.Count > 0)
             {
                 if ((undoIndex < 0) || (undoIndex >= undoList.Count))
@@ -306,10 +318,15 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                 lstScriptActions.Invalidate();
             }
+            */
         }
 
         private void RedoChange()
         {
+            (var script, var instances) = undoRedo.Redo();
+            BeginUndoRedoProcess(script, instances, false);
+
+            /*
             if (undoList.Count > 0)
             {
                 undoIndex++;
@@ -331,6 +348,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                 lstScriptActions.Invalidate();
             }
+            */
         }
 
         private void SetSelectedCodeToCommented(bool setCommented)
@@ -341,6 +359,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 Notify("No code was selected!");
             }
 
+            CreateUndoSnapshot();
+
             // get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
@@ -350,7 +370,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             ChangeSaveState(true);
 
-            CreateUndoSnapshot();
+            //CreateUndoSnapshot();
 
             // recolor
             lstScriptActions.Invalidate();
@@ -364,6 +384,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 Notify("No code was selected!");
             }
 
+            CreateUndoSnapshot();
+
             // get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
@@ -373,7 +395,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             ChangeSaveState(true);
 
-            CreateUndoSnapshot();
+            //CreateUndoSnapshot();
 
             lstScriptActions.Invalidate();
         }
@@ -386,6 +408,8 @@ namespace taskt.UI.Forms.ScriptBuilder
                 Notify("No code was selected!");
             }
 
+            CreateUndoSnapshot();
+
             // get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
@@ -395,7 +419,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             ChangeSaveState(true);
 
-            CreateUndoSnapshot();
+            //CreateUndoSnapshot();
 
             lstScriptActions.Invalidate();
         }
@@ -426,6 +450,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // TEST: new undo redo
             undoRedo.AddSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
 
+            /*
             var itemList = new List<ListViewItem>();
             foreach (ListViewItem rowItem in lstScriptActions.Items)
             {
@@ -440,6 +465,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             }
 
             undoIndex = itemList.Count - 1;
+            */
         }
         #endregion
 
@@ -475,6 +501,8 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 pnlCommandHelper.Hide();
             }
+
+            CreateUndoSnapshot();
 
             var command = CreateScriptCommandListViewItem(selectedCommand);
 
@@ -567,7 +595,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             lstScriptActions.Items[focusIndex].Selected = true;
             lstScriptActions.MultiSelect = true;
 
-            CreateUndoSnapshot();
+            //CreateUndoSnapshot();
 
             // check indent
             IndentListViewItems();

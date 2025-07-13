@@ -29,6 +29,11 @@ namespace taskt.UI.Forms
         /// </summary>
         public bool CanRedo { get => (this.redo.Count > 0); }
 
+        /// <summary>
+        /// DBG: undo, redo size
+        /// </summary>
+        private const int max_size = 256;
+
         public UndoRedoManager4frmScriptBuilder() { }
 
         /// <summary>
