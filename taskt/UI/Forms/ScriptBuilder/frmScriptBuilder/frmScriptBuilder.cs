@@ -535,6 +535,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             scriptVariables = new List<ScriptVariable>();
             scriptInfo = new ScriptInformation();
             instanceList = new Core.InstanceCounter();
+            undoRedo = new UndoRedoManager4frmScriptBuilder();
 
             ChangeSaveState(false);
         }
