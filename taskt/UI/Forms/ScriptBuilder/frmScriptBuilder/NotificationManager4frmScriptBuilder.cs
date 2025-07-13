@@ -81,6 +81,7 @@ namespace taskt.UI.Forms
         public void ShowMessage(string message)
         {
             this.NotificationText = message;
+            this.notificationMessages.Add(message);
 
             if (!IsVisible)
             {
