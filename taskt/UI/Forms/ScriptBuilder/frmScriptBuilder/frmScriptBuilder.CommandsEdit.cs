@@ -403,7 +403,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// </summary>
         private void CreateUndoSnapshot()
         {
-            undoRedo.AddUndoSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
+            undoRedo.AddUndoSnapshot(GetSerializedScript("", false), instanceList.GetInstancesCounterClone());
 
             undoSplitMenuItem.Enabled = true;
         }
@@ -413,7 +413,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// </summary>
         private void CreateRedoSnapshot()
         {
-            undoRedo.AddRedoSnapshot(GetSerializedScript(), instanceList.GetInstancesCounterClone());
+            undoRedo.AddRedoSnapshot(GetSerializedScript("", false), instanceList.GetInstancesCounterClone());
 
             redoSplitMenuItem.Enabled = true;
         }

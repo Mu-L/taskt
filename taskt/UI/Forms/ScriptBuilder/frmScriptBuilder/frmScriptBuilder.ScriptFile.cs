@@ -467,10 +467,11 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// get serialized script and save
         /// </summary>
         /// <param name="fileName"></param>
+        /// <param name="enableConvertIntermediate"></param>
         /// <returns></returns>
-        private Script GetSerializedScript(string fileName = "")
+        private Script GetSerializedScript(string fileName = "", bool enableConvertIntermediate = true)
         {
-            return Script.SerializeScript(lstScriptActions.Items, this.scriptVariables, this.scriptInfo, appSettings.EngineSettings, scriptSerializer, fileName);
+            return Script.SerializeScript(lstScriptActions.Items, this.scriptVariables, this.scriptInfo, appSettings.EngineSettings, scriptSerializer, fileName, enableConvertIntermediate);
         }
 
         private void CheckValidateCommands(List<ScriptCommand> commands)
