@@ -93,6 +93,9 @@ namespace taskt.UI.Forms.ScriptBuilder
         /// </summary>
         private Pen indentDashLine;
 
+        /// <summary>
+        /// width of 1 charactor in lstScriptAction line column
+        /// </summary>
         private int lineCharWidth = 14;
 
         // forms

@@ -67,8 +67,9 @@ namespace taskt.Core.Script
         /// <param name="serializer">Script Serializer, when null create new</param>
         /// <param name="scriptFilePath">output file path, when null not output</param>
         /// <param name="enableConvertIntermediate">convert intermediate script, but depends on the engine settings</param>
+        /// <param name="changeCommandSaveState">change IsDontSaveCommand is false when specified true</param>
         /// <returns></returns>
-        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, ScriptInformation info, IEngineSettings engineSettings, XmlSerializer serializer = null, string scriptFilePath = "", bool enableConvertIntermediate = true)
+        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, ScriptInformation info, IEngineSettings engineSettings, XmlSerializer serializer = null, string scriptFilePath = "", bool enableConvertIntermediate = true, bool changeCommandSaveState = true)
         {
             var script = new Script
             {
@@ -84,8 +85,11 @@ namespace taskt.Core.Script
             foreach (ListViewItem commandItem in scriptCommands)
             {
                 var srcCommand = (ScriptCommand)commandItem.Tag;
-                srcCommand.IsDontSavedCommand = false;
-
+                if (changeCommandSaveState)
+                {
+                    srcCommand.IsDontSavedCommand = false;
+                }
+                
                 var command = srcCommand.Clone();
                 command.LineNumber = lineNumber;
 
