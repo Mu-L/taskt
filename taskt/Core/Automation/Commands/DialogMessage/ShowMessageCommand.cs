@@ -66,15 +66,25 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Dialog Type")]
-        [PropertyUISelectionOption("Nothing")]
-        [PropertyUISelectionOption("Close")]
         [PropertyUISelectionOption("OkOnly")]
         [PropertyUISelectionOption("YesNo")]
         [PropertyUISelectionOption("OkCancel")]
+        [PropertyUISelectionOption("Close")]
+        [PropertyUISelectionOption("Nothing")]
         [PropertyValidationRule("Dialog Type", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Dialog Type")]
         [PropertyIsOptional(true, "OkOnly")]
         public string v_DialogType { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Dialog Title")]
+        [InputSpecification("Text")]
+        [PropertyIsOptional(true, "ShowMessage Command")]
+        [PropertyValidationRule("DialogTitle", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyFirstValue("ShowMessage Command")]
+        [PropertyDisplayText(false, "Dialog Title")]
+        public string v_DialogTitle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -85,6 +95,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("Yes")]
         [PropertyDisplayText(false, "Wait For Answer")]
         public string v_WaitForAnswer { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Dialog Result")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Dialog Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Dialog Result")]
+        public string v_DialogResult { get; set; }
 
         public ShowMessageCommand()
         {
@@ -110,7 +128,7 @@ namespace taskt.Core.Automation.Commands
 
             var closeAfter = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
-            //automatically close messageboxes for server requests
+            // automatically close messageboxes for server requests
             if (engine.serverExecution && closeAfter <= 0)
             {
                 closeAfter = 10;
@@ -130,14 +148,32 @@ namespace taskt.Core.Automation.Commands
             {
                 v_DialogType = "OkOnly";
             }
-            frmDialog.DialogType dialogType = (frmDialog.DialogType)Enum.Parse(typeof(frmDialog.DialogType), v_DialogType.ExpandValueOrUserVariable(engine), true);
+            var dialogType = (frmDialog.DialogType)Enum.Parse(typeof(frmDialog.DialogType), this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DialogType), engine), true);
 
-            // TODO: support OK/cancel etc buttons
-            var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            if (string.IsNullOrEmpty(v_DialogTitle))
             {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", dialogType, closeAfter);
+                v_DialogTitle = "ShowMessage Command";
             }
-            ));
+            var dialogTitle = v_DialogTitle.ExpandValueOrUserVariable(engine);
+
+            //// TODO: support OK/cancel etc buttons
+            //var result = engine.tasktEngineUI.Invoke(new Action(() =>
+            //{
+            //    engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", dialogType, closeAfter);
+            //}
+            //));
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
+            {
+                using (var confirmationForm = new frmDialog(variableMessage, dialogTitle, dialogType, closeAfter, true, fontName, fontSize))
+                {
+                    var res = confirmationForm.ShowDialog();
+                    if (!string.IsNullOrEmpty(v_DialogResult))
+                    {
+                        res.ToString().StoreInUserVariable(engine, v_DialogResult);
+                    }
+                }
+            }));
         }
 
         //public override List<Control> Render(frmCommandEditor editor)
