@@ -4,10 +4,13 @@ using System.Windows.Forms;
 
 namespace taskt.UI.Forms
 {
+    /// <summary>
+    /// taskt theme colored form
+    /// </summary>
     public partial class ThemedForm : Form
     {
-        private taskt.Core.Theme _Theme = new taskt.Core.Theme();
-        public taskt.Core.Theme Theme
+        private Core.Theme _Theme = new Core.Theme();
+        public Core.Theme Theme
         {
             get { return _Theme; }
             set { _Theme = value; }
@@ -37,6 +40,5 @@ namespace taskt.UI.Forms
             e.Graphics.FillRectangle(this.Theme.CreateGradient(this.ClientRectangle), this.ClientRectangle);
             base.OnPaint(e);
         }
-
     }
 }
