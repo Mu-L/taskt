@@ -665,5 +665,15 @@ namespace taskt.UI.Forms.ScriptEngine
             MessageBox.Show(lstSteppingCommands.SelectedItem.ToString(), "Item Status");
         }
         #endregion UI Elements
+
+
+        /// <summary>
+        /// move form to window Bottom-Right
+        /// </summary>
+        /// <param name="sender"></param>
+        public static void MoveFormToBottomRight(Form sender)
+        {
+            sender.Location = new Point(Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width, Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height);
+        }
     }
 }

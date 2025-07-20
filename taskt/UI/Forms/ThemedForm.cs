@@ -6,6 +6,13 @@ namespace taskt.UI.Forms
 {
     public partial class ThemedForm : Form
     {
+        private taskt.Core.Theme _Theme = new taskt.Core.Theme();
+        public taskt.Core.Theme Theme
+        {
+            get { return _Theme; }
+            set { _Theme = value; }
+        }
+
         public ThemedForm()
         {
             InitializeComponent();
@@ -25,21 +32,11 @@ namespace taskt.UI.Forms
             }
         }
 
-        private taskt.Core.Theme _Theme = new taskt.Core.Theme();
-        public taskt.Core.Theme Theme
-        {
-            get { return _Theme; }
-            set { _Theme = value; }
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.FillRectangle(this.Theme.CreateGradient(this.ClientRectangle), this.ClientRectangle);
             base.OnPaint(e);
         }
-        public static void MoveFormToBottomRight(Form sender)
-        {
-            sender.Location = new Point(Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width, Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height);
-        }
+
     }
 }
