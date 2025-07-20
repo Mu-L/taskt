@@ -29,9 +29,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var info = FileVersionInfo.GetVersionInfo(location);
             lblProjectName.Text = info.ProductName;
-            //lblAppVersion.Text = "version: " + new Version(System.Windows.Forms.Application.ProductVersion);
             lblAppVersion.Text = "version: " + info.ProductVersion;
-            //lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("MM.dd.yy hh.mm.ss");
             lblBuildDate.Text = "build date: " + System.IO.File.GetLastWriteTime(location).ToString("MM.dd.yy hh.mm.ss");
         }
         #endregion
